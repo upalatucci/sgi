@@ -1,39 +1,41 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import {getJsonData} from '../api';
-import BuddismoItem from '../components/BuddismoItem';
 import Loading from '../components/Loading';
+import CustomHTML from '../components/CustomHTML';
 
-export default () => {
+export default (props) => {
+  const {id} = props;
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getJsonData('posts/4016')
-      .then((posts) => setContent(posts))
+    setLoading(true);
+    getJsonData(`news/${id}`)
+      .then((news) => setContent(news))
       .finally(() => setLoading(false));
-  }, []);
+  }, [id]);
 
   if (loading) {
     return <Loading />;
   }
 
+  console.log(content);
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {content ? (
-        <FlatList
-          data={content.data}
-          keyExtractor={(item) => item.title}
-          renderItem={({item}) => <BuddismoItem {...item} />}
-        />
+        <CustomHTML content={content.data[0].full + '<br><br>'} />
       ) : null}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingTop: 10,
     paddingHorizontal: 10,
+    paddingBottom: 100,
   },
 });
