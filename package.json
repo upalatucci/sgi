@@ -6,10 +6,12 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "build:android": "cd android && ./gradlew buildRelease",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "date-fns": "^2.16.1",
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-gesture-handler": "^1.8.0",
@@ -17,7 +19,10 @@
     "react-native-render-html": "^4.2.4",
     "react-native-router-flux": "^4.2.0",
     "react-native-screens": "^2.11.0",
+    "react-native-svg": "^12.1.0",
+    "react-native-svg-transformer": "^0.14.3",
     "react-native-vector-icons": "^7.1.0",
+    "react-native-webview": "^10.10.0",
     "react-redux": "^7.2.1"
   },
   "devDependencies": {

@@ -7,3 +7,8 @@ export const TitleStyle = {
   fontSize: 20,
   fontWeight: 'bold',
 };
+
+export const IconColors = {
+  focused: Colors.primary,
+  notFocused: '#f4f4f4',
+};

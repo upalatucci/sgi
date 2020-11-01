@@ -20,8 +20,6 @@ export default (props) => {
     return <Loading />;
   }
 
-  console.log(content);
-
   return (
     <ScrollView style={styles.container}>
       {content ? (

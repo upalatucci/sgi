@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {getJsonData} from '../api';
 import BuddismoItem from '../components/BuddismoItem';
 import Loading from '../components/Loading';
@@ -19,15 +19,9 @@ export default () => {
   }
 
   return (
-    <View style={styles.container}>
-      {content ? (
-        <FlatList
-          data={content.data}
-          keyExtractor={(item) => item.title}
-          renderItem={({item}) => <BuddismoItem {...item} />}
-        />
-      ) : null}
-    </View>
+    <ScrollView style={styles.container}>
+      {content ? <BuddismoItem {...content.data[0]} /> : null}
+    </ScrollView>
   );
 };
 

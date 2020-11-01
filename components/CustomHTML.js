@@ -7,13 +7,14 @@ const deviceWidth = Dimensions.get('window').width;
 export default (props) => (
   <HTML
     renderers={{
-      hr: () => <View style={styles.hr} />,
+      hr: () => <View style={styles.hr} key={Math.random()} />,
     }}
     tagsStyles={{
       p: {marginBottom: -10},
       a: {textDecorationLine: null, color: Colors.primary},
       li: {marginBottom: -40},
       h3: {marginBottom: -40},
+      ...props.additionalTagsStyles,
     }}
     staticContentMaxWidth={deviceWidth}
     imagesMaxWidth={deviceWidth}
