@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useCallback} from 'react';
 import {View, Text, StyleSheet, Animated, Easing} from 'react-native';
 
-export default () => {
+export default ({absolutePositioning = true, withText = true}) => {
   const rotation = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   const spin = useCallback(() => {
@@ -25,7 +25,11 @@ export default () => {
   });
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        absolutePositioning ? styles.containerAbsolutePosition : null,
+      ]}>
       <Animated.View
         style={[
           styles.spinner,
@@ -40,14 +44,13 @@ export default () => {
             : null,
         ]}
       />
-      <Text style={styles.text}>Loading...</Text>
+      {withText ? <Text style={styles.text}>Loading...</Text> : null}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
@@ -63,5 +66,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgb(200, 200, 200)',
     borderTopColor: 'rgb(100, 100, 100)',
     borderWidth: 5,
+  },
+  containerAbsolutePosition: {
+    position: 'absolute',
   },
 });

@@ -10,9 +10,7 @@ export default ({title, date, image, excerpt, id}) => (
     style={styles.container}
     onPress={() => Actions.newsPage({id})}>
     <View style={[styles.container, styles.newsContainer]}>
-      {image && image !== '' ? (
-        <Image source={{uri: image}} style={styles.image} />
-      ) : null}
+      <Image source={image ? {uri: image} : null} style={styles.image} />
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         <View style={[styles.container, styles.textContainer]}>
