@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {getJsonData} from '../api';
 import NewsItem from '../components/NewsItem';

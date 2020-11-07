@@ -6,6 +6,7 @@ import Buddismo from './pages/Buddismo';
 import Riviste from './pages/Riviste';
 import FraseDelGiorno from './pages/FraseDelGiorno';
 import NewsPage from './pages/NewsPage';
+import Home from './pages/Home';
 import {Colors} from './styles';
 import FraseDelGiornoIcon from './components/icons/FraseDelGiornoIcon';
 import HomeIcon from './components/icons/HomeIcon';
@@ -15,44 +16,43 @@ import BookIcon from './components/icons/BookIcon';
 export default () => {
   return (
     <Router>
-      <Stack key="root">
-        <Tabs
-          key="tab"
-          hideNavBar
-          activeBackgroundColor="white"
-          inactiveTintColor="white"
-          inactiveBackgroundColor={Colors.primary}
-          navigationBarStyle={styles.navbar}
-          titleStyle={styles.title}>
-          <Scene key="news" component={News} icon={HomeIcon} title="News" />
-          <Scene
-            key="buddismo"
-            component={Buddismo}
-            icon={LotusIcon}
-            title="Buddismo"
-          />
-          <Scene
-            key="riviste"
-            component={Riviste}
-            icon={BookIcon}
-            title="Riviste"
-          />
-          <Scene
-            key="frasedelgiorno"
-            component={FraseDelGiorno}
-            icon={FraseDelGiornoIcon}
-            title="Frase del Giorno"
-          />
-        </Tabs>
+      <Stack
+        key="root"
+        navigationBarStyle={styles.navbar}
+        titleStyle={styles.title}
+        backButtonTintColor={Colors.primary}>
+        <Scene key="home" component={Home} title="Home" hideNavBar />
         <Scene
-          key="newsPage"
-          component={NewsPage}
           back
-          title="News"
+          key="news"
           navigationBarStyle={styles.navbar}
           titleStyle={styles.title}
-          backButtonTintColor="white"
+          component={News}
+          icon={HomeIcon}
+          title="News"
         />
+        <Scene
+          back
+          key="buddismo"
+          component={Buddismo}
+          icon={LotusIcon}
+          title="Buddismo"
+        />
+        <Scene
+          back
+          key="riviste"
+          component={Riviste}
+          icon={BookIcon}
+          title="Riviste"
+        />
+        <Scene
+          back
+          key="frasedelgiorno"
+          component={FraseDelGiorno}
+          icon={FraseDelGiornoIcon}
+          title="Frase del Giorno"
+        />
+        <Scene key="newsPage" component={NewsPage} back title="News" />
       </Stack>
     </Router>
   );
@@ -60,9 +60,9 @@ export default () => {
 
 const styles = StyleSheet.create({
   navbar: {
-    backgroundColor: Colors.primary,
+    backgroundColor: 'white',
   },
   title: {
-    color: 'white',
+    color: Colors.primary,
   },
 });

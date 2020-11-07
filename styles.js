@@ -1,5 +1,7 @@
 export const Colors = {
   primary: '#3F85AF',
+  secondary: '#DD9B28',
+  backgroundColorPrimary: '#eaf3f7',
 };
 
 export const TitleStyle = {
@@ -12,3 +14,16 @@ export const IconColors = {
   focused: Colors.primary,
   notFocused: '#f4f4f4',
 };
+
+export const DefaultShadow = {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+  elevation: 5,
+};
+
+export const DefaultBorderRadius = 10;
