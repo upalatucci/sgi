@@ -11,10 +11,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.2",
+    "buffer": "^6.0.1",
     "date-fns": "^2.16.1",
+    "md5": "^2.3.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-gesture-handler": "^1.8.0",
+    "react-native-keychain": "^6.2.0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-reanimated": "^1.13.1",
     "react-native-render-html": "^4.2.4",
@@ -24,7 +28,8 @@
     "react-native-svg-transformer": "^0.14.3",
     "react-native-vector-icons": "^7.1.0",
     "react-native-webview": "^10.10.0",
-    "react-redux": "^7.2.1"
+    "react-redux": "^7.2.1",
+    "sha.js": "^2.4.11"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

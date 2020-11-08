@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import TouchableHighlight from './CustomTouchableHighlight';
 import {TitleStyle} from '../styles';
 
 export default ({title, date, image, excerpt, id}) => (
   <TouchableHighlight
-    activeOpacity={0.6}
-    underlayColor="#fff"
     style={styles.container}
     onPress={() => Actions.newsPage({id})}>
     <View style={[styles.container, styles.newsContainer]}>

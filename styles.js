@@ -2,6 +2,9 @@ export const Colors = {
   primary: '#3F85AF',
   secondary: '#DD9B28',
   backgroundColorPrimary: '#eaf3f7',
+  gray: '#999',
+  error: '#dc3545',
+  light: '#d2d2d2',
 };
 
 export const TitleStyle = {
