@@ -1,6 +1,10 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Router, Scene, Tabs, Stack} from 'react-native-router-flux';
+import {Router, Scene, Stack} from 'react-native-router-flux';
+import thunk from 'redux-thunk';
+import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import magazineReducer from './store/magazineRecuder';
 import News from './pages/News';
 import Buddismo from './pages/Buddismo';
 import Riviste from './pages/Riviste';
@@ -13,8 +17,14 @@ import HomeIcon from './components/icons/HomeIcon';
 import LotusIcon from './components/icons/LotusIcon';
 import BookIcon from './components/icons/BookIcon';
 
-export default () => {
-  return (
+const rootReduced = combineReducers({
+  magazine: magazineReducer,
+});
+
+const store = createStore(rootReduced, compose(applyMiddleware(thunk)));
+
+export default () => (
+  <Provider store={store}>
     <Router>
       <Stack
         key="root"
@@ -55,8 +65,8 @@ export default () => {
         <Scene key="newsPage" component={NewsPage} back title="News" />
       </Stack>
     </Router>
-  );
-};
+  </Provider>
+);
 
 const styles = StyleSheet.create({
   navbar: {

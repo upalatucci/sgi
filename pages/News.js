@@ -36,6 +36,8 @@ export default () => {
     fetchNews();
   }, []);
 
+  console.log(loading);
+
   return (
     <View style={styles.container}>
       <FlatList

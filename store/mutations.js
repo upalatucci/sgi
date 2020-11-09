@@ -1,0 +1,2 @@
+export const SET_LASR_NR_IMAGE = 'SET_LASR_NR_IMAGE';
+export const SET_LASR_BS_IMAGE = 'SET_LASR_BS_IMAGE';
