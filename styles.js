@@ -1,10 +1,33 @@
 export const Colors = {
-  primary: '#3F85AF',
-  secondary: '#DD9B28',
+  blue: '#4479A2',
+  indigo: '#6610f2',
+  purple: '#6f42c1',
+  pink: '#e83e8c',
+  red: '#E02122',
+  orange: '#f2a063',
+  yellow: '#F7DE34',
+  green: '#28a745',
+  teal: '#20c997',
+  cyan: '#17a2b8',
+  white: '#fff',
+  gray: '#6c757d',
+  grayDark: '#343a40',
+  primary: '#4479A2',
+  secondary: '#C6B696',
+  success: '#28a745',
+  info: '#17a2b8',
+  warning: '#F7DE34',
+  danger: '#E02122',
+  light: '#f8f9fa',
+  dark: '#696969',
   backgroundColorPrimary: '#eaf3f7',
-  gray: '#999',
   error: '#dc3545',
-  light: '#d2d2d2',
+  voloContinuo: '#4a8eff',
+  riviste: '#b8d6e0',
+};
+
+export const FontFamilies = {
+  primary: 'BrownLLWeb',
 };
 
 export const TitleStyle = {
