@@ -1,13 +1,29 @@
 import React, {useEffect, useReducer} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import * as Keychain from 'react-native-keychain';
 import SubscriptionContext from '../contexts/SubscriptionContext';
 import {login, generateSignToken} from '../services/auth';
-// import Loading from '../components/Loading';
 import LoginForm from '../components/LoginForm';
 import ErrorModal from '../components/ErrorModal';
+import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
+import Loading from '../components/Loading';
+import MagazineCarousel from '../components/magazine/MagazineCarousel';
+
+const initialState = {
+  logged: false,
+  loading: true,
+  error: null,
+  subscriptionInfo: null,
+};
 
 function loginReducer(state, action) {
   switch (action.type) {
+    case 'no_logged':
+      return {
+        ...initialState,
+        loading: false,
+      };
     case 'clear_error':
       return {
         ...state,
@@ -44,22 +60,22 @@ function loginReducer(state, action) {
   }
 }
 
-const initialState = {
-  logged: false,
-  loading: false,
-  error: null,
-  subscriptionInfo: null,
-};
-
-export default () => {
+const Riviste = ({lastBSImage, lastNRImage}) => {
   const [state, dispatch] = useReducer(loginReducer, initialState);
 
+  console.log(state.subscriptionInfo);
   useEffect(() => {
-    // const credentials = fetchAuthInfoFromStorage();
-    // console.log(credentials);
-    // if (credentials) {
-    //   login(...credentials);
-    // }
+    Keychain.getGenericPassword().then(async (credentials) => {
+      if (credentials) {
+        const response = await login(
+          credentials.username,
+          credentials.password,
+        );
+        dispatch({type: 'logged', payload: response});
+      } else {
+        dispatch({type: 'no_logged'});
+      }
+    });
   }, []);
 
   const onLogin = async (username, password) => {
@@ -69,10 +85,14 @@ export default () => {
     if (response.riv_message && response.riv_message.length > 0) {
       dispatch({type: 'error', payload: response.riv_message});
     } else {
-      // await Keychain.setGenericPassword(username, password);
       dispatch({type: 'logged', payload: response});
+      await Keychain.setGenericPassword(username, password);
     }
   };
+
+  if (state.loading) {
+    return <Loading />;
+  }
 
   return (
     <SubscriptionContext.Provider value={state.subscriptionInfo}>
@@ -81,7 +101,28 @@ export default () => {
           <LoginForm onLogin={onLogin} />
         ) : (
           <View style={styles.container}>
-            <Text>{JSON.stringify(state.subscriptionInfo)}</Text>
+            <MagazineCarousel
+              entrypoint={NR_ENTRYPOINT}
+              firstImage={lastNRImage}
+              subInfo={{
+                riv_nome: state.subscriptionInfo.riv_nome,
+                riv_cognome: state.subscriptionInfo.riv_cognome,
+                sign: state.subscriptionInfo.sign_nr,
+                riv_dig_scad: state.subscriptionInfo.riv_dig_scad_nr,
+                riv_cod_abb: state.subscriptionInfo.riv_codabb,
+              }}
+            />
+            <MagazineCarousel
+              entrypoint={BS_ENTRYPOINT}
+              firstImage={lastBSImage}
+              subInfo={{
+                riv_nome: state.subscriptionInfo.riv_nome,
+                riv_cognome: state.subscriptionInfo.riv_cognome,
+                sign: state.subscriptionInfo.sign_bs,
+                riv_dig_scad: state.subscriptionInfo.riv_dig_scad_bs,
+                riv_cod_abb: state.subscriptionInfo.riv_codabb,
+              }}
+            />
           </View>
         )}
         <ErrorModal
@@ -93,6 +134,15 @@ export default () => {
     </SubscriptionContext.Provider>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    lastBSImage: state.magazine.lastBSImage,
+    lastNRImage: state.magazine.lastNRImage,
+  };
+};
+
+export default connect(mapStateToProps)(Riviste);
 
 const styles = StyleSheet.create({
   container: {

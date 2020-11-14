@@ -6,19 +6,20 @@ import {loginRequest} from '../api';
 const TOKEN = 'CEfxtHDyhkrsXsptHfFYC4DfRDnt74ZR2jKKKzHEskRUhEtKzM';
 
 export function generateSignToken(parameters, magazine = 'nr') {
-  const {riv_nome, riv_cognome, riv_cod_abb} = parameters;
+  const {riv_nome, riv_cognome, riv_codabb: riv_cod_abb} = parameters;
 
-  const passphraseArray = [riv_cod_abb, riv_cognome, riv_nome];
+  const passphraseArray = {riv_cod_abb, riv_cognome, riv_nome};
 
   if (magazine === 'nr') {
-    passphraseArray.splice(2, 0, parameters.riv_dig_scad_nr);
+    passphraseArray.riv_dig_scad = parameters.riv_dig_scad_nr;
   } else {
-    passphraseArray.splice(2, 0, parameters.riv_dig_scad_bs);
+    passphraseArray.riv_dig_scad = parameters.riv_dig_scad_bs;
   }
 
   let passphrase = '';
-  for (const key of passphraseArray) {
-    passphrase += `${key}=${parameters[key]}${TOKEN}`;
+
+  for (const key of Object.keys(passphraseArray).sort()) {
+    passphrase += `${key}=${passphraseArray[key]}${TOKEN}`;
   }
 
   return shajs('sha512').update(passphrase).digest('hex');

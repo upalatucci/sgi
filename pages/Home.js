@@ -23,7 +23,7 @@ const Home = ({lastBSImage, lastNRImage, fetchBS, fetchNR}) => {
   const [lastNewsImage, setLastNewsImage] = useState();
 
   function fetchLastNews() {
-    getJsonData('news', {
+    return getJsonData('news', {
       posts_per_page: 1,
     }).then((newContent) => {
       if (
@@ -52,9 +52,7 @@ const Home = ({lastBSImage, lastNRImage, fetchBS, fetchNR}) => {
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <Text style={[styles.cardTitle, {color: Colors.blue}]}>News</Text>
             <View style={styles.cardImagesContainer}>
-              {lastNewsImage ? (
-                <Image source={{uri: lastNewsImage}} style={styles.cardImage} />
-              ) : null}
+              <Image source={{uri: lastNewsImage}} style={styles.cardImage} />
             </View>
           </View>
         </TouchableHighlight>
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
   },
   cardImage: {
-    height: 160,
+    height: 120,
     width: 150,
     resizeMode: 'contain',
   },
