@@ -1,8 +1,15 @@
-import {SET_LASR_NR_IMAGE, SET_LASR_BS_IMAGE} from './mutations';
+import {
+  SET_LASR_NR_IMAGE,
+  SET_LASR_BS_IMAGE,
+  SET_SUBSCRIPTION_INFO,
+} from './mutations';
+
+import {generateSignToken} from '../services/auth';
 
 const initialState = {
-  lastBSImage: null,
-  lastNRImage: null,
+  lastBS: null,
+  lastNR: null,
+  subscriptionInfo: null,
 };
 
 export default function (state = initialState, {type, payload}) {
@@ -10,12 +17,21 @@ export default function (state = initialState, {type, payload}) {
     case SET_LASR_BS_IMAGE:
       return {
         ...state,
-        lastBSImage: payload,
+        lastBS: payload,
       };
     case SET_LASR_NR_IMAGE:
       return {
         ...state,
-        lastNRImage: payload,
+        lastNR: payload,
+      };
+    case SET_SUBSCRIPTION_INFO:
+      return {
+        ...state,
+        subscriptionInfo: {
+          ...payload,
+          sign_nr: generateSignToken(payload),
+          sign_bs: generateSignToken(payload, 'bs'),
+        },
       };
     default:
       return state;

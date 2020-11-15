@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import TouchableHighlight from './CustomTouchableHighlight';
 import {Colors} from '../styles';
 
-const LoginForm = ({onLogin, lastBSImage, lastNRImage}) => {
+const LoginForm = ({onLogin, lastBS, lastNR}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,11 +12,11 @@ const LoginForm = ({onLogin, lastBSImage, lastNRImage}) => {
     <View style={styles.container}>
       <View style={styles.containerImages}>
         <Image
-          source={{uri: lastNRImage}}
+          source={{uri: lastNR ? lastNR.cover : null}}
           style={[styles.magazineImage, styles.NRimage]}
         />
         <Image
-          source={{uri: lastBSImage}}
+          source={{uri: lastBS ? lastBS.cover : null}}
           style={[styles.magazineImage, styles.BSimage]}
         />
       </View>
@@ -58,8 +58,8 @@ const LoginForm = ({onLogin, lastBSImage, lastNRImage}) => {
 
 export default connect((state) => {
   return {
-    lastNRImage: state.magazine.lastNRImage,
-    lastBSImage: state.magazine.lastBSImage,
+    lastNR: state.magazine.lastNR,
+    lastBS: state.magazine.lastBS,
   };
 })(LoginForm);
 

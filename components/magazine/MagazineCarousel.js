@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Image, StyleSheet, FlatList, Text} from 'react-native';
+import {View, StyleSheet, FlatList, Text} from 'react-native';
+import MagazineImage from './MagazineImage';
 import {getJsonData} from '../../api';
 
-export default ({firstImage, entrypoint, subInfo}) => {
+export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
   const [magazines, setMagazines] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,7 +24,12 @@ export default ({firstImage, entrypoint, subInfo}) => {
   return (
     <View style={styles.container}>
       <View style={styles.firstContainer}>
-        <Image source={{uri: firstImage}} style={styles.image} />
+        <MagazineImage
+          containerStyle={styles.containerImage}
+          number={lastNumber}
+          style={styles.image}
+          magazine={magazine}
+        />
         <View style={styles.container}>
           <Text>Articoli</Text>
         </View>
@@ -34,7 +40,11 @@ export default ({firstImage, entrypoint, subInfo}) => {
         data={magazines.slice(1)}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({item}) => (
-          <Image source={{uri: item.cover}} style={styles.imageList} />
+          <MagazineImage
+            style={styles.imageList}
+            magazine={magazine}
+            number={item}
+          />
         )}
         onRefresh={fetchMagazines}
         refreshing={loading}
@@ -53,6 +63,9 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
     alignItems: 'flex-start',
+  },
+  containerImage: {
+    flex: 1,
   },
   imageList: {
     height: '100%',

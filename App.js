@@ -11,6 +11,8 @@ import Riviste from './pages/Riviste';
 import FraseDelGiorno from './pages/FraseDelGiorno';
 import NewsPage from './pages/NewsPage';
 import Home from './pages/Home';
+import Article from './pages/Article';
+import Magazine from './pages/Magazine';
 import {Colors} from './styles';
 import FraseDelGiornoIcon from './components/icons/FraseDelGiornoIcon';
 import HomeIcon from './components/icons/HomeIcon';
@@ -63,6 +65,8 @@ export default () => (
           title="Frase del Giorno"
         />
         <Scene key="newsPage" component={NewsPage} back title="News" />
+        <Scene key="magazine" component={Magazine} back title="Rivista" />
+        <Scene key="article" component={Article} back title="Articolo" />
       </Stack>
     </Router>
   </Provider>

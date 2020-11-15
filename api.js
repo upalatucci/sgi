@@ -12,6 +12,7 @@ export function getJsonData(url, parameters, entrypoint = SGI_ENTRYPOINT) {
     const queryParam = new URLSearchParams(parameters);
     completeUrl += `?${queryParam.toString()}`;
   }
+
   return fetch(completeUrl).then((r) => r.json());
 }
 

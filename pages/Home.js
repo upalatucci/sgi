@@ -9,17 +9,22 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
+import * as Keychain from 'react-native-keychain';
+
 import {fetchLastNRImage, fetchLastBSImage} from '../store/magazineAction';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import {getJsonData} from '../api';
+import {login} from '../services/auth';
 
 import logoSGI from '../assets/logo_SGI_2020.png';
 import {TitleStyle, DefaultShadow, Colors, FontFamilies} from '../styles';
 import voloContinuoImage from '../assets/il-volo-continuo-logo.png';
 import logo from '../assets/logo.png';
 import FeatherWrite from '../components/icons/FeatherWrite';
+import MagazineImage from '../components/magazine/MagazineImage';
+import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
 
-const Home = ({lastBSImage, lastNRImage, fetchBS, fetchNR}) => {
+const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
   const [lastNewsImage, setLastNewsImage] = useState();
 
   function fetchLastNews() {
@@ -35,6 +40,18 @@ const Home = ({lastBSImage, lastNRImage, fetchBS, fetchNR}) => {
       }
     });
   }
+
+  useEffect(() => {
+    Keychain.getGenericPassword().then(async (credentials) => {
+      if (credentials) {
+        const response = await login(
+          credentials.username,
+          credentials.password,
+        );
+        setSubscriptionInfo(response);
+      }
+    });
+  }, [setSubscriptionInfo]);
 
   useEffect(() => {
     fetchBS();
@@ -74,8 +91,16 @@ const Home = ({lastBSImage, lastNRImage, fetchBS, fetchNR}) => {
               Riviste
             </Text>
             <View style={styles.cardImagesContainer}>
-              <Image source={{uri: lastBSImage}} style={styles.magazineImage} />
-              <Image source={{uri: lastNRImage}} style={styles.magazineImage} />
+              <MagazineImage
+                number={lastBS}
+                magazine="bs"
+                style={styles.magazineImage}
+              />
+              <MagazineImage
+                number={lastNR}
+                magazine="nr"
+                style={styles.magazineImage}
+              />
             </View>
           </View>
         </TouchableHighlight>
@@ -180,8 +205,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    lastBSImage: state.magazine.lastBSImage,
-    lastNRImage: state.magazine.lastNRImage,
+    lastBS: state.magazine.lastBS,
+    lastNR: state.magazine.lastNR,
   };
 };
 
@@ -189,6 +214,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchBS: () => dispatch(fetchLastBSImage()),
     fetchNR: () => dispatch(fetchLastNRImage()),
+    setSubscriptionInfo: (subInfo) =>
+      dispatch({type: SET_SUBSCRIPTION_INFO, payload: subInfo}),
   };
 };
 
