@@ -17,7 +17,7 @@ export default ({title, date, image, excerpt, id}) => (
             {excerpt
               .trim()
               .replace('&nbsp;', '')
-              .replace(/(\r\n|\n|\r)/gm, '')}
+              .replace(/(\r\n|\n|\r)/gm, ' ')}
           </Text>
         </View>
       </View>

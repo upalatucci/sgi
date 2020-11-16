@@ -19,7 +19,10 @@ export default (props) => (
     staticContentMaxWidth={deviceWidth}
     imagesMaxWidth={deviceWidth}
     {...props}
-    html={props.content.replace(/width=['"].*?['"]/, '')}
+    html={props.content.replace(
+      /width=['"].*?['"]/gm,
+      `width="${deviceWidth * 0.9}"`,
+    )}
     onLinkPress={(event, href) => Linking.openURL(href)}
   />
 );

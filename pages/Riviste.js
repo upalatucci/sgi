@@ -2,7 +2,6 @@ import React, {useReducer, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import * as Keychain from 'react-native-keychain';
-import SubscriptionContext from '../contexts/SubscriptionContext';
 import {login, subscriptionDataForMagazine} from '../services/auth';
 import LoginForm from '../components/LoginForm';
 import ErrorModal from '../components/ErrorModal';
@@ -78,38 +77,37 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, setSubscriptionInfo}) => {
     }
   }, [subscriptionInfo]);
 
-  if (state.loading) {
+  if (state.loading || (state.logged && !subscriptionInfo)) {
     return <Loading />;
   }
 
+  console.log(subscriptionInfo);
   return (
-    <SubscriptionContext.Provider value={subscriptionInfo}>
-      <View style={styles.container}>
-        {!state.logged ? (
-          <LoginForm onLogin={onLogin} />
-        ) : (
-          <View style={styles.container}>
-            <MagazineCarousel
-              entrypoint={NR_ENTRYPOINT}
-              lastNumber={lastNR}
-              subInfo={subscriptionDataForMagazine(subscriptionInfo, 'nr')}
-              magazine="nr"
-            />
-            <MagazineCarousel
-              entrypoint={BS_ENTRYPOINT}
-              lastNumber={lastBS}
-              subInfo={subscriptionDataForMagazine(subscriptionInfo, 'bs')}
-              magazine="bs"
-            />
-          </View>
-        )}
-        <ErrorModal
-          modalVisible={state.error !== null}
-          onClose={() => dispatch({type: 'clear_error'})}
-          error={state.error}
-        />
-      </View>
-    </SubscriptionContext.Provider>
+    <View style={styles.container}>
+      {!state.logged ? (
+        <LoginForm onLogin={onLogin} />
+      ) : (
+        <View style={styles.container}>
+          <MagazineCarousel
+            entrypoint={NR_ENTRYPOINT}
+            lastNumber={lastNR}
+            subInfo={subscriptionDataForMagazine(subscriptionInfo, 'nr')}
+            magazine="nr"
+          />
+          <MagazineCarousel
+            entrypoint={BS_ENTRYPOINT}
+            lastNumber={lastBS}
+            subInfo={subscriptionDataForMagazine(subscriptionInfo, 'bs')}
+            magazine="bs"
+          />
+        </View>
+      )}
+      <ErrorModal
+        modalVisible={state.error !== null}
+        onClose={() => dispatch({type: 'clear_error'})}
+        error={state.error}
+      />
+    </View>
   );
 };
 
