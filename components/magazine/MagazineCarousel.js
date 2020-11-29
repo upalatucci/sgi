@@ -1,7 +1,15 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {View, StyleSheet, FlatList, Text} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import MagazineImage from './MagazineImage';
 import {getJsonData} from '../../api';
+import MagazineImageWithNumber from './MagazineImageWithNumber';
+import {
+  Colors,
+  PrimaryButtonTitleStyle,
+  PrimaryButtonStyle,
+} from '../../styles';
+import TouchableHighlight from '../CustomTouchableHighlight';
 
 export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
   const [magazines, setMagazines] = useState([]);
@@ -31,7 +39,7 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
           magazine={magazine}
         />
         <View style={styles.container}>
-          <Text>Articoli</Text>
+          <Text style={styles.titleText}>{lastNumber.number}</Text>
         </View>
       </View>
       <FlatList
@@ -40,7 +48,7 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
         data={magazines.slice(1)}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({item}) => (
-          <MagazineImage
+          <MagazineImageWithNumber
             style={styles.imageList}
             magazine={magazine}
             number={item}
@@ -81,5 +89,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
+  },
+  titleText: {
+    fontSize: 32,
+    color: Colors.orange,
+    marginBottom: 20,
+  },
+  loginButton: {
+    ...PrimaryButtonStyle,
+    width: 140,
+  },
+  loginTextButton: {
+    ...PrimaryButtonTitleStyle,
   },
 });

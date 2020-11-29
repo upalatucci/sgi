@@ -4,24 +4,27 @@ import {View, StyleSheet, Dimensions, Linking} from 'react-native';
 import {Colors} from '../styles';
 
 const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
+
+const minorSize = Math.min(deviceHeight, deviceWidth);
 export default (props) => (
   <HTML
     renderers={{
       hr: () => <View style={styles.hr} key={Math.random()} />,
     }}
     tagsStyles={{
-      p: {marginBottom: -10},
       a: {textDecorationLine: null, color: Colors.primary},
-      li: {marginBottom: -40},
-      h3: {marginBottom: -40},
+      h3: {marginBottom: 0},
       ...props.additionalTagsStyles,
     }}
-    staticContentMaxWidth={deviceWidth}
-    imagesMaxWidth={deviceWidth}
+    staticContentMaxWidth={minorSize}
+    imagesMaxWidth={minorSize}
     {...props}
     html={props.content.replace(
       /width=['"].*?['"]/gm,
-      `width="${deviceWidth * 0.9}"`,
+      `width="${
+        minorSize * 0.9
+      }" style="margin-left: auto; margin-right: auto;"`,
     )}
     onLinkPress={(event, href) => Linking.openURL(href)}
   />

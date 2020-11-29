@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {getJsonData} from '../api';
 import Loading from '../components/Loading';
@@ -23,6 +24,10 @@ const Article = React.memo(
         }
       });
     }, [articleId, magazine, subscriptionInfo]);
+
+    if (!subscriptionInfo) {
+      Actions.magazines();
+    }
 
     if (!articleContent) {
       return <Loading />;

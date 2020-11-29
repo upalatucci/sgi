@@ -4,10 +4,10 @@ import {Actions} from 'react-native-router-flux';
 import TouchableHighlight from './CustomTouchableHighlight';
 import {TitleStyle} from '../styles';
 
-export default ({title, date, image, excerpt, id}) => (
+export default ({title, date, image, excerpt, id, entrypoint, uri}) => (
   <TouchableHighlight
     style={styles.container}
-    onPress={() => Actions.newsPage({id})}>
+    onPress={() => Actions.postPage({id, entrypoint, uri, title})}>
     <View style={[styles.container, styles.newsContainer]}>
       <Image source={image ? {uri: image} : null} style={styles.image} />
       <View style={styles.container}>

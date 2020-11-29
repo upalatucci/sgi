@@ -5,18 +5,23 @@ import Loading from '../components/Loading';
 import CustomHTML from '../components/CustomHTML';
 
 export default (props) => {
-  const {id} = props;
+  const {id, uri, entrypoint, title} = props;
   const [content, setContent] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    getJsonData(`news/${id}`)
-      .then((news) => setContent(news))
-      .finally(() => setLoading(false));
-  }, [id]);
+    getJsonData(`${uri}/${id}`, null, entrypoint).then((news) =>
+      setContent(news),
+    );
+  }, [id, uri, entrypoint]);
 
-  if (loading) {
+  useEffect(() => {
+    props.navigation.setParams({
+      title,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title]);
+
+  if (!content) {
     return <Loading />;
   }
 

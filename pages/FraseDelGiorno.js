@@ -1,35 +1,37 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {format} from 'date-fns';
-import {getJsonData, VOLO_ENTRYPOINT} from '../api';
+import {getJsonData, SGI_SERVICES} from '../api';
 import Loading from '../components/Loading';
-import CustomHTML from '../components/CustomHTML';
+import Phrase from '../components/Phrase';
 
 export default () => {
   const [content, setContent] = useState();
 
   useEffect(() => {
-    const nowString = format(new Date(), 'dd/MM/yyyy');
-
-    getJsonData('frase', {}, VOLO_ENTRYPOINT)
-      .then((response) =>
-        setContent(response.data.find((p) => p.date === nowString)),
-      )
+    const now = new Date();
+    getJsonData(
+      'aderenti/index.php/site/wsFrase',
+      {
+        giorno: format(now, 'dd'),
+        mese: format(now, 'MM'),
+      },
+      SGI_SERVICES,
+    )
+      .then((response) => {
+        setContent(response);
+      })
       .catch((err) => console.log(err));
   }, []);
 
   if (!content) {
     return <Loading />;
   } else {
+    const phrases = Object.values(content);
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <CustomHTML
-          content={content.full}
-          additionalTagsStyles={{
-            p: {marginBottom: 30, fontSize: 18},
-            strong: {fontSize: 20},
-          }}
-        />
+        <Phrase phrase={phrases[0]} />
+        <Phrase phrase={phrases[1]} />
       </ScrollView>
     );
   }
@@ -38,8 +40,6 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
     marginHorizontal: 40,
   },
 });

@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Foundation';
 import TouchableHighlight from './CustomTouchableHighlight';
 import {Colors} from '../styles';
 
-export default ({modalVisible, onClose, error}) => (
+export default ({modalVisible, onClose, error, message}) => (
   <Modal
     animationType="slide"
     transparent={true}
@@ -12,10 +12,16 @@ export default ({modalVisible, onClose, error}) => (
     onRequestClose={onClose}>
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
-        <View style={styles.errorIcon}>
-          <Icon name="x" size={28} color={Colors.error} />
-        </View>
-        <Text style={styles.modalText}>{error}</Text>
+        {error !== undefined ? (
+          <View style={styles.icon}>
+            <Icon name="x" size={28} color={Colors.error} />
+          </View>
+        ) : (
+          <View style={styles.icon}>
+            <Icon name="check" size={28} color={Colors.blue} />
+          </View>
+        )}
+        <Text style={styles.modalText}>{error || message}</Text>
         <TouchableHighlight style={styles.openButton} onPress={onClose}>
           <Text style={styles.textStyle}>Prova di nuovo</Text>
         </TouchableHighlight>
@@ -67,7 +73,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
-  errorIcon: {
+  icon: {
     borderWidth: 1,
     borderRadius: 50,
     borderColor: Colors.light,

@@ -53,3 +53,20 @@ export const DefaultShadow = {
 };
 
 export const DefaultBorderRadius = 10;
+
+export const PrimaryButtonStyle = {
+  marginBottom: 60,
+  width: 100,
+  height: 50,
+  backgroundColor: 'white',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: 10,
+  borderWidth: 1,
+  borderColor: Colors.orange,
+};
+
+export const PrimaryButtonTitleStyle = {
+  color: Colors.orange,
+  fontSize: 20,
+};

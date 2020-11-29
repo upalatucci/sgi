@@ -1,3 +1,5 @@
 export const SET_LASR_NR_IMAGE = 'SET_LASR_NR_IMAGE';
 export const SET_LASR_BS_IMAGE = 'SET_LASR_BS_IMAGE';
 export const SET_SUBSCRIPTION_INFO = 'SET_SUBSCRIPTION_INFO';
+export const HIDE_MODAL = 'HIDE_MODAL';
+export const SHOW_MODAL = 'SHOW_MODAL';

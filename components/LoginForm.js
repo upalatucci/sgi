@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TextInput, Image} from 'react-native';
+import {View, Text, StyleSheet, TextInput, Image, Linking} from 'react-native';
 import {connect} from 'react-redux';
 import TouchableHighlight from './CustomTouchableHighlight';
-import {Colors} from '../styles';
+import {Colors, PrimaryButtonStyle, PrimaryButtonTitleStyle} from '../styles';
 
 const LoginForm = ({onLogin, lastBS, lastNR}) => {
   const [username, setUsername] = useState('');
@@ -43,11 +43,23 @@ const LoginForm = ({onLogin, lastBS, lastNR}) => {
         </TouchableHighlight>
 
         <View style={styles.bottomButtons}>
-          <TouchableHighlight onPress={() => {}} style={styles.otherButtons}>
+          <TouchableHighlight
+            onPress={() =>
+              Linking.openURL(
+                'https://servizi.sgi-italia.org/abbonamenti/index.php/registrazione/index',
+              )
+            }
+            style={styles.otherButtons}>
             <Text style={styles.otherButtonsText}>Registrati</Text>
           </TouchableHighlight>
 
-          <TouchableHighlight onPress={() => {}} style={styles.otherButtons}>
+          <TouchableHighlight
+            onPress={() =>
+              Linking.openURL(
+                'https://servizi.sgi-italia.org/abbonamenti/index.php/site/ricordaPassword',
+              )
+            }
+            style={styles.otherButtons}>
             <Text style={styles.otherButtonsText}>Password Dimenticata?</Text>
           </TouchableHighlight>
         </View>
@@ -73,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: 'center',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
   },
   containerImages: {
     flex: 1,
@@ -92,19 +104,10 @@ const styles = StyleSheet.create({
     color: Colors.gray,
   },
   loginButton: {
-    marginBottom: 60,
-    width: 100,
-    height: 50,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.orange,
+    ...PrimaryButtonStyle,
   },
   loginTextButton: {
-    color: Colors.orange,
-    fontSize: 20,
+    ...PrimaryButtonTitleStyle,
   },
   otherButtons: {},
   otherButtonsText: {

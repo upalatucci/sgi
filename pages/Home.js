@@ -13,7 +13,7 @@ import * as Keychain from 'react-native-keychain';
 
 import {fetchLastNRImage, fetchLastBSImage} from '../store/magazineAction';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
-import {getJsonData} from '../api';
+import {getJsonData, SGI_ENTRYPOINT, VOLO_ENTRYPOINT} from '../api';
 import {login} from '../services/auth';
 
 import logoSGI from '../assets/logo_SGI_2020.png';
@@ -67,7 +67,14 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
         <View style={styles.welcome}>
           <Image source={logoSGI} style={styles.image} />
         </View>
-        <TouchableHighlight onPress={() => Actions.news()}>
+        <TouchableHighlight
+          onPress={() =>
+            Actions.posts({
+              title: 'News',
+              uri: 'news',
+              entrypoint: SGI_ENTRYPOINT,
+            })
+          }>
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <Text style={[styles.cardTitle, {color: Colors.blue}]}>News</Text>
             <View style={styles.cardImagesContainer}>
@@ -87,7 +94,7 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={() => Actions.riviste()}>
+        <TouchableHighlight onPress={() => Actions.magazines()}>
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <Text style={[styles.cardTitle, {color: Colors.blue}]}>
               Riviste
@@ -118,7 +125,28 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={() => Actions.news()}>
+        <TouchableHighlight
+          onPress={() =>
+            Actions.webview({
+              title: 'Spazio Aderenti',
+              uri: 'https://servizi.sgi-italia.org/aderenti/',
+            })
+          }>
+          <View style={[styles.card, {backgroundColor: Colors.light}]}>
+            <Text style={[styles.cardTitle, {color: Colors.blue}]}>
+              Spazio Aderenti
+            </Text>
+          </View>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+          onPress={() =>
+            Actions.posts({
+              title: 'Il Volo Continuo',
+              uri: 'posts',
+              entrypoint: VOLO_ENTRYPOINT,
+            })
+          }>
           <View
             style={[
               styles.card,

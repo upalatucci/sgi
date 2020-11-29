@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import * as Keychain from 'react-native-keychain';
 import {login, subscriptionDataForMagazine} from '../services/auth';
 import LoginForm from '../components/LoginForm';
-import ErrorModal from '../components/ErrorModal';
+import Modal from '../components/Modal';
 import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
 import Loading from '../components/Loading';
 import MagazineCarousel from '../components/magazine/MagazineCarousel';
@@ -81,7 +81,6 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, setSubscriptionInfo}) => {
     return <Loading />;
   }
 
-  console.log(subscriptionInfo);
   return (
     <View style={styles.container}>
       {!state.logged ? (
@@ -102,7 +101,7 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, setSubscriptionInfo}) => {
           />
         </View>
       )}
-      <ErrorModal
+      <Modal
         modalVisible={state.error !== null}
         onClose={() => dispatch({type: 'clear_error'})}
         error={state.error}
