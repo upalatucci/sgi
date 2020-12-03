@@ -32,15 +32,19 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
   return (
     <View style={styles.container}>
       <View style={styles.firstContainer}>
-        <MagazineImage
-          containerStyle={styles.containerImage}
-          number={lastNumber}
-          style={styles.image}
-          magazine={magazine}
-        />
-        <View style={styles.container}>
-          <Text style={styles.titleText}>{lastNumber.number}</Text>
-        </View>
+        {lastNumber ? (
+          <>
+            <MagazineImage
+              containerStyle={styles.containerImage}
+              number={lastNumber}
+              style={styles.image}
+              magazine={magazine}
+            />
+            <View style={styles.container}>
+              <Text style={styles.titleText}>{lastNumber.number}</Text>
+            </View>
+          </>
+        ) : null}
       </View>
       <FlatList
         style={styles.scrollView}

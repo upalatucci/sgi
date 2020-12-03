@@ -25,10 +25,17 @@ export default (props) => {
     return <Loading />;
   }
 
+  console.log(content.data[0].full);
   return (
     <ScrollView style={styles.container}>
       {content ? (
-        <CustomHTML content={content.data[0].full + '<br><br>'} />
+        <CustomHTML
+          content={content.data[0].full + '<br><br>'}
+          additionalTagsStyles={{
+            h3: {fontSize: 20, color: 'black'},
+            a: {fontSize: 18, textDecorationLine: null},
+          }}
+        />
       ) : null}
     </ScrollView>
   );

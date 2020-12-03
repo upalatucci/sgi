@@ -9,12 +9,28 @@ import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
 import ArticleSection from '../components/magazine/ArticleSection';
 import {PrimaryButtonStyle, PrimaryButtonTitleStyle} from '../styles';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
+import {downloadAndOpenPDF} from '../utils';
 
 const windowHeight = Dimensions.get('window').height;
 const Magazine = React.memo(({number, magazine, subscriptionInfo}) => {
   const [magazineContent, setMagazineContent] = useState();
+  const [loadingPDF, setLoadingPDF] = useState(false);
+
+  async function downloadPDFRequest() {
+    setLoadingPDF(true);
+    const magazinePrefix = magazine === 'nr' ? 'NR' : 'BS';
+    await downloadAndOpenPDF(
+      magazineContent.number.download,
+      `${magazinePrefix}${magazineContent.number.number}`,
+    );
+    setLoadingPDF(false);
+  }
 
   useEffect(() => {
+    if (!subscriptionInfo || !magazine || !number) {
+      return;
+    }
+
     getJsonData(
       `number/${number.number}`,
       subscriptionDataForMagazine(subscriptionInfo, magazine),
@@ -30,7 +46,7 @@ const Magazine = React.memo(({number, magazine, subscriptionInfo}) => {
     Actions.magazines();
   }
 
-  if (!magazineContent) {
+  if (!magazineContent || loadingPDF) {
     return <Loading />;
   }
 
@@ -38,12 +54,7 @@ const Magazine = React.memo(({number, magazine, subscriptionInfo}) => {
     <ScrollView style={styles.container}>
       <Image style={styles.image} source={{uri: number.cover}} />
       <TouchableHighlight
-        onPress={() =>
-          Actions.webview({
-            title: 'Spazio Aderenti',
-            uri: magazineContent.number.download,
-          })
-        }
+        onPress={downloadPDFRequest}
         style={styles.loginButton}>
         <Text style={styles.loginTextButton}>Scarica PDF</Text>
       </TouchableHighlight>

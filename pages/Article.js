@@ -14,6 +14,10 @@ const Article = React.memo(
     const [articleContent, setArticleContent] = useState();
 
     useEffect(() => {
+      if (!subscriptionInfo || !magazine || !articleId) {
+        return;
+      }
+
       getJsonData(
         `articles/${articleId}`,
         subscriptionDataForMagazine(subscriptionInfo, magazine),
