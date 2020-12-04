@@ -1,25 +1,53 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {WebView} from 'react-native-webview';
+import Loading from '../components/Loading';
 
 export default class WebViewPage extends React.Component {
-  shouldComponentUpdate(newProps, oldProps) {
-    if (oldProps.title !== newProps.title) {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+    };
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    if (newState.loading !== this.state.loading) {
+      return true;
+    }
+
+    if (this.props.title !== newProps.title) {
       this.props.navigation.setParams({
         title: newProps.title,
       });
       return true;
     }
 
-    if (oldProps.uri !== newProps.uri) {
+    if (this.props.uri !== newProps.uri) {
+      this.setState({loading: true});
       return true;
     }
 
     return false;
   }
 
+  endLoading = () => {
+    if (this.state.loading) {
+      this.setState({loading: false});
+    }
+  };
+
   render() {
-    return <WebView source={{uri: this.props.uri}} style={styles.container} />;
+    return (
+      <>
+        <WebView
+          source={{uri: this.props.uri}}
+          style={styles.container}
+          onLoadEnd={this.endLoading}
+        />
+        {this.state.loading ? <Loading /> : null}
+      </>
+    );
   }
 }
 
