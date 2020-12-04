@@ -25,18 +25,14 @@ import MagazineImage from '../components/magazine/MagazineImage';
 import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
 
 const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
-  const [lastNewsImage, setLastNewsImage] = useState();
+  const [lastNews, setLastNews] = useState();
 
   function fetchLastNews() {
     return getJsonData('news', {
       posts_per_page: 1,
     }).then((newContent) => {
-      if (
-        newContent.data &&
-        newContent.data[0].image &&
-        newContent.data[0].image.length > 0
-      ) {
-        setLastNewsImage(newContent.data[0].image);
+      if (newContent.data && newContent.data.length > 0) {
+        setLastNews(newContent.data[0]);
       }
     });
   }
@@ -78,7 +74,22 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <Text style={[styles.cardTitle, {color: Colors.blue}]}>News</Text>
             <View style={styles.cardImagesContainer}>
-              <Image source={{uri: lastNewsImage}} style={styles.cardImage} />
+              <TouchableHighlight
+                onPress={() =>
+                  lastNews
+                    ? Actions.postPage({
+                        id: lastNews.id,
+                        entrypoint: SGI_ENTRYPOINT,
+                        uri: 'news',
+                        title: lastNews.title,
+                      })
+                    : null
+                }>
+                <Image
+                  source={{uri: lastNews ? lastNews.image : null}}
+                  style={styles.cardImage}
+                />
+              </TouchableHighlight>
             </View>
           </View>
         </TouchableHighlight>

@@ -19,6 +19,7 @@ export default (props) => (
     }}
     staticContentMaxWidth={minorSize}
     imagesMaxWidth={minorSize}
+    baseFontStyle={{fontSize: 18}}
     {...props}
     html={props.content.replace(
       /width=['"].*?['"]/gm,
