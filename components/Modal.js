@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, StyleSheet, Modal} from 'react-native';
-import Icon from 'react-native-vector-icons/Foundation';
 import TouchableHighlight from './CustomTouchableHighlight';
 import {Colors} from '../styles';
 
@@ -12,7 +11,7 @@ export default ({modalVisible, onClose, error, message}) => (
     onRequestClose={onClose}>
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
-        {error !== undefined ? (
+        {/* {error !== undefined ? (
           <View style={styles.icon}>
             <Icon name="x" size={28} color={Colors.error} />
           </View>
@@ -20,7 +19,7 @@ export default ({modalVisible, onClose, error, message}) => (
           <View style={styles.icon}>
             <Icon name="check" size={28} color={Colors.blue} />
           </View>
-        )}
+        )} */}
         <Text style={styles.modalText}>{error || message}</Text>
         <TouchableHighlight style={styles.openButton} onPress={onClose}>
           <Text style={styles.textStyle}>Prova di nuovo</Text>

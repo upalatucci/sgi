@@ -1,3 +1,5 @@
+import {Platform} from 'react-native';
+
 export const Colors = {
   blue: '#4479A2',
   indigo: '#6610f2',
@@ -27,7 +29,7 @@ export const Colors = {
 };
 
 export const FontFamilies = {
-  primary: 'BrownLLWeb',
+  primary: Platform.OS === 'ios' ? 'SFUIDisplay-Medium' : 'SFUIDisplayMedium',
 };
 
 export const TitleStyle = {

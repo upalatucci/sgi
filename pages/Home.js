@@ -58,7 +58,7 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
   }, [fetchNR, fetchBS]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
         <View style={styles.welcome}>
           <Image source={logoSGI} style={styles.image} />
@@ -171,7 +171,7 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
           </View>
         </TouchableHighlight>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

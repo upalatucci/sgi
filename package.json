@@ -7,6 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "build:android": "cd android && ./gradlew buildRelease",
+    "clean:android": "cd android && ./gradlew clean && cd ../",
+    "clean:ios": "cd ios && xcodebuild clean && cd ../",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -30,7 +32,6 @@
     "react-native-screens": "^2.11.0",
     "react-native-svg": "^12.1.0",
     "react-native-svg-transformer": "^0.14.3",
-    "react-native-vector-icons": "^7.1.0",
     "react-native-webview": "^10.10.2",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
