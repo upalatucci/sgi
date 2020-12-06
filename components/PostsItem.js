@@ -17,7 +17,7 @@ export default ({title, date, image, excerpt, id, entrypoint, uri}) => (
             {excerpt
               .trim()
               .replace('&nbsp;', '')
-              .replace(/(\r\n|\n|\r)/gm, '<br>')}
+              .replace(/(\r\n|\n|\r)/gm, ' ')}
           </Text>
         </View>
       </View>

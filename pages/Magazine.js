@@ -43,7 +43,7 @@ const Magazine = React.memo(({number, magazine, subscriptionInfo}) => {
   }, [number, magazine, subscriptionInfo]);
 
   if (!subscriptionInfo) {
-    Actions.magazines();
+    Actions.magazines({onBack: () => Actions.home()});
   }
 
   if (!magazineContent || loadingPDF) {

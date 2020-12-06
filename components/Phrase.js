@@ -37,7 +37,12 @@ export default React.memo(({phrase}) => {
   return (
     <View style={styles.phraseContainer}>
       <CustomHTML content={addCenter(phrase.frase)} />
-      {phrase.note ? <CustomHTML content={addNote(phrase.note)} /> : null}
+      {phrase.note ? (
+        <CustomHTML
+          content={addNote(phrase.note)}
+          baseFontStyle={{fontSize: 16}}
+        />
+      ) : null}
       <CustomHTML content={addStrong(phrase.origine)} />
       <CustomTouchableHighlight
         style={PrimaryButtonStyle}
@@ -52,6 +57,5 @@ const styles = StyleSheet.create({
   phraseContainer: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 60,
   },
 });

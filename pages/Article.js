@@ -30,7 +30,7 @@ const Article = React.memo(
     }, [articleId, magazine, subscriptionInfo]);
 
     if (!subscriptionInfo) {
-      Actions.magazines();
+      Actions.magazines({onBack: () => Actions.home()});
     }
 
     if (!articleContent) {

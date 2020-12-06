@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 6,
-    resizeMode: 'center',
+    resizeMode: 'contain',
   },
 });

@@ -19,15 +19,18 @@ export default (props) => (
     }}
     staticContentMaxWidth={minorSize}
     imagesMaxWidth={minorSize}
-    baseFontStyle={{fontSize: 18}}
+    baseFontStyle={{fontSize: 16}}
     {...props}
-    html={props.content.replace(
-      /width=['"].*?['"]/gm,
-      `width="${
-        minorSize * 0.9
-      }" style="margin-left: auto; margin-right: auto;"`,
-    )}
+    html={props.content
+      .replace(/height=['"].*?['"]/, '')
+      .replace(
+        /width=['"].*?['"]/gm,
+        `width="${
+          minorSize * 0.9
+        }" style="margin-left: auto; margin-right: auto;"`,
+      )}
     onLinkPress={(event, href) => Linking.openURL(href)}
+    ignoredStyles={['font-family', 'fontFamily']}
   />
 );
 

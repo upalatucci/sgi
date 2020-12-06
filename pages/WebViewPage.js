@@ -44,6 +44,9 @@ export default class WebViewPage extends React.Component {
           source={{uri: this.props.uri}}
           style={styles.container}
           onLoadEnd={this.endLoading}
+          injectedJavaScript={
+            'document.body.style.overflowX = "none"          '
+          }
         />
         {this.state.loading ? <Loading /> : null}
       </>
@@ -54,5 +57,6 @@ export default class WebViewPage extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    resizeMode: 'cover',
   },
 });

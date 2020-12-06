@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
+import {View, Text, Image, StyleSheet, ScrollView, Linking} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import * as Keychain from 'react-native-keychain';
@@ -64,6 +57,7 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
           <Image source={logoSGI} style={styles.image} />
         </View>
         <TouchableHighlight
+          style={styles.cardHighlight}
           onPress={() =>
             Actions.posts({
               title: 'News',
@@ -75,6 +69,7 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
             <Text style={[styles.cardTitle, {color: Colors.blue}]}>News</Text>
             <View style={styles.cardImagesContainer}>
               <TouchableHighlight
+                style={styles.cardHighlight}
                 onPress={() =>
                   lastNews
                     ? Actions.postPage({
@@ -94,7 +89,9 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={() => Actions.buddismo()}>
+        <TouchableHighlight
+          style={styles.cardHighlight}
+          onPress={() => Actions.buddismo()}>
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <View style={styles.cardImagesContainer}>
               <Image source={logo} style={styles.buddismoImageStyle} />
@@ -105,7 +102,9 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={() => Actions.magazines()}>
+        <TouchableHighlight
+          style={styles.cardHighlight}
+          onPress={() => Actions.magazines()}>
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <Text style={[styles.cardTitle, {color: Colors.blue}]}>
               Riviste
@@ -125,7 +124,9 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={() => Actions.frasedelgiorno()}>
+        <TouchableHighlight
+          style={styles.cardHighlight}
+          onPress={() => Actions.frasedelgiorno()}>
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <View style={styles.cardImagesContainer}>
               <FeatherWrite color={Colors.blue} height={140} width={100} />
@@ -137,20 +138,7 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
         </TouchableHighlight>
 
         <TouchableHighlight
-          onPress={() =>
-            Actions.webview({
-              title: 'Spazio Aderenti',
-              uri: 'https://servizi.sgi-italia.org/aderenti/',
-            })
-          }>
-          <View style={[styles.card, {backgroundColor: Colors.light}]}>
-            <Text style={[styles.cardTitle, {color: Colors.blue}]}>
-              Spazio Aderenti
-            </Text>
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
+          style={styles.cardHighlight}
           onPress={() =>
             Actions.posts({
               title: 'Il Volo Continuo',
@@ -168,6 +156,33 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
               source={voloContinuoImage}
               style={[styles.cardImage, styles.imageVolo]}
             />
+          </View>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+          style={styles.cardHighlight}
+          onPress={() =>
+            Actions.webview({
+              title: 'Spazio Aderenti',
+              uri: 'https://servizi.sgi-italia.org/aderenti/',
+            })
+          }>
+          <View style={[styles.card, {backgroundColor: Colors.light}]}>
+            <Text style={[styles.cardTitle, {color: Colors.blue}]}>
+              Spazio Aderenti
+            </Text>
+          </View>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+          style={styles.cardHighlight}
+          onPress={() =>
+            Linking.openURL('https://servizi.sgi-italia.org/abbonamenti/')
+          }>
+          <View style={[styles.card, {backgroundColor: Colors.light}]}>
+            <Text style={[styles.cardTitle, {color: Colors.blue}]}>
+              Spazio Abbonamenti
+            </Text>
           </View>
         </TouchableHighlight>
       </ScrollView>
@@ -208,9 +223,10 @@ const styles = StyleSheet.create({
     width: 100,
     resizeMode: 'contain',
   },
-
-  card: {
+  cardHighlight: {
     margin: 20,
+  },
+  card: {
     ...DefaultShadow,
     borderRadius: 10,
     flexDirection: 'row',
@@ -237,6 +253,7 @@ const styles = StyleSheet.create({
   },
   imageVolo: {
     width: '80%',
+    maxWidth: 400,
   },
   cardImagesContainer: {
     flexDirection: 'row',

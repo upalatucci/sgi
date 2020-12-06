@@ -31,8 +31,7 @@ export function downloadAndOpenPDF(pdfUri, name) {
     };
     RNFS.downloadFile(options).promise.then((data) => {
       console.log(data);
-      FileViewer.open(localFile);
-      resolve();
+      FileViewer.open(localFile).then(() => resolve());
     });
   });
 }

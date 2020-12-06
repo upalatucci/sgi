@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {View, StyleSheet, FlatList, Text} from 'react-native';
-import {Actions} from 'react-native-router-flux';
 import MagazineImage from './MagazineImage';
 import {getJsonData} from '../../api';
 import MagazineImageWithNumber from './MagazineImageWithNumber';
@@ -9,7 +8,6 @@ import {
   PrimaryButtonTitleStyle,
   PrimaryButtonStyle,
 } from '../../styles';
-import TouchableHighlight from '../CustomTouchableHighlight';
 
 export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
   const [magazines, setMagazines] = useState([]);
@@ -30,7 +28,7 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
   }, [fetchMagazines]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <View style={styles.firstContainer}>
         {lastNumber ? (
           <>
