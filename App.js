@@ -42,6 +42,7 @@ const persistedReducer = persistReducer(persistConfig, rootReduced);
 
 const store = createStore(persistedReducer, compose(applyMiddleware(thunk)));
 const persistor = persistStore(store);
+// persistor.purge();
 
 export default () => (
   <Provider store={store}>
