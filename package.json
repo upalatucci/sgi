@@ -6,7 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "build:android": "cd android && ./gradlew buildRelease",
+    "build:android:test": "cd android && ./gradlew assembleRelease",
+    "build:android:prod": "cd android && ./gradlew bundleRelease",
     "clean:android": "cd android && ./gradlew clean && cd ../",
     "clean:ios": "cd ios && xcodebuild clean && cd ../",
     "test": "jest",
@@ -35,6 +36,7 @@
     "react-native-webview": "^10.10.2",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "sha.js": "^2.4.11"
   },

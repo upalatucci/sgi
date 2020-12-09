@@ -24,72 +24,85 @@ import DownloadPDF from './pages/DownloadPDF';
 import GlobalModal from './components/GlobalModal';
 import {ErrorBoundary} from 'react-error-boundary';
 import ErrorFallback from './components/ErrorFallback';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {persistStore, persistReducer} from 'redux-persist';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const rootReduced = combineReducers({
   magazine: magazineReducer,
   ui: uiRecuder,
 });
 
-const store = createStore(rootReduced, compose(applyMiddleware(thunk)));
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReduced);
+
+const store = createStore(persistedReducer, compose(applyMiddleware(thunk)));
+const persistor = persistStore(store);
 
 export default () => (
   <Provider store={store}>
-    <ErrorBoundary
-      FallbackComponent={ErrorFallback}
-      onReset={() => {
-        Actions.home();
-      }}>
-      <GlobalModal />
-      <Router>
-        <Stack
-          key="root"
-          navigationBarStyle={styles.navbar}
-          titleStyle={styles.title}
-          backButtonTintColor={Colors.primary}>
-          <Scene key="home" component={Home} title="Home" hideNavBar />
-          <Scene
-            back
-            key="posts"
+    <PersistGate loading={null} persistor={persistor}>
+      <ErrorBoundary
+        FallbackComponent={ErrorFallback}
+        onReset={() => {
+          Actions.home();
+        }}>
+        <GlobalModal />
+        <Router>
+          <Stack
+            key="root"
             navigationBarStyle={styles.navbar}
             titleStyle={styles.title}
-            component={Posts}
-            icon={HomeIcon}
-            title="Posts"
-          />
-          <Scene
-            back
-            key="buddismo"
-            component={Buddismo}
-            icon={LotusIcon}
-            title="Buddismo"
-          />
-          <Scene
-            back
-            key="magazines"
-            component={Riviste}
-            icon={BookIcon}
-            title="Riviste"
-          />
-          <Scene
-            back
-            key="frasedelgiorno"
-            component={FraseDelGiorno}
-            icon={FraseDelGiornoIcon}
-            title="Frase del Giorno"
-          />
-          <Scene key="postPage" component={PostPage} back title="Post" />
-          <Scene key="magazine" component={Magazine} back title="Rivista" />
-          <Scene key="article" component={Article} back title="Articolo" />
-          <Scene key="webview" component={WebViewPage} back title="Pagina" />
-          <Scene
-            key="downloadPdf"
-            component={DownloadPDF}
-            back
-            title="PDF Rivista"
-          />
-        </Stack>
-      </Router>
-    </ErrorBoundary>
+            backButtonTintColor={Colors.primary}>
+            <Scene key="home" component={Home} title="Home" hideNavBar />
+            <Scene
+              back
+              key="posts"
+              navigationBarStyle={styles.navbar}
+              titleStyle={styles.title}
+              component={Posts}
+              icon={HomeIcon}
+              title="Posts"
+            />
+            <Scene
+              back
+              key="buddismo"
+              component={Buddismo}
+              icon={LotusIcon}
+              title="Buddismo"
+            />
+            <Scene
+              back
+              key="magazines"
+              component={Riviste}
+              icon={BookIcon}
+              title="Riviste"
+            />
+            <Scene
+              back
+              key="frasedelgiorno"
+              component={FraseDelGiorno}
+              icon={FraseDelGiornoIcon}
+              title="Frase del Giorno"
+            />
+            <Scene key="postPage" component={PostPage} back title="Post" />
+            <Scene key="magazine" component={Magazine} back title="Rivista" />
+            <Scene key="article" component={Article} back title="Articolo" />
+            <Scene key="webview" component={WebViewPage} back title="Pagina" />
+            <Scene
+              key="downloadPdf"
+              component={DownloadPDF}
+              back
+              title="PDF Rivista"
+            />
+          </Stack>
+        </Router>
+      </ErrorBoundary>
+    </PersistGate>
   </Provider>
 );
 
