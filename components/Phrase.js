@@ -57,5 +57,6 @@ const styles = StyleSheet.create({
   phraseContainer: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });
