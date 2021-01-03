@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, SafeAreaView, StyleSheet} from 'react-native';
+import {ScrollView, SafeAreaView, StyleSheet, View, Text} from 'react-native';
 import {getJsonData} from '../api';
-import BuddismoItem from '../components/BuddismoItem';
 import Loading from '../components/Loading';
+import CustomWebView from '../components/CustomWebView';
+import {TitleStyle} from '../styles';
 
 export default () => {
   const [content, setContent] = useState(null);
@@ -10,7 +11,7 @@ export default () => {
 
   useEffect(() => {
     getJsonData('posts/4016')
-      .then((posts) => setContent(posts))
+      .then((posts) => setContent(posts.data[0]))
       .finally(() => setLoading(false));
   }, []);
 
@@ -19,17 +20,27 @@ export default () => {
   }
 
   return (
-    <SafeAreaView style={styles.flex}>
+    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
-        {content ? <BuddismoItem {...content.data[0]} /> : null}
+        {content ? (
+          <View style={styles.container}>
+            <Text style={styles.title}>{content.title}</Text>
+            <View style={styles.container}>
+              <CustomWebView content={content.full} />
+            </View>
+          </View> 
+          ) : null}
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  flex: {
+  container: {
     flex: 1,
+  },
+  title: {
+    ...TitleStyle,
   },
   container: {
     paddingTop: 10,

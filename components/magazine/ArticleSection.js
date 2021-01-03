@@ -48,7 +48,7 @@ export default ({section, magazine}) => {
               </Text>
               {article.subtitle ? (
                 <Text style={[styles.subtitle, styles.titleMargin]}>
-                  {article.subtitle}
+                  {article.subtitle.replace(/&nbsp/gm, '')}
                 </Text>
               ) : null}
               {formattedExcerpt.length ? (

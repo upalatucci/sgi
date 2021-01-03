@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, ScrollView, SafeAreaView} from 'react-native';
-import {getJsonData} from '../api';
+import {getJsonData, SGI_ENTRYPOINT} from '../api';
 import Loading from '../components/Loading';
-import CustomHTML from '../components/CustomHTML';
+import CustomWebView from '../components/CustomWebView';
 
 export default (props) => {
   const {id, uri, entrypoint, title} = props;
@@ -23,13 +23,9 @@ export default (props) => {
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.container}>
-        <CustomHTML
+        <CustomWebView
           content={content + '<br/><br/>'}
-          additionalTagsStyles={{
-            h3: {fontSize: 18, color: 'black'},
-            a: {fontSize: 18, textDecorationLine: null},
-            img: {resizeMode: 'contain'},
-          }}
+          style={entrypoint === SGI_ENTRYPOINT ? "sito" : "volocontinuo"}
         />
       </ScrollView>
     </SafeAreaView>

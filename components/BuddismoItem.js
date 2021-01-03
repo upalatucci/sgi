@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import CustomHTML from './CustomHTML';
+import CustomWebView from './CustomWebView';
 import {TitleStyle} from '../styles';
 
 export default ({title, full}) => (
   <View style={styles.container}>
     <Text style={styles.title}>{title}</Text>
     <View style={styles.container}>
-      <CustomHTML content={full} />
+      <CustomWebView content={full} />
     </View>
   </View>
 );

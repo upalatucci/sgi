@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {getJsonData} from '../api';
 import Loading from '../components/Loading';
 import {subscriptionDataForMagazine} from '../services/auth';
 import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
-import CustomHTML from '../components/CustomHTML';
+import CustomWebView from '../components/CustomWebView';
 import {Colors, TitleStyle} from '../styles';
 
 const Article = React.memo(
@@ -38,11 +38,15 @@ const Article = React.memo(
     }
 
     return (
-      <ScrollView style={styles.container}>
-        <Text style={styles.title}>{articleTitle}</Text>
-        <Text style={styles.subtitle}>{articleSubtitle}</Text>
-        <CustomHTML content={articleContent.full} />
-      </ScrollView>
+      <SafeAreaView style={styles.flex}>
+        <CustomWebView content={`
+          <div class="post-category entry-category"></div>
+          <h1 class="entry-title">${articleTitle}</h1>
+          <div class="post-teaser entry-teaser">${articleSubtitle}</div>
+          <div class="post-content entry-content">
+            ${articleContent.full}
+          </div>`} style="magazine" />
+      </SafeAreaView>
     );
   },
 );
@@ -56,6 +60,9 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(Article);
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1
+  },
   container: {
     padding: 20,
   },
