@@ -7,6 +7,7 @@ const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
 const minorSize = Math.min(deviceHeight, deviceWidth);
+
 export default (props) => (
   <HTML
     renderers={{

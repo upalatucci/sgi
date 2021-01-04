@@ -21,16 +21,9 @@ export default () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
-        {content ? (
-          <View style={styles.container}>
-            <Text style={styles.title}>{content.title}</Text>
-            <View style={styles.container}>
-              <CustomWebView content={content.full} />
-            </View>
-          </View> 
-          ) : null}
-      </ScrollView>
+      {content ? (
+        <CustomWebView content={`<h1>${content.title}</h1>${content.full}`} />
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -38,12 +31,5 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  title: {
-    ...TitleStyle,
-  },
-  container: {
-    paddingTop: 10,
-    paddingHorizontal: 10,
   },
 });
