@@ -4,7 +4,11 @@ import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import * as Keychain from 'react-native-keychain';
 
-import {fetchLastNRImage, fetchLastBSImage} from '../store/magazineAction';
+import {
+  fetchLastNRImage,
+  fetchLastBSImage,
+  fetchLastNews,
+} from '../store/magazineAction';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import {getJsonData, SGI_ENTRYPOINT, VOLO_ENTRYPOINT} from '../api';
 import {login} from '../services/auth';
@@ -17,21 +21,17 @@ import FeatherWrite from '../components/icons/FeatherWrite';
 import MagazineImage from '../components/magazine/MagazineImage';
 import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
 
-const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
-  const [lastNews, setLastNews] = useState();
-
-  function fetchLastNews() {
-    return getJsonData('news', {
-      posts_per_page: 1,
-    }).then((newContent) => {
-      if (newContent.data && newContent.data.length > 0) {
-        setLastNews(newContent.data[0]);
-      }
-    });
-  }
-
+const Home = ({
+  lastBS,
+  lastNR,
+  lastNews,
+  fetchBS,
+  fetchNR,
+  fetchLastNews,
+  setSubscriptionInfo,
+}) => {
   useEffect(() => {
-    Keychain.resetGenericPassword();
+    // Keychain.resetGenericPassword();
 
     Keychain.getGenericPassword().then(async (credentials) => {
       if (credentials) {
@@ -48,7 +48,7 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
     fetchBS();
     fetchNR();
     fetchLastNews();
-  }, [fetchNR, fetchBS]);
+  }, [fetchNR, fetchBS, fetchLastNews]);
 
   return (
     <View style={styles.container}>
@@ -129,7 +129,7 @@ const Home = ({lastBS, lastNR, fetchBS, fetchNR, setSubscriptionInfo}) => {
           onPress={() => Actions.frasedelgiorno()}>
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <View style={styles.cardImagesContainer}>
-              <FeatherWrite color={Colors.blue} height={140} width={100} />
+              <FeatherWrite color={Colors.blue} height={120} width={100} />
             </View>
             <Text style={[styles.cardTitle, {color: Colors.blue}]}>
               Frase Del Giorno
@@ -265,6 +265,7 @@ const mapStateToProps = (state) => {
   return {
     lastBS: state.magazine.lastBS,
     lastNR: state.magazine.lastNR,
+    lastNews: state.magazine.lastNews,
   };
 };
 
@@ -272,6 +273,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchBS: () => dispatch(fetchLastBSImage()),
     fetchNR: () => dispatch(fetchLastNRImage()),
+    fetchLastNews: () => dispatch(fetchLastNews()),
     setSubscriptionInfo: (subInfo) =>
       dispatch({type: SET_SUBSCRIPTION_INFO, payload: subInfo}),
   };

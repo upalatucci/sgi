@@ -31,3 +31,9 @@ export async function lastMaganize(maganize = 'nr') {
     maganize === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
   );
 }
+
+export async function lastNews() {
+  return await getJsonData('news', {
+    posts_per_page: 1,
+  });
+}

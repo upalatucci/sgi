@@ -1,8 +1,11 @@
 import {
   SET_LASR_NR_IMAGE,
   SET_LASR_BS_IMAGE,
+  SET_LAST_NEWS,
   SET_SUBSCRIPTION_INFO,
   SET_MAGAZINE_CACHE,
+  SET_ARTICLE_CACHE,
+  SET_POST_CACHE,
 } from './mutations';
 
 import {generateSignToken} from '../services/auth';
@@ -10,8 +13,11 @@ import {generateSignToken} from '../services/auth';
 const initialState = {
   lastBS: null,
   lastNR: null,
+  lastNews: null,
   subscriptionInfo: null,
   cachedMagazines: {},
+  cachedArticles: {},
+  cachedPosts: {},
 };
 
 export default function (state = initialState, {type, payload}) {
@@ -24,6 +30,27 @@ export default function (state = initialState, {type, payload}) {
           ...state.cachedMagazines,
           ...payload,
         },
+      };
+    case SET_ARTICLE_CACHE:
+      return {
+        ...state,
+        cachedArticles: {
+          ...state.cachedArticles,
+          ...payload,
+        },
+      };
+    case SET_POST_CACHE:
+      return {
+        ...state,
+        cachedPosts: {
+          ...state.cachedPosts,
+          ...payload,
+        },
+      };
+    case SET_LAST_NEWS:
+      return {
+        ...state,
+        lastNews: payload,
       };
     case SET_LASR_BS_IMAGE:
       return {

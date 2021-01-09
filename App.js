@@ -28,19 +28,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistStore, persistReducer} from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
 
-const rootReduced = combineReducers({
-  magazine: magazineReducer,
-  ui: uiRecuder,
-});
-
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  whitelist: ['subscriptionInfo', 'lastNR', 'lastBS', 'lastNews'],
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReduced);
+const persistedMagazineReducer = persistReducer(persistConfig, magazineReducer);
 
-const store = createStore(persistedReducer, compose(applyMiddleware(thunk)));
+const rootReduced = combineReducers({
+  magazine: persistedMagazineReducer,
+  ui: uiRecuder,
+});
+
+const store = createStore(rootReduced, compose(applyMiddleware(thunk)));
 const persistor = persistStore(store);
 // persistor.purge();
 
