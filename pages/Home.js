@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, Image, StyleSheet, ScrollView, Linking} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -10,7 +10,7 @@ import {
   fetchLastNews,
 } from '../store/magazineAction';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
-import {getJsonData, SGI_ENTRYPOINT, VOLO_ENTRYPOINT} from '../api';
+import {SGI_ENTRYPOINT, VOLO_ENTRYPOINT} from '../api';
 import {login} from '../services/auth';
 
 import logoSGI from '../assets/logo_SGI_2020.png';
@@ -27,7 +27,7 @@ const Home = ({
   lastNews,
   fetchBS,
   fetchNR,
-  fetchLastNews,
+  fetchLastNewsAction,
   setSubscriptionInfo,
 }) => {
   useEffect(() => {
@@ -47,8 +47,8 @@ const Home = ({
   useEffect(() => {
     fetchBS();
     fetchNR();
-    fetchLastNews();
-  }, [fetchNR, fetchBS, fetchLastNews]);
+    fetchLastNewsAction();
+  }, [fetchNR, fetchBS, fetchLastNewsAction]);
 
   return (
     <View style={styles.container}>
@@ -273,7 +273,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchBS: () => dispatch(fetchLastBSImage()),
     fetchNR: () => dispatch(fetchLastNRImage()),
-    fetchLastNews: () => dispatch(fetchLastNews()),
+    fetchLastNewsAction: () => dispatch(fetchLastNews()),
     setSubscriptionInfo: (subInfo) =>
       dispatch({type: SET_SUBSCRIPTION_INFO, payload: subInfo}),
   };

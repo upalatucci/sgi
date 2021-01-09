@@ -35,3 +35,9 @@ export function downloadAndOpenPDF(pdfUri, name) {
     });
   });
 }
+
+export const possibleTextSizes = [0, 1, 2];
+
+export function getFontSize(textSize) {
+  return `${100 + 50 * textSize}%`;
+}

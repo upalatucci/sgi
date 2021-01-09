@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, SafeAreaView, StyleSheet, View, Text} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {getJsonData} from '../api';
 import Loading from '../components/Loading';
 import CustomWebView from '../components/CustomWebView';
-import {TitleStyle} from '../styles';
 
 export default () => {
   const [content, setContent] = useState(null);
@@ -22,7 +21,9 @@ export default () => {
   return (
     <SafeAreaView style={styles.container}>
       {content ? (
-        <CustomWebView content={`<h1>${content.title}</h1>${content.full}`} />
+        <CustomWebView
+          content={`<br/><h1>${content.title}</h1>${content.full}`}
+        />
       ) : null}
     </SafeAreaView>
   );
