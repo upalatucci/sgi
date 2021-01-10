@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, Linking} from 'react-native';
 import {WebView} from 'react-native-webview';
 import SitoStyle from '../utils/sitoStyle';
 import VoloContinuoStyle from '../utils/volocontinuoStyle';
@@ -27,13 +27,20 @@ const CustomWebView = ({style, content, textSize, onLoadEnd}) => {
   });
 
   function handleLoadPageRequest(req) {
-    return req.url === "about:blank"
+    console.log('WebView Load Request', req);
+    if (req.navigationType === 'click') {
+      Linking.openURL(req.url);
+      return false;
+    }
+    return true;
   }
 
   return (
     <WebView
       scalesPageToFit={true}
-      originWhitelist={[]}
+      javaScriptEnabled={true}
+      domStorageEnabled={true}
+      originWhitelist={['*']}
       source={{
         html: `<html>
         <head>

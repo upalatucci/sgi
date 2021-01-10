@@ -3,12 +3,12 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'sgi' do
+target 'SGIItalia' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
-  target 'sgiTests' do
+  target 'SGIItaliaTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -23,10 +23,10 @@ target 'sgi' do
   end
 end
 
-target 'sgi-tvOS' do
-  # Pods for sgi-tvOS
+target 'SGIItalia-tvOS' do
+  # Pods for SGIItalia-tvOS
 
-  target 'sgi-tvOSTests' do
+  target 'SGIItalia-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
