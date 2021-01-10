@@ -14,15 +14,13 @@ export default () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <SafeAreaView style={styles.container}>
+      {loading && <Loading />}
       {content ? (
         <CustomWebView
           content={`<br/><h1>${content.title}</h1>${content.full}`}
+          onLoadEnd={() => setLoading(true)}
         />
       ) : null}
     </SafeAreaView>

@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Router, Scene, Stack} from 'react-native-router-flux';
-import {connect} from 'react-redux';
 
 import {Colors} from './styles';
 import FraseDelGiornoIcon from './components/icons/FraseDelGiornoIcon';
@@ -20,11 +19,9 @@ import Home from './pages/Home';
 import Article from './pages/Article';
 import Magazine from './pages/Magazine';
 
-import ChangeFontSize from './components/ChangeFontSize';
-import {SET_TEXT_SIZE} from './store/mutations';
+import ChangeFontSizeContainer from './components/ChangeFontSizeContainer';
 
-function Routes({textSize, changeTextSize}) {
-  console.log('TextSize Routes', textSize);
+function Routes() {
   return (
     <Router>
       <Stack
@@ -48,9 +45,7 @@ function Routes({textSize, changeTextSize}) {
           component={Buddismo}
           icon={LotusIcon}
           title="Buddismo"
-          renderRightButton={ChangeFontSize}
-          textSize={textSize}
-          onRight={changeTextSize}
+          renderRightButton={ChangeFontSizeContainer}
         />
         <Scene
           back
@@ -66,9 +61,21 @@ function Routes({textSize, changeTextSize}) {
           icon={FraseDelGiornoIcon}
           title="Frase del Giorno"
         />
-        <Scene key="postPage" component={PostPage} back title="Post" />
+        <Scene
+          key="postPage"
+          component={PostPage}
+          back
+          title="Post"
+          renderRightButton={ChangeFontSizeContainer}
+        />
         <Scene key="magazine" component={Magazine} back title="Rivista" />
-        <Scene key="article" component={Article} back title="Articolo" />
+        <Scene
+          key="article"
+          component={Article}
+          back
+          title="Articolo"
+          renderRightButton={ChangeFontSizeContainer}
+        />
         <Scene key="webview" component={WebViewPage} back title="Pagina" />
         <Scene
           key="downloadPdf"
@@ -90,16 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps(state) {
-  return {
-    textSize: state.ui.textSize,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    changeTextSize: () => dispatch({type: SET_TEXT_SIZE}),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+export default Routes;

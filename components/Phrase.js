@@ -40,7 +40,7 @@ export default React.memo(({phrase}) => {
       {phrase.note ? (
         <CustomHTML
           content={addNote(phrase.note)}
-          baseFontStyle={{fontSize: 16}}
+          baseFontStyle={{fontSize: 24}}
         />
       ) : null}
       <CustomHTML content={addStrong(phrase.origine)} />

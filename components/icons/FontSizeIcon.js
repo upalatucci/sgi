@@ -1,16 +1,14 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import TouchableHighlight from './CustomTouchableHighlight';
-import {Colors} from '../styles';
-import {possibleTextSizes} from '../utils';
+import {connect} from 'react-redux';
+import {Colors} from '../../styles';
+import {possibleTextSizes} from '../../utils';
+import TouchableHighlight from '../CustomTouchableHighlight';
+import {SET_TEXT_SIZE} from '../../store/mutations';
 
-function ChangeFontSize(props) {
-  const {textSize, onRight} = props;
-  console.log(props);
-
-  console.log('Text size', textSize);
+function FontSizeIcon({textSize, changeTextSize}) {
   return (
-    <TouchableHighlight onPress={onRight}>
+    <TouchableHighlight onPress={changeTextSize}>
       <View style={styles.container}>
         <Text
           style={[
@@ -40,7 +38,7 @@ function ChangeFontSize(props) {
 
 const styles = new StyleSheet.create({
   container: {
-    width: 60,
+    width: '100%',
     height: '100%',
     marginRight: 20,
     flex: 1,
@@ -67,4 +65,16 @@ const styles = new StyleSheet.create({
   },
 });
 
-export default ChangeFontSize;
+function mapStateToProps(state) {
+  return {
+    textSize: state.ui.textSize,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    changeTextSize: () => dispatch({type: SET_TEXT_SIZE}),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FontSizeIcon);

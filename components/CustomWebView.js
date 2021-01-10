@@ -18,7 +18,7 @@ const contentStyles = {
   magazine: MagazineStyle,
 };
 
-const CustomWebView = ({style, content, textSize}) => {
+const CustomWebView = ({style, content, textSize, onLoadEnd}) => {
   const [height, setHeight] = useState(maxSize);
 
   Dimensions.addEventListener('change', ({window}) => {
@@ -26,7 +26,9 @@ const CustomWebView = ({style, content, textSize}) => {
     setHeight(max);
   });
 
-  console.log('TextSize', textSize);
+  function handleLoadPageRequest(req) {
+    return req.url === "about:blank"
+  }
 
   return (
     <WebView
@@ -50,7 +52,8 @@ const CustomWebView = ({style, content, textSize}) => {
         </html>`,
       }}
       style={{height: height - 80}}
-      onShouldStartLoadWithRequest={() => false}
+      onShouldStartLoadWithRequest={handleLoadPageRequest}
+      onLoadEnd={onLoadEnd}
     />
   );
 };
