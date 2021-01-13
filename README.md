@@ -12,6 +12,7 @@
 
 
 ### Development
+Follow the CONTRIBUTING.md guide to start developing new awesome features
 
 - Launch the server:
 
@@ -19,7 +20,7 @@
   yarn start
 ```
 
-- Build the device if is necessary.
+- Build if is necessary.
 
   For android
 
