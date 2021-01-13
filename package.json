@@ -1,0 +1,57 @@
+{
+  "name": "SGIItalia",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "build:android:test": "cd android && ./gradlew assembleRelease",
+    "build:android:prod": "cd android && ./gradlew bundleRelease",
+    "clean:android": "cd android && ./gradlew clean && cd ../",
+    "clean:ios": "cd ios && xcodebuild clean && cd ../",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.2",
+    "buffer": "^6.0.1",
+    "date-fns": "^2.16.1",
+    "htmlparser2": "^5.0.1",
+    "md5": "^2.3.0",
+    "react": "16.13.1",
+    "react-error-boundary": "^3.0.2",
+    "react-native": "0.63.3",
+    "react-native-file-viewer": "^2.1.4",
+    "react-native-fs": "^2.16.6",
+    "react-native-gesture-handler": "^1.8.0",
+    "react-native-keychain": "^6.2.0",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-reanimated": "^1.13.1",
+    "react-native-rename": "^2.6.0",
+    "react-native-render-html": "^4.2.4",
+    "react-native-router-flux": "^4.2.0",
+    "react-native-screens": "^2.11.0",
+    "react-native-svg": "^12.1.0",
+    "react-native-svg-transformer": "^0.14.3",
+    "react-native-webview": "^11.0.2",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "sha.js": "^2.4.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.5.1",
+    "jest": "^25.1.0",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "react-test-renderer": "16.13.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
