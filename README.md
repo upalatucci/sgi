@@ -1,4 +1,4 @@
-### Enrivonment Setup
+### Environment Setup
 
  - Follow the react native guide described [here](https://reactnative.dev/docs/environment-setup) ( select the React Native CLI QuickStart tab)
 
