@@ -1,5 +1,6 @@
 ### Environment Setup
-
+ - Install git from [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+ 
  - Follow the react native guide described [here](https://reactnative.dev/docs/environment-setup) ( select the React Native CLI QuickStart tab)
 
  - Install Yarn, the node package manager (replacing npm), from [here](https://classic.yarnpkg.com/en/docs/install/)
