@@ -22,7 +22,7 @@ export default ({modalVisible, onClose, error, message}) => (
         )} */}
         <Text style={styles.modalText}>{error || message}</Text>
         <TouchableHighlight style={styles.openButton} onPress={onClose}>
-          <Text style={styles.textStyle}>Prova di nuovo</Text>
+          <Text style={styles.textStyle}>Okay</Text>
         </TouchableHighlight>
       </View>
     </View>

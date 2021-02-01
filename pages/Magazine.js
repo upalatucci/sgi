@@ -10,11 +10,18 @@ import ArticleSection from '../components/magazine/ArticleSection';
 import {PrimaryButtonStyle, PrimaryButtonTitleStyle} from '../styles';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import {downloadAndOpenPDF} from '../utils';
-import {SET_MAGAZINE_CACHE} from '../store/mutations';
+import {SET_MAGAZINE_CACHE, SHOW_MODAL} from '../store/mutations';
 
 const windowHeight = Dimensions.get('window').height;
 const Magazine = React.memo(
-  ({number, magazine, subscriptionInfo, storedMagazines, cacheMagazine}) => {
+  ({
+    number,
+    magazine,
+    subscriptionInfo,
+    storedMagazines,
+    cacheMagazine,
+    launchError,
+  }) => {
     const [magazineContent, setMagazineContent] = useState();
     const [loadingPDF, setLoadingPDF] = useState(false);
 
@@ -45,9 +52,15 @@ const Magazine = React.memo(
         subscriptionDataForMagazine(subscriptionInfo, magazine),
         magazine === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
       ).then((response) => {
-        if (response.data) {
-          setMagazineContent(response.data);
-          cacheMagazine(cacheKey, response.data);
+        console.log(response);
+        if (response.data.status === 404) {
+          Actions.pop();
+          launchError(response.message);
+        } else {
+          if (response.data) {
+            setMagazineContent(response.data);
+            cacheMagazine(cacheKey, response.data);
+          }
         }
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,6 +101,7 @@ function mapDispatchToProps(dispatch) {
   return {
     cacheMagazine: (key, numberData) =>
       dispatch({type: SET_MAGAZINE_CACHE, payload: {[key]: numberData}}),
+    launchError: (error) => dispatch({type: SHOW_MODAL, payload: error}),
   };
 }
 
