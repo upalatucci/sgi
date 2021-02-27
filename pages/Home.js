@@ -18,8 +18,14 @@ import {TitleStyle, DefaultShadow, Colors, FontFamilies} from '../styles';
 import voloContinuoImage from '../assets/il-volo-continuo-logo.png';
 import logo from '../assets/logo.png';
 import FeatherWrite from '../components/icons/FeatherWrite';
+<<<<<<< HEAD
 import MagazineImage from '../components/magazine/MagazineImage';
 import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
+=======
+import HomeMagazineCard from '../components/home/HomeMagazineCard';
+import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
+import { MAGAZINE_TYPES } from '../utils';
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
 
 const Home = ({
   lastBS,
@@ -56,7 +62,41 @@ const Home = ({
         <View style={styles.welcome}>
           <Image source={logoSGI} style={styles.image} />
         </View>
+<<<<<<< HEAD
         <TouchableHighlight
+=======
+        <View style={styles.newsSsection}>
+  
+          <TouchableHighlight
+            style={styles.cardHighlight}
+            onPress={() =>
+              Actions.posts({
+                title: 'News',
+                uri: 'news',
+                entrypoint: SGI_ENTRYPOINT,
+              })
+            }>
+            <View style={[styles.card, {backgroundColor: Colors.light}]}>
+              <Image source={logo} style={styles.cardImage} />
+              <Text style={[styles.cardTitle]}>
+                News
+              </Text>
+            </View>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={styles.cardHighlight}
+            onPress={() => Actions.buddismo()}>
+            <View style={[styles.card, {backgroundColor: Colors.light}]}>
+              <Image source={logo} style={styles.cardImage} />
+              <Text style={[styles.cardTitle]}>
+                Buddismo
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+        {/* <TouchableHighlight
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
           style={styles.cardHighlight}
           onPress={() =>
             Actions.posts({
@@ -67,7 +107,11 @@ const Home = ({
           }>
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <Text style={[styles.cardTitle, {color: Colors.blue}]}>News</Text>
+<<<<<<< HEAD
             <View style={styles.cardImagesContainer}>
+=======
+            <View>
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
               <TouchableHighlight
                 style={styles.cardHighlight}
                 onPress={() =>
@@ -87,6 +131,7 @@ const Home = ({
               </TouchableHighlight>
             </View>
           </View>
+<<<<<<< HEAD
         </TouchableHighlight>
 
         <TouchableHighlight
@@ -129,6 +174,40 @@ const Home = ({
           onPress={() => Actions.frasedelgiorno()}>
           <View style={[styles.card, {backgroundColor: Colors.light}]}>
             <View style={styles.cardImagesContainer}>
+=======
+        </TouchableHighlight> */}
+
+        <HomeMagazineCard magazine={lastNR} magazineType={MAGAZINE_TYPES.NR} />
+        <HomeMagazineCard magazine={lastBS} magazineType={MAGAZINE_TYPES.BS} />
+        
+        <TouchableHighlight
+          style={styles.cardHighlight}
+          onPress={() =>
+            Actions.posts({
+              title: 'Il Volo Continuo',
+              uri: 'posts',
+              entrypoint: VOLO_ENTRYPOINT,
+            })
+          }>
+          <View
+            style={[
+              styles.card,
+              styles.cardImageVolo,
+              {backgroundColor: Colors.blue},
+            ]}>
+            <Image
+              source={voloContinuoImage}
+              style={[styles.cardImage, styles.imageVolo]}
+            />
+          </View>
+        </TouchableHighlight>
+
+        {/* <TouchableHighlight
+          style={styles.cardHighlight}
+          onPress={() => Actions.frasedelgiorno()}>
+          <View style={[styles.card, {backgroundColor: Colors.light}]}>
+            <View>
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
               <FeatherWrite color={Colors.blue} height={120} width={100} />
             </View>
             <Text style={[styles.cardTitle, {color: Colors.blue}]}>
@@ -184,7 +263,11 @@ const Home = ({
               Spazio Abbonamenti
             </Text>
           </View>
+<<<<<<< HEAD
         </TouchableHighlight>
+=======
+        </TouchableHighlight> */}
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
       </ScrollView>
     </View>
   );
@@ -213,10 +296,22 @@ const styles = StyleSheet.create({
     ...TitleStyle,
     fontSize: 20,
   },
+<<<<<<< HEAD
   magazineImage: {
     height: 120,
     width: 100,
     resizeMode: 'contain',
+=======
+  newsSsection: {
+    marginTop: 20,
+    width: "100%",
+    height: 200,
+    backgroundColor: Colors.secondary,
+    flex: 1,
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center"
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
   },
   buddismoImageStyle: {
     height: 120,
@@ -229,6 +324,7 @@ const styles = StyleSheet.create({
   card: {
     ...DefaultShadow,
     borderRadius: 10,
+<<<<<<< HEAD
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -248,6 +344,19 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: 'white',
   },
+=======
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flex: 1,
+    width: "100%",
+  }, 
+  cardImage: {
+    height: 100,
+    width: 100,
+    resizeMode: 'contain',
+  },
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
   cardImageVolo: {
     justifyContent: 'center',
   },
@@ -255,10 +364,13 @@ const styles = StyleSheet.create({
     width: '80%',
     maxWidth: 400,
   },
+<<<<<<< HEAD
   cardImagesContainer: {
     flexDirection: 'row',
     marginHorizontal: 8,
   },
+=======
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
 });
 
 const mapStateToProps = (state) => {

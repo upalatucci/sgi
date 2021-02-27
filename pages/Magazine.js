@@ -10,11 +10,26 @@ import ArticleSection from '../components/magazine/ArticleSection';
 import {PrimaryButtonStyle, PrimaryButtonTitleStyle} from '../styles';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import {downloadAndOpenPDF} from '../utils';
+<<<<<<< HEAD
 import {SET_MAGAZINE_CACHE} from '../store/mutations';
 
 const windowHeight = Dimensions.get('window').height;
 const Magazine = React.memo(
   ({number, magazine, subscriptionInfo, storedMagazines, cacheMagazine}) => {
+=======
+import {SET_MAGAZINE_CACHE, SHOW_MODAL} from '../store/mutations';
+
+const windowHeight = Dimensions.get('window').height;
+const Magazine = React.memo(
+  ({
+    number,
+    magazine,
+    subscriptionInfo,
+    storedMagazines,
+    cacheMagazine,
+    launchError,
+  }) => {
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
     const [magazineContent, setMagazineContent] = useState();
     const [loadingPDF, setLoadingPDF] = useState(false);
 
@@ -45,9 +60,21 @@ const Magazine = React.memo(
         subscriptionDataForMagazine(subscriptionInfo, magazine),
         magazine === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
       ).then((response) => {
+<<<<<<< HEAD
         if (response.data) {
           setMagazineContent(response.data);
           cacheMagazine(cacheKey, response.data);
+=======
+        console.log(response);
+        if (response.data.status === 404) {
+          Actions.pop();
+          launchError(response.message);
+        } else {
+          if (response.data) {
+            setMagazineContent(response.data);
+            cacheMagazine(cacheKey, response.data);
+          }
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
         }
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,6 +115,10 @@ function mapDispatchToProps(dispatch) {
   return {
     cacheMagazine: (key, numberData) =>
       dispatch({type: SET_MAGAZINE_CACHE, payload: {[key]: numberData}}),
+<<<<<<< HEAD
+=======
+    launchError: (error) => dispatch({type: SHOW_MODAL, payload: error}),
+>>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
   };
 }
 
