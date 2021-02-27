@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, Text, View, Image} from 'react-native'
 import { MAGAZINE_NAMES } from '../../utils'
 import TouchableHighlight from '../CustomTouchableHighlight';
 import HomeLinearGradient from './HomeLinearGradient';
@@ -10,10 +10,17 @@ import {Colors, FontFamilies, DefaultShadow} from '../../styles';
 export default ({magazine, magazineType}) => (
   <TouchableHighlight
     style={{margin: 20}}
-    onPress={() => magazine && Actions.magazine({
-      number: magazine,
-      magazine: magazineType,
-    })}>
+    onPress={() => {
+      if(!magazine)
+        return
+      else {
+        if (Actions.currentScene !== "magazine")
+          Actions.magazine({
+            number: magazine,
+            magazine: magazineType,
+          })
+      }
+    }}>
     <HomeLinearGradient style={[styles.card, {backgroundColor: Colors.light}]}>
       <View style={styles.cardText}>
         <Text style={[styles.cardSubTitle]}>

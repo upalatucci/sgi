@@ -32,7 +32,6 @@ const Home = ({
 }) => {
   useEffect(() => {
     // Keychain.resetGenericPassword();
-
     Keychain.getGenericPassword().then(async (credentials) => {
       if (credentials) {
         const response = await login(
