@@ -122,6 +122,28 @@ const Home = ({
 
         <HomeMagazineCard magazine={lastNR} magazineType={MAGAZINE_TYPES.NR} />
         <HomeMagazineCard magazine={lastBS} magazineType={MAGAZINE_TYPES.BS} />
+        
+        <TouchableHighlight
+          style={styles.cardHighlight}
+          onPress={() =>
+            Actions.posts({
+              title: 'Il Volo Continuo',
+              uri: 'posts',
+              entrypoint: VOLO_ENTRYPOINT,
+            })
+          }>
+          <View
+            style={[
+              styles.card,
+              styles.cardImageVolo,
+              {backgroundColor: Colors.blue},
+            ]}>
+            <Image
+              source={voloContinuoImage}
+              style={[styles.cardImage, styles.imageVolo]}
+            />
+          </View>
+        </TouchableHighlight>
 
         {/* <TouchableHighlight
           style={styles.cardHighlight}
@@ -229,7 +251,6 @@ const styles = StyleSheet.create({
   },
   cardHighlight: {
     margin: 20,
-    padding: 20
   },
   card: {
     ...DefaultShadow,

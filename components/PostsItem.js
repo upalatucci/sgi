@@ -17,6 +17,7 @@ export default ({title, date, image, excerpt, id, entrypoint, uri}) => (
             {excerpt
               .trim()
               .replace('&nbsp;', '')
+              .replace("<br />", "")
               .replace(/(\r\n|\n|\r)/gm, ' ')}
           </Text>
         </View>
@@ -27,7 +28,7 @@ export default ({title, date, image, excerpt, id, entrypoint, uri}) => (
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   title: {
     ...TitleStyle,
@@ -41,10 +42,11 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     paddingHorizontal: 8,
     paddingVertical: 6,
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   image: {
-    width: '25%',
+    width: '100%',
+    height: 130,
     borderRadius: 10,
     marginRight: 10,
     resizeMode: 'cover',
