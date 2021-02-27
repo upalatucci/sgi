@@ -1,12 +1,11 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, StyleSheet, FlatList, Text} from 'react-native';
-import MagazineImage from './MagazineImage';
+import {View, StyleSheet, FlatList, Text, Image} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import {getJsonData} from '../../api';
 import MagazineImageWithNumber from './MagazineImageWithNumber';
+import TouchableHighlight from '../CustomTouchableHighlight';
 import {
   Colors,
-  PrimaryButtonTitleStyle,
-  PrimaryButtonStyle,
 } from '../../styles';
 
 export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
@@ -31,17 +30,28 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
     <View style={[styles.container]}>
       <View style={styles.firstContainer}>
         {lastNumber ? (
-          <>
-            <MagazineImage
-              containerStyle={styles.containerImage}
-              number={lastNumber}
-              style={styles.image}
-              magazine={magazine}
-            />
-            <View style={styles.container}>
-              <Text style={styles.titleText}>{lastNumber.number}</Text>
-            </View>
-          </>
+          <TouchableHighlight 
+            style={{flex: 4, flexDirection: "row"}} 
+            onPress={() =>
+              lastNumber
+                ? Actions.magazine({
+                    number: lastNumber,
+                    magazine: magazine,
+                  })
+                : null
+            }
+          >
+            <>
+
+              <Image
+                style={styles.image}
+                source={{uri: lastNumber?.cover}}
+              />
+              <View style={styles.container}>
+                <Text style={styles.titleText}>{lastNumber.number_desc}</Text>
+              </View>
+            </>
+          </TouchableHighlight>
         ) : null}
       </View>
       <FlatList
@@ -74,9 +84,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     alignItems: 'flex-start',
   },
-  containerImage: {
-    flex: 1,
-  },
   imageList: {
     height: '100%',
     width: 100,
@@ -84,24 +91,20 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   scrollView: {
-    flex: 2,
+    flex: 1,
+    minHeight: 150,
   },
   firstContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
+    minHeight: 150,
+    marginVertical: 10
   },
   titleText: {
     fontSize: 32,
     color: Colors.orange,
     marginBottom: 20,
-  },
-  loginButton: {
-    ...PrimaryButtonStyle,
-    width: 140,
-  },
-  loginTextButton: {
-    ...PrimaryButtonTitleStyle,
   },
 });

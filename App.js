@@ -20,10 +20,14 @@ const persistConfig = {
 };
 
 const persistedMagazineReducer = persistReducer(persistConfig, magazineReducer);
+const persistedUiReducer = persistReducer({
+  ...persistConfig,
+  whitelist: ["textSize"]
+}, uiRecuder)
 
 const rootReduced = combineReducers({
   magazine: persistedMagazineReducer,
-  ui: uiRecuder,
+  ui: persistedUiReducer,
 });
 
 const store = createStore(rootReduced, compose(applyMiddleware(thunk)));

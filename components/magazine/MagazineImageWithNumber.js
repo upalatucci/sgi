@@ -35,14 +35,14 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   text: {
-    flex: 1,
+    height: 30,
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
     color: Colors.orange,
   },
   image: {
-    flex: 6,
+    flex: 1,
     resizeMode: 'contain',
   },
 });

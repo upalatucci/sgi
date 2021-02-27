@@ -1,5 +1,5 @@
 import React, {useReducer, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import * as Keychain from 'react-native-keychain';
 import {login, subscriptionDataForMagazine} from '../services/auth';
@@ -86,7 +86,7 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, setSubscriptionInfo}) => {
       {!state.logged ? (
         <LoginForm onLogin={onLogin} />
       ) : (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <MagazineCarousel
             entrypoint={NR_ENTRYPOINT}
             lastNumber={lastNR}
@@ -99,7 +99,7 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, setSubscriptionInfo}) => {
             subInfo={subscriptionDataForMagazine(subscriptionInfo, 'bs')}
             magazine="bs"
           />
-        </View>
+        </ScrollView>
       )}
       <Modal
         modalVisible={state.error !== null}
