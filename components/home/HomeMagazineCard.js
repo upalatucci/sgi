@@ -10,7 +10,10 @@ import {Colors, FontFamilies, DefaultShadow} from '../../styles';
 export default ({magazine, magazineType}) => (
   <TouchableHighlight
     style={{margin: 20}}
-    onPress={() => Actions.magazines()}>
+    onPress={() => magazine && Actions.magazine({
+      number: magazine,
+      magazine: magazineType,
+    })}>
     <HomeLinearGradient style={[styles.card, {backgroundColor: Colors.light}]}>
       <View style={styles.cardText}>
         <Text style={[styles.cardSubTitle]}>
@@ -21,11 +24,10 @@ export default ({magazine, magazineType}) => (
         </Text>
       </View>
       <View style={styles.magazineImagesContainer}>
-        <MagazineImage
-            number={magazine}
-            magazine={magazineType}
-            style={styles.magazineImage}
-          />
+        <Image
+          source={{uri: magazine?.cover}}
+          style={styles.magazineImage}
+        />
       </View>
     </HomeLinearGradient>
   </TouchableHighlight>
