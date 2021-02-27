@@ -1,14 +1,4 @@
 import React, {useState, useEffect, useCallback} from 'react';
-<<<<<<< HEAD
-import {View, StyleSheet, FlatList, Text} from 'react-native';
-import MagazineImage from './MagazineImage';
-import {getJsonData} from '../../api';
-import MagazineImageWithNumber from './MagazineImageWithNumber';
-import {
-  Colors,
-  PrimaryButtonTitleStyle,
-  PrimaryButtonStyle,
-=======
 import {View, StyleSheet, FlatList, Text, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {getJsonData} from '../../api';
@@ -16,7 +6,6 @@ import MagazineImageWithNumber from './MagazineImageWithNumber';
 import TouchableHighlight from '../CustomTouchableHighlight';
 import {
   Colors,
->>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
 } from '../../styles';
 
 export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
@@ -41,19 +30,6 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
     <View style={[styles.container]}>
       <View style={styles.firstContainer}>
         {lastNumber ? (
-<<<<<<< HEAD
-          <>
-            <MagazineImage
-              containerStyle={styles.containerImage}
-              number={lastNumber}
-              style={styles.image}
-              magazine={magazine}
-            />
-            <View style={styles.container}>
-              <Text style={styles.titleText}>{lastNumber.number}</Text>
-            </View>
-          </>
-=======
           <TouchableHighlight 
             style={{flex: 4, flexDirection: "row"}} 
             onPress={() =>
@@ -76,7 +52,6 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
               </View>
             </>
           </TouchableHighlight>
->>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
         ) : null}
       </View>
       <FlatList
@@ -109,12 +84,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     alignItems: 'flex-start',
   },
-<<<<<<< HEAD
-  containerImage: {
-    flex: 1,
-  },
-=======
->>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
   imageList: {
     height: '100%',
     width: 100,
@@ -122,37 +91,20 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   scrollView: {
-<<<<<<< HEAD
-    flex: 2,
-=======
     flex: 1,
     minHeight: 150,
->>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
   },
   firstContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
-<<<<<<< HEAD
-=======
     minHeight: 150,
     marginVertical: 10
->>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
   },
   titleText: {
     fontSize: 32,
     color: Colors.orange,
     marginBottom: 20,
   },
-<<<<<<< HEAD
-  loginButton: {
-    ...PrimaryButtonStyle,
-    width: 140,
-  },
-  loginTextButton: {
-    ...PrimaryButtonTitleStyle,
-  },
-=======
->>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
 });

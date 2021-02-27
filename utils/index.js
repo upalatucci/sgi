@@ -41,8 +41,6 @@ export const possibleTextSizes = [0, 1, 2];
 export function getFontSize(textSize) {
   return `${100 + 50 * textSize}%`;
 }
-<<<<<<< HEAD
-=======
 
 export const MAGAZINE_TYPES = {
   NR: "nr",
@@ -53,4 +51,3 @@ export const MAGAZINE_NAMES = {
   [MAGAZINE_TYPES.NR]: "Nuovo Rinascimento",
   [MAGAZINE_TYPES.BS]: "Buddismo e Società"
 }
->>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a

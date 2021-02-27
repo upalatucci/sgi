@@ -1,12 +1,7 @@
 import shajs from 'sha.js';
 import md5 from 'md5';
 import {loginRequest} from '../api';
-<<<<<<< HEAD
-
-const TOKEN = 'CEfxtHDyhkrsXsptHfFYC4DfRDnt74ZR2jKKKzHEskRUhEtKzM';
-=======
 import {TOKEN} from '../token';
->>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
 
 export function generateSignToken(parameters, magazine = 'nr') {
   const {riv_nome, riv_cognome, riv_codabb: riv_cod_abb} = parameters;

@@ -57,9 +57,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
-<<<<<<< HEAD
-=======
 
 # SGI Token
 token.js
->>>>>>> bb7dc9d7ddaaba19969fc3fa8b9d5b5dbaa2f38a
