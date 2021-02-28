@@ -10,15 +10,11 @@ export default ({magazine, magazineType}) => (
   <TouchableHighlight
     style={styles.margin}
     onPress={() => {
-      if(!magazine)
-        return
-      else {
-        if (Actions.currentScene !== "magazine")
-          Actions.magazine({
-            number: magazine,
-            magazine: magazineType,
-          })
-      }
+      if (Actions.currentScene !== "magazine" && magazine)
+        Actions.magazine({
+          number: magazine,
+          magazine: magazineType,
+        })
     }}>
     <HomeLinearGradient style={[styles.card, {backgroundColor: Colors.light}]}>
       <View style={styles.cardText}>
