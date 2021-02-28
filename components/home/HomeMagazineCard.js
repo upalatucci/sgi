@@ -3,13 +3,12 @@ import {StyleSheet, Text, View, Image} from 'react-native'
 import { MAGAZINE_NAMES } from '../../utils'
 import TouchableHighlight from '../CustomTouchableHighlight';
 import HomeLinearGradient from './HomeLinearGradient';
-import MagazineImage from '../magazine/MagazineImage';
 import {Actions} from 'react-native-router-flux';
 import {Colors, FontFamilies, DefaultShadow} from '../../styles';
 
 export default ({magazine, magazineType}) => (
   <TouchableHighlight
-    style={{margin: 20}}
+    style={styles.margin}
     onPress={() => {
       if(!magazine)
         return
@@ -41,6 +40,9 @@ export default ({magazine, magazineType}) => (
 )
 
 const styles = StyleSheet.create({
+  margin: {
+    margin: 20
+  },
   magazineImage: {
     height: 220,
     width: 200,
