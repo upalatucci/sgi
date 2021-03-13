@@ -7,7 +7,6 @@ import {Colors} from '../../styles';
 const windowWidth = Dimensions.get('window').width;
 export default React.memo((props) => (
   <TouchableHighlight
-    style={props.containerStyle}
     onPress={() =>
       props.number
         ? Actions.magazine({
@@ -16,13 +15,25 @@ export default React.memo((props) => (
           })
         : null
     }>
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        props.index === 0 ? styles.firstMagazineContainer : null,
+      ]}>
       <Image
-        {...props}
         source={{uri: props.number ? props.number.cover : null}}
-        style={styles.image}
+        style={[
+          styles.image,
+          props.index === 0 ? styles.firstMagazineImage : null,
+        ]}
       />
-      <Text style={styles.text}>{props.number.number}</Text>
+      <Text
+        style={[
+          styles.text,
+          props.index === 0 ? styles.firstMagazineText : null,
+        ]}>
+        {props.number.number}
+      </Text>
     </View>
   </TouchableHighlight>
 ));
@@ -34,15 +45,25 @@ const styles = StyleSheet.create({
     width: windowWidth / 3.5,
     padding: 10,
   },
+  firstMagazineContainer: {
+    width: windowWidth / 2,
+  },
   text: {
     height: 30,
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
+    color: Colors.textGray,
+  },
+  firstMagazineText: {
     color: Colors.orange,
   },
   image: {
+    height: 150,
     flex: 1,
     resizeMode: 'contain',
+  },
+  firstMagazineImage: {
+    height: 200,
   },
 });

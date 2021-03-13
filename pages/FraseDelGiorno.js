@@ -41,8 +41,8 @@ export default () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    marginHorizontal: 40,
+    flex: 1,
+    alignItems: 'center',
   },
   scroll: {
     flex: 1,

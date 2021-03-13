@@ -57,3 +57,10 @@ export const MAGAZINE_NAMES = {
 export const MAGAZINE_SUBTITLES = {
   [MAGAZINE_TYPES.VC]: 'Il giornale online del gruppo giovani',
 };
+
+export const MAGAZINE_DESCRIPTION = {
+  [MAGAZINE_TYPES.NR]:
+    'È la prima rivista nata in Italia, nel 1982, per rispondere alle domande sul Buddismo di Nichiren Daishonin. Oggi settimanale digitale, raccoglie scritti di Daisaku Ikeda, articoli di approfondimento, testimonianze di vita e di fede e notizie sulle attività della Soka Gakkai in Italia e nel mondo.',
+  [MAGAZINE_TYPES.BS]:
+    'Bimestrale pubblicato dal 1986 al 2000 con il nome di DuemilaUno e oggi mensile, approfondisce temi legati alla filosofia buddista e all’attualità. Riporta gli scritti di Nichiren Daishonin commentati da Daisaku Ikeda, che costituiscono il materiale di studio mensile e uno speciale monografico, corredato in genere da una o più interviste.',
+};

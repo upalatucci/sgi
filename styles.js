@@ -29,6 +29,7 @@ export const Colors = {
   voloContinuo: '#4a8eff',
   riviste: '#b8d6e0',
   background: '#F8F8F8',
+  textGray: '#777777',
 };
 
 export const FontFamilies = {

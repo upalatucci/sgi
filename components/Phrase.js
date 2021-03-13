@@ -35,9 +35,11 @@ export default React.memo(({phrase}) => {
 
   return (
     <View style={styles.phraseContainer}>
-      <CustomHTML content={addCenter(phrase.frase)} />
-      {phrase.note ? <CustomHTML content={addNote(phrase.note)} /> : null}
-      <CustomHTML content={addStrong(phrase.origine)} />
+      <CustomHTML content={addCenter(phrase.frase)} style={styles.flex} />
+      {phrase.note ? (
+        <CustomHTML content={addNote(phrase.note)} style={styles.flex} />
+      ) : null}
+      <CustomHTML content={addStrong(phrase.origine)} style={styles.flex} />
       <PrimaryButton text="Condividi" onPress={sharePhrase} />
     </View>
   );
@@ -49,5 +51,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
+    marginHorizontal: 20,
+    maxWidth: 700,
+  },
+  flex: {
+    flex: 1,
   },
 });

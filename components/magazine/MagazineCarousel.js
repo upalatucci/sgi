@@ -1,12 +1,15 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, StyleSheet, FlatList, Text, Image} from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {View, StyleSheet, FlatList, Text} from 'react-native';
 import {getJsonData} from '../../api';
 import MagazineImageWithNumber from './MagazineImageWithNumber';
-import TouchableHighlight from '../CustomTouchableHighlight';
 import {Colors} from '../../styles';
+import {
+  MAGAZINE_DESCRIPTION,
+  MAGAZINE_NAMES,
+  MAGAZINE_TYPES,
+} from '../../utils';
 
-export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
+export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
   const [magazines, setMagazines] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -31,16 +34,22 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
         horizontal
         data={magazines}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({item}) => (
+        renderItem={({item, index}) => (
           <MagazineImageWithNumber
-            style={styles.imageList}
             magazine={magazine}
             number={item}
+            index={index}
           />
         )}
         onRefresh={fetchMagazines}
         refreshing={loading}
       />
+      <View style={styles.containerText}>
+        <Text style={styles.magazineTitle}>{MAGAZINE_NAMES[magazine]}</Text>
+        <Text style={styles.magazineDesc}>
+          {MAGAZINE_DESCRIPTION[magazine]}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -48,35 +57,28 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
   },
-  image: {
-    flex: 1,
-    height: '100%',
-    resizeMode: 'contain',
-    alignItems: 'flex-start',
-  },
-  imageList: {
-    height: '100%',
-    width: 100,
-    marginHorizontal: 10,
-    resizeMode: 'contain',
+  containerText: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   scrollView: {
     flex: 1,
-    minHeight: 150,
+    minHeight: 220,
   },
   firstContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
-    minHeight: 150,
+    minHeight: 220,
     marginVertical: 10,
   },
-  titleText: {
-    fontSize: 32,
-    color: Colors.orange,
-    marginBottom: 20,
+  magazineTitle: {
+    fontSize: 20,
+    color: Colors.lightBlue,
+  },
+  magazineDesc: {
+    color: Colors.textGray,
   },
 });

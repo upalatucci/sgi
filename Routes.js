@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Drawer, Router, Scene, Stack} from 'react-native-router-flux';
+import {Drawer, Router, Scene, Stack, Actions} from 'react-native-router-flux';
 
 import {Colors} from './styles';
 import FraseDelGiornoIcon from './components/icons/FraseDelGiornoIcon';
@@ -22,6 +22,7 @@ import Magazine from './pages/Magazine';
 import ChangeFontSizeContainer from './components/ChangeFontSizeContainer';
 import CustomDrawer from './components/Drawer';
 import Menu from './components/icons/Menu';
+import SGILogo from './components/icons/SGILogoHome';
 
 function Routes() {
   return (
@@ -32,13 +33,20 @@ function Routes() {
           navigationBarStyle={styles.navbar}
           titleStyle={styles.title}
           backButtonTintColor={Colors.primary}>
-          <Scene key="home" component={Home} />
+          <Scene
+            key="home"
+            component={Home}
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
+          />
           <Scene
             key="posts"
             navigationBarStyle={styles.navbar}
             titleStyle={styles.title}
             component={Posts}
             icon={HomeIcon}
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
           />
           <Scene
             drawer
@@ -47,12 +55,21 @@ function Routes() {
             icon={LotusIcon}
             renderRightButton={ChangeFontSizeContainer}
           />
-          <Scene drawer key="magazines" component={Riviste} icon={BookIcon} />
+          <Scene
+            drawer
+            key="magazines"
+            component={Riviste}
+            icon={BookIcon}
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
+          />
           <Scene
             drawer
             key="frasedelgiorno"
             component={FraseDelGiorno}
             icon={FraseDelGiornoIcon}
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
           />
           <Scene
             key="postPage"

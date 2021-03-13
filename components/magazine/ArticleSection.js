@@ -39,9 +39,6 @@ export default ({section, magazine}) => {
               })
             }>
             <View style={styles.container}>
-              {!!article.image && (
-                <Image source={{uri: article.image}} style={styles.image} />
-              )}
               <Text
                 style={[
                   styles.title,
@@ -97,9 +94,10 @@ const styles = StyleSheet.create({
     color: Colors.lightBlue,
   },
   image: {
+    position: 'absolute',
     height: 150,
     width: '100%',
-    resizeMode: 'center',
+    resizeMode: 'cover',
     borderRadius: 10,
   },
 });

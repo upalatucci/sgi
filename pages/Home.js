@@ -1,17 +1,15 @@
 import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {SGI_ENTRYPOINT} from '../api';
-import logo from '../assets/logo.png';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import HomeMagazineCard from '../components/home/HomeMagazineCard';
 import {login} from '../services/auth';
-import {WithLocalSvg} from 'react-native-svg';
-import FraseDelGiornoIcon from '../assets/frasedelgiorno.svg';
-import BuddismoIcon from '../assets/buddismo.svg';
-import NewsIcon from '../assets/news.svg';
+import FraseDelGiornoIcon from '../assets/frasedelgiorno.png';
+import BuddismoIcon from '../assets/buddismo.png';
+import NewsIcon from '../assets/news.png';
 import {
   fetchLastBSImage,
   fetchLastNews,
@@ -69,7 +67,7 @@ const Home = ({
                 })
               }>
               <View style={[styles.card, {backgroundColor: Colors.light}]}>
-                <WithLocalSvg asset={NewsIcon} width={50} height={50} />
+                <Image source={NewsIcon} style={styles.cardImage} />
                 <Text style={[styles.cardTitle]}>In primo piano</Text>
               </View>
             </TouchableHighlight>
@@ -78,7 +76,7 @@ const Home = ({
               style={styles.cardHighlight}
               onPress={() => Actions.buddismo()}>
               <View style={[styles.card, {backgroundColor: Colors.light}]}>
-                <WithLocalSvg asset={BuddismoIcon} width={50} height={50} />
+                <Image source={BuddismoIcon} style={styles.cardImage} />
                 <Text style={[styles.cardTitle]}>Il Buddismo</Text>
               </View>
             </TouchableHighlight>
@@ -87,11 +85,7 @@ const Home = ({
               style={styles.cardHighlight}
               onPress={() => Actions.frasedelgiorno()}>
               <View style={[styles.card, {backgroundColor: Colors.light}]}>
-                <WithLocalSvg
-                  asset={FraseDelGiornoIcon}
-                  width={50}
-                  height={50}
-                />
+                <Image source={FraseDelGiornoIcon} style={styles.cardImage} />
                 <Text style={[styles.cardTitle]}>La frase del giorno</Text>
               </View>
             </TouchableHighlight>
@@ -220,6 +214,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
+    marginBottom: 30,
+    ...DefaultShadow,
   },
   welcomeTitle: {
     fontWeight: 'bold',
@@ -227,7 +223,7 @@ const styles = StyleSheet.create({
   },
   welcomeSubtitle: {
     fontSize: 14,
-    color: '#777777',
+    color: Colors.textGray,
   },
   newsSsection: {
     marginTop: 20,
@@ -257,11 +253,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  cardImage: {
-    height: 100,
-    width: 100,
-    resizeMode: 'contain',
-  },
   cardImageVolo: {
     justifyContent: 'center',
   },
@@ -269,6 +260,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
+  },
+  cardImage: {
+    width: '60%',
+    height: '60%',
+    resizeMode: 'contain',
   },
   imageVolo: {
     width: '80%',
