@@ -5,7 +5,7 @@ export default ({children, style}) => (
   <LinearGradient
     start={{x: 0, y: 0}}
     end={{x: 1, y: 0}}
-    colors={['#4c669f', '#3b5998', '#192f6a']}
+    colors={['#0090AE', '#004664']}
     {...{style}}>
     {children}
   </LinearGradient>

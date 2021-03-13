@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, Share} from 'react-native';
 import CustomHTML from './CustomHTML';
-import {PrimaryButtonStyle, PrimaryButtonTitleStyle} from '../styles';
-import CustomTouchableHighlight from './CustomTouchableHighlight';
+import PrimaryButton from './PrimaryButton';
 import {convertHTMLToText, italianFormat} from '../utils';
 
 export default React.memo(({phrase}) => {
@@ -37,18 +36,9 @@ export default React.memo(({phrase}) => {
   return (
     <View style={styles.phraseContainer}>
       <CustomHTML content={addCenter(phrase.frase)} />
-      {phrase.note ? (
-        <CustomHTML
-          content={addNote(phrase.note)}
-          baseFontStyle={{fontSize: 24}}
-        />
-      ) : null}
+      {phrase.note ? <CustomHTML content={addNote(phrase.note)} /> : null}
       <CustomHTML content={addStrong(phrase.origine)} />
-      <CustomTouchableHighlight
-        style={PrimaryButtonStyle}
-        onPress={sharePhrase}>
-        <Text style={PrimaryButtonTitleStyle}>Condividi</Text>
-      </CustomTouchableHighlight>
+      <PrimaryButton text="Condividi" onPress={sharePhrase} />
     </View>
   );
 });
@@ -58,5 +48,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 20,
   },
 });

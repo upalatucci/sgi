@@ -4,9 +4,7 @@ import {Actions} from 'react-native-router-flux';
 import {getJsonData} from '../../api';
 import MagazineImageWithNumber from './MagazineImageWithNumber';
 import TouchableHighlight from '../CustomTouchableHighlight';
-import {
-  Colors,
-} from '../../styles';
+import {Colors} from '../../styles';
 
 export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
   const [magazines, setMagazines] = useState([]);
@@ -28,36 +26,10 @@ export default ({lastNumber, entrypoint, subInfo, magazine = 'nr'}) => {
 
   return (
     <View style={[styles.container]}>
-      <View style={styles.firstContainer}>
-        {lastNumber ? (
-          <TouchableHighlight 
-            style={{flex: 4, flexDirection: "row"}} 
-            onPress={() =>
-              lastNumber
-                ? Actions.magazine({
-                    number: lastNumber,
-                    magazine: magazine,
-                  })
-                : null
-            }
-          >
-            <>
-
-              <Image
-                style={styles.image}
-                source={{uri: lastNumber?.cover}}
-              />
-              <View style={styles.container}>
-                <Text style={styles.titleText}>{lastNumber.number_desc}</Text>
-              </View>
-            </>
-          </TouchableHighlight>
-        ) : null}
-      </View>
       <FlatList
         style={styles.scrollView}
         horizontal
-        data={magazines.slice(1)}
+        data={magazines}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({item}) => (
           <MagazineImageWithNumber
@@ -100,7 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%',
     minHeight: 150,
-    marginVertical: 10
+    marginVertical: 10,
   },
   titleText: {
     fontSize: 32,

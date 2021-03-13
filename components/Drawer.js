@@ -3,12 +3,14 @@ import {View, StyleSheet, Text, Linking} from 'react-native';
 import TouchableHighlight from './CustomTouchableHighlight';
 import {Actions} from 'react-native-router-flux';
 import {SGI_ENTRYPOINT} from '../api';
+import {WithLocalSvg} from 'react-native-svg';
+import X from '../assets/x.svg';
 
 export default () => (
   <View style={styles.container}>
-    <View>
+    <View style={styles.x}>
       <TouchableHighlight onPress={() => Actions.pop()}>
-        <Text style={styles.x}>X</Text>
+        <WithLocalSvg width={20} height={20} asset={X} />
       </TouchableHighlight>
     </View>
     <TouchableHighlight onPress={() => Actions.home()}>
@@ -59,12 +61,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#68C8DB',
+    borderBottomColor: 'white',
   },
   x: {
-    paddingVertical: 10,
+    paddingVertical: 15,
     marginHorizontal: 15,
     fontSize: 30,
     color: 'white',
+    width: 20,
   },
 });

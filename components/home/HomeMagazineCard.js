@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import {MAGAZINE_NAMES} from '../../utils';
+import {MAGAZINE_NAMES, MAGAZINE_SUBTITLES, MAGAZINE_TYPES} from '../../utils';
 import TouchableHighlight from '../CustomTouchableHighlight';
 import HomeLinearGradient from './HomeLinearGradient';
 import {Actions} from 'react-native-router-flux';
@@ -20,8 +20,19 @@ export default ({magazine, magazineType}) => (
     }}>
     <HomeLinearGradient style={[styles.card, {backgroundColor: Colors.light}]}>
       <View style={styles.cardText}>
-        <Text style={[styles.cardSubTitle]}>{magazine?.number_desc}</Text>
-        <Text style={[styles.cardTitle]}>{MAGAZINE_NAMES[magazineType]}</Text>
+        {magazine?.number_desc ? (
+          <Text style={[styles.cardDate]}>{magazine?.number_desc}</Text>
+        ) : null}
+        <Text
+          style={[
+            styles.cardTitle,
+            magazineType === MAGAZINE_TYPES.VC ? styles.cardTitleWide : null,
+          ]}>
+          {MAGAZINE_NAMES[magazineType]}
+        </Text>
+        <Text style={[styles.cardSubtitle]}>
+          {MAGAZINE_SUBTITLES[magazineType]}
+        </Text>
       </View>
       <View style={styles.magazineImagesContainer}>
         <Image source={{uri: magazine?.cover}} style={styles.magazineImage} />
@@ -32,7 +43,8 @@ export default ({magazine, magazineType}) => (
 
 const styles = StyleSheet.create({
   margin: {
-    margin: 20,
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
   magazineImage: {
     height: 220,
@@ -41,7 +53,7 @@ const styles = StyleSheet.create({
   },
   magazineImagesContainer: {
     position: 'absolute',
-    top: 70,
+    top: 50,
     left: '40%',
     transform: [{rotateZ: '10deg'}],
     zIndex: 0,
@@ -52,7 +64,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: 160,
+    height: 140,
     position: 'relative',
     overflow: 'hidden',
   },
@@ -60,19 +72,25 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
+    alignContent: 'center',
     paddingHorizontal: 20,
-    paddingTop: 30,
     zIndex: 1,
   },
   cardTitle: {
     fontFamily: FontFamilies.primary,
     flexWrap: 'wrap',
-    flex: 1,
     fontSize: 24,
     color: 'white',
-    width: '50%',
+    width: '60%',
   },
-  cardSubTitle: {
+  cardTitleWide: {
+    width: '100%',
+  },
+  cardDate: {
+    fontFamily: FontFamilies.primary,
+    color: '#EDF1F2',
+  },
+  cardSubtitle: {
     fontFamily: FontFamilies.primary,
     color: 'white',
   },

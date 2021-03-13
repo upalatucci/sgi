@@ -1,25 +1,24 @@
 import React, {useEffect} from 'react';
-import {View, Text, Image, StyleSheet, ScrollView, Linking} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
-import * as Keychain from 'react-native-keychain';
-
+import {SGI_ENTRYPOINT} from '../api';
+import logo from '../assets/logo.png';
+import TouchableHighlight from '../components/CustomTouchableHighlight';
+import HomeMagazineCard from '../components/home/HomeMagazineCard';
+import {login} from '../services/auth';
+import {WithLocalSvg} from 'react-native-svg';
+import FraseDelGiornoIcon from '../assets/frasedelgiorno.svg';
+import BuddismoIcon from '../assets/buddismo.svg';
+import NewsIcon from '../assets/news.svg';
 import {
-  fetchLastNRImage,
   fetchLastBSImage,
   fetchLastNews,
+  fetchLastNRImage,
 } from '../store/magazineAction';
-import TouchableHighlight from '../components/CustomTouchableHighlight';
-import {SGI_ENTRYPOINT, VOLO_ENTRYPOINT} from '../api';
-import {login} from '../services/auth';
-
-import logoSGI from '../assets/logo_SGI_2020.png';
-import {TitleStyle, DefaultShadow, Colors, FontFamilies} from '../styles';
-import voloContinuoImage from '../assets/il-volo-continuo-logo.png';
-import logo from '../assets/logo.png';
-import FeatherWrite from '../components/icons/FeatherWrite';
-import HomeMagazineCard from '../components/home/HomeMagazineCard';
 import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
+import {Colors, DefaultShadow} from '../styles';
 import {MAGAZINE_TYPES} from '../utils';
 
 const Home = ({
@@ -51,30 +50,52 @@ const Home = ({
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={styles.newsSsection}>
-          <TouchableHighlight
-            style={styles.cardHighlight}
-            onPress={() =>
-              Actions.posts({
-                title: 'In primo piano',
-                uri: 'news',
-                entrypoint: SGI_ENTRYPOINT,
-              })
-            }>
-            <View style={[styles.card, {backgroundColor: Colors.light}]}>
-              <Image source={logo} style={styles.cardImage} />
-              <Text style={[styles.cardTitle]}>News</Text>
-            </View>
-          </TouchableHighlight>
+        <View style={styles.welcome}>
+          <Text style={styles.welcomeTitle}>Buongiorno</Text>
+          <Text style={styles.welcomeSubtitle}>
+            Benvenuti nell'app dell'Istituto Buddista Italiano Soka Gakkai,
+            tramite la quale è possibile essere aggiornati sulle novità e
+            consultare le riviste con gli ultimi incoraggiamenti.
+          </Text>
 
-          <TouchableHighlight
-            style={styles.cardHighlight}
-            onPress={() => Actions.buddismo()}>
-            <View style={[styles.card, {backgroundColor: Colors.light}]}>
-              <Image source={logo} style={styles.cardImage} />
-              <Text style={[styles.cardTitle]}>Buddismo</Text>
-            </View>
-          </TouchableHighlight>
+          <View style={styles.newsSsection}>
+            <TouchableHighlight
+              style={styles.cardHighlight}
+              onPress={() =>
+                Actions.posts({
+                  title: 'In primo piano',
+                  uri: 'news',
+                  entrypoint: SGI_ENTRYPOINT,
+                })
+              }>
+              <View style={[styles.card, {backgroundColor: Colors.light}]}>
+                <WithLocalSvg asset={NewsIcon} width={50} height={50} />
+                <Text style={[styles.cardTitle]}>In primo piano</Text>
+              </View>
+            </TouchableHighlight>
+
+            <TouchableHighlight
+              style={styles.cardHighlight}
+              onPress={() => Actions.buddismo()}>
+              <View style={[styles.card, {backgroundColor: Colors.light}]}>
+                <WithLocalSvg asset={BuddismoIcon} width={50} height={50} />
+                <Text style={[styles.cardTitle]}>Il Buddismo</Text>
+              </View>
+            </TouchableHighlight>
+
+            <TouchableHighlight
+              style={styles.cardHighlight}
+              onPress={() => Actions.frasedelgiorno()}>
+              <View style={[styles.card, {backgroundColor: Colors.light}]}>
+                <WithLocalSvg
+                  asset={FraseDelGiornoIcon}
+                  width={50}
+                  height={50}
+                />
+                <Text style={[styles.cardTitle]}>La frase del giorno</Text>
+              </View>
+            </TouchableHighlight>
+          </View>
         </View>
         {/* <TouchableHighlight
           style={styles.cardHighlight}
@@ -109,9 +130,19 @@ const Home = ({
           </View>
         </TouchableHighlight> */}
 
+        <View style={styles.homeSection}>
+          <Text style={styles.homeTitle}>LE ULTIME USCITE</Text>
+          <TouchableHighlight onPress={() => Actions.magazines()}>
+            <Text style={styles.homeLink}>Sfoglia i numeri precedenti</Text>
+          </TouchableHighlight>
+        </View>
         <HomeMagazineCard magazine={lastNR} magazineType={MAGAZINE_TYPES.NR} />
         <HomeMagazineCard magazine={lastBS} magazineType={MAGAZINE_TYPES.BS} />
+        <HomeMagazineCard magazineType={MAGAZINE_TYPES.VC} />
 
+        {/* <View style={styles.homeSection}>
+          <Text style={styles.homeTitle}>LA SOKA GAKKAI ITALIANA NEL WEB</Text>
+        </View> */}
         {/* <TouchableHighlight
           style={styles.cardHighlight}
           onPress={() => Actions.frasedelgiorno()}>
@@ -183,15 +214,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.backgroundColorPrimary,
   },
+  welcome: {
+    padding: 20,
+    paddingBottom: 40,
+    backgroundColor: 'white',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+  },
+  welcomeTitle: {
+    fontWeight: 'bold',
+    fontSize: 26,
+  },
+  welcomeSubtitle: {
+    fontSize: 14,
+    color: '#777777',
+  },
   newsSsection: {
     marginTop: 20,
     width: '100%',
-    height: 200,
-    backgroundColor: Colors.secondary,
+    height: 120,
     flex: 1,
     flexDirection: 'row',
     alignContent: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   buddismoImageStyle: {
     height: 120,
@@ -199,17 +244,18 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   cardHighlight: {
-    margin: 20,
-    padding: 20,
+    width: '30%',
   },
   card: {
     ...DefaultShadow,
     borderRadius: 10,
+    paddingHorizontal: 6,
+    paddingVertical: 10,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
-    flex: 1,
     width: '100%',
+    height: '100%',
   },
   cardImage: {
     height: 100,
@@ -219,9 +265,29 @@ const styles = StyleSheet.create({
   cardImageVolo: {
     justifyContent: 'center',
   },
+  cardTitle: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 16,
+  },
   imageVolo: {
     width: '80%',
     maxWidth: 400,
+  },
+  homeSection: {
+    paddingHorizontal: 20,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  homeTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  homeLink: {
+    color: Colors.orange,
   },
 });
 

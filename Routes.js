@@ -21,11 +21,12 @@ import Magazine from './pages/Magazine';
 
 import ChangeFontSizeContainer from './components/ChangeFontSizeContainer';
 import CustomDrawer from './components/Drawer';
+import Menu from './components/icons/Menu';
 
 function Routes() {
   return (
     <Router>
-      <Drawer contentComponent={CustomDrawer}>
+      <Drawer contentComponent={CustomDrawer} drawerIcon={Menu}>
         <Stack
           key="root"
           navigationBarStyle={styles.navbar}

@@ -45,9 +45,15 @@ export function getFontSize(textSize) {
 export const MAGAZINE_TYPES = {
   NR: 'nr',
   BS: 'bs',
+  VC: 'vc',
 };
 
 export const MAGAZINE_NAMES = {
   [MAGAZINE_TYPES.NR]: 'Il Nuovo Rinascimento',
   [MAGAZINE_TYPES.BS]: 'Buddismo e Società',
+  [MAGAZINE_TYPES.VC]: 'ILVOLOCONTINUO.IT',
+};
+
+export const MAGAZINE_SUBTITLES = {
+  [MAGAZINE_TYPES.VC]: 'Il giornale online del gruppo giovani',
 };
