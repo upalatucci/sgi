@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet, Text} from 'react-native';
 import {getJsonData} from '../api';
 import PostsItem from '../components/PostsItem';
+import {TitleStyle, Colors} from '../styles';
 
-export default ({uri, entrypoint, title, navigation}) => {
+export default ({uri, entrypoint, title}) => {
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(false);
   const [postsPage, setPostsPage] = useState(1);
@@ -31,13 +32,6 @@ export default ({uri, entrypoint, title, navigation}) => {
       })
       .finally(() => setLoading(false));
   }, [uri, entrypoint, postsPage]);
-
-  useEffect(() => {
-    navigation.setParams({
-      title,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title]);
 
   useEffect(() => {
     setContent([]);
@@ -70,5 +64,10 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
+  },
+  title: {
+    ...TitleStyle,
+    paddingHorizontal: 10,
+    color: Colors.dark,
   },
 });

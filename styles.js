@@ -2,6 +2,8 @@ import {Platform} from 'react-native';
 
 export const Colors = {
   blue: '#4479A2',
+  lightBlue: '#00A2C3',
+  darkBlue: '#004664',
   indigo: '#6610f2',
   purple: '#6f42c1',
   pink: '#e83e8c',
@@ -26,6 +28,7 @@ export const Colors = {
   error: '#dc3545',
   voloContinuo: '#4a8eff',
   riviste: '#b8d6e0',
+  background: '#F8F8F8',
 };
 
 export const FontFamilies = {

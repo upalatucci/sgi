@@ -20,10 +20,13 @@ const persistConfig = {
 };
 
 const persistedMagazineReducer = persistReducer(persistConfig, magazineReducer);
-const persistedUiReducer = persistReducer({
-  ...persistConfig,
-  whitelist: ["textSize"]
-}, uiRecuder)
+const persistedUiReducer = persistReducer(
+  {
+    ...persistConfig,
+    whitelist: ['textSize'],
+  },
+  uiRecuder,
+);
 
 const rootReduced = combineReducers({
   magazine: persistedMagazineReducer,

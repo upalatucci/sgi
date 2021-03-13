@@ -20,7 +20,7 @@ import logo from '../assets/logo.png';
 import FeatherWrite from '../components/icons/FeatherWrite';
 import HomeMagazineCard from '../components/home/HomeMagazineCard';
 import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
-import { MAGAZINE_TYPES } from '../utils';
+import {MAGAZINE_TYPES} from '../utils';
 
 const Home = ({
   lastBS,
@@ -51,25 +51,19 @@ const Home = ({
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={styles.welcome}>
-          <Image source={logoSGI} style={styles.image} />
-        </View>
         <View style={styles.newsSsection}>
-  
           <TouchableHighlight
             style={styles.cardHighlight}
             onPress={() =>
               Actions.posts({
-                title: 'News',
+                title: 'In primo piano',
                 uri: 'news',
                 entrypoint: SGI_ENTRYPOINT,
               })
             }>
             <View style={[styles.card, {backgroundColor: Colors.light}]}>
               <Image source={logo} style={styles.cardImage} />
-              <Text style={[styles.cardTitle]}>
-                News
-              </Text>
+              <Text style={[styles.cardTitle]}>News</Text>
             </View>
           </TouchableHighlight>
 
@@ -78,9 +72,7 @@ const Home = ({
             onPress={() => Actions.buddismo()}>
             <View style={[styles.card, {backgroundColor: Colors.light}]}>
               <Image source={logo} style={styles.cardImage} />
-              <Text style={[styles.cardTitle]}>
-                Buddismo
-              </Text>
+              <Text style={[styles.cardTitle]}>Buddismo</Text>
             </View>
           </TouchableHighlight>
         </View>
@@ -191,33 +183,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.backgroundColorPrimary,
   },
-  welcome: {
-    height: 160,
-    width: '100%',
-    padding: 20,
-    backgroundColor: 'white',
-    ...DefaultShadow,
-    borderBottomRightRadius: 30,
-    borderBottomLeftRadius: 30,
-  },
-  image: {
-    width: '100%',
-    height: '80%',
-    resizeMode: 'contain',
-  },
-  welcomeTitle: {
-    ...TitleStyle,
-    fontSize: 20,
-  },
   newsSsection: {
     marginTop: 20,
-    width: "100%",
+    width: '100%',
     height: 200,
     backgroundColor: Colors.secondary,
     flex: 1,
-    flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "center"
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'center',
   },
   buddismoImageStyle: {
     height: 120,
@@ -226,7 +200,7 @@ const styles = StyleSheet.create({
   },
   cardHighlight: {
     margin: 20,
-    padding: 20
+    padding: 20,
   },
   card: {
     ...DefaultShadow,
@@ -235,8 +209,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     flex: 1,
-    width: "100%",
-  }, 
+    width: '100%',
+  },
   cardImage: {
     height: 100,
     width: 100,

@@ -7,7 +7,6 @@ export const NR_ENTRYPOINT =
 
 export function getJsonData(url, parameters, entrypoint = SGI_ENTRYPOINT) {
   let completeUrl = [entrypoint, url].join('/');
-
   if (parameters) {
     const queryParam = new URLSearchParams(parameters);
     completeUrl += `?${queryParam.toString()}`;

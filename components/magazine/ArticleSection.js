@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Image} from 'react-native';
 import {
   DefaultShadow,
   DefaultBorderRadius,
@@ -26,7 +26,7 @@ export default ({section, magazine}) => {
         const formattedExcerpt = article.excerpt
           .trim()
           .replace(/(\r\n|\n|\r|<br ?\/>)/gm, ' ');
-
+        console.log(article);
         return (
           <TouchableHighlight
             key={key}
@@ -39,6 +39,9 @@ export default ({section, magazine}) => {
               })
             }>
             <View style={styles.container}>
+              {!!article.image && (
+                <Image source={{uri: article.image}} style={styles.image} />
+              )}
               <Text
                 style={[
                   styles.title,
@@ -79,6 +82,7 @@ const styles = StyleSheet.create({
   },
   title: {
     ...TitleStyle,
+    color: 'black',
   },
   subtitle: {
     fontSize: 16,
@@ -90,6 +94,12 @@ const styles = StyleSheet.create({
   },
   category: {
     fontWeight: 'bold',
-    color: Colors.gray,
+    color: Colors.lightBlue,
+  },
+  image: {
+    height: 150,
+    width: '100%',
+    resizeMode: 'center',
+    borderRadius: 10,
   },
 });

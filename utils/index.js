@@ -43,11 +43,11 @@ export function getFontSize(textSize) {
 }
 
 export const MAGAZINE_TYPES = {
-  NR: "nr",
-  BS: "bs"
-}
+  NR: 'nr',
+  BS: 'bs',
+};
 
 export const MAGAZINE_NAMES = {
-  [MAGAZINE_TYPES.NR]: "Nuovo Rinascimento",
-  [MAGAZINE_TYPES.BS]: "Buddismo e Società"
-}
+  [MAGAZINE_TYPES.NR]: 'Il Nuovo Rinascimento',
+  [MAGAZINE_TYPES.BS]: 'Buddismo e Società',
+};

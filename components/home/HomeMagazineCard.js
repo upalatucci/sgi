@@ -1,6 +1,6 @@
-import React from 'react'
-import {StyleSheet, Text, View, Image} from 'react-native'
-import { MAGAZINE_NAMES } from '../../utils'
+import React from 'react';
+import {StyleSheet, Text, View, Image} from 'react-native';
+import {MAGAZINE_NAMES} from '../../utils';
 import TouchableHighlight from '../CustomTouchableHighlight';
 import HomeLinearGradient from './HomeLinearGradient';
 import {Actions} from 'react-native-router-flux';
@@ -10,34 +10,29 @@ export default ({magazine, magazineType}) => (
   <TouchableHighlight
     style={styles.margin}
     onPress={() => {
-      if (Actions.currentScene !== "magazine" && magazine)
+      if (Actions.currentScene !== 'magazine' && magazine) {
+        console.log(magazine, magazineType);
         Actions.magazine({
           number: magazine,
           magazine: magazineType,
-        })
+        });
+      }
     }}>
     <HomeLinearGradient style={[styles.card, {backgroundColor: Colors.light}]}>
       <View style={styles.cardText}>
-        <Text style={[styles.cardSubTitle]}>
-          {magazine?.number_desc}
-        </Text>
-        <Text style={[styles.cardTitle]}>
-          {MAGAZINE_NAMES[magazineType]}
-        </Text>
+        <Text style={[styles.cardSubTitle]}>{magazine?.number_desc}</Text>
+        <Text style={[styles.cardTitle]}>{MAGAZINE_NAMES[magazineType]}</Text>
       </View>
       <View style={styles.magazineImagesContainer}>
-        <Image
-          source={{uri: magazine?.cover}}
-          style={styles.magazineImage}
-        />
+        <Image source={{uri: magazine?.cover}} style={styles.magazineImage} />
       </View>
     </HomeLinearGradient>
   </TouchableHighlight>
-)
+);
 
 const styles = StyleSheet.create({
   margin: {
-    margin: 20
+    margin: 20,
   },
   magazineImage: {
     height: 220,
@@ -45,11 +40,11 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   magazineImagesContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 70,
-    left: "40%",
-    transform: [{rotateZ: "10deg"}],
-    zIndex: 0
+    left: '40%',
+    transform: [{rotateZ: '10deg'}],
+    zIndex: 0,
   },
   card: {
     ...DefaultShadow,
@@ -58,26 +53,27 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: 160,
-    position: "relative",
-    overflow: "hidden"
+    position: 'relative',
+    overflow: 'hidden',
   },
   cardText: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
+    flexDirection: 'column',
+    justifyContent: 'center',
     paddingHorizontal: 20,
     paddingTop: 30,
-    zIndex: 1
+    zIndex: 1,
   },
   cardTitle: {
     fontFamily: FontFamilies.primary,
-    flexWrap: "wrap",
+    flexWrap: 'wrap',
     flex: 1,
     fontSize: 24,
     color: 'white',
+    width: '50%',
   },
   cardSubTitle: {
     fontFamily: FontFamilies.primary,
-    color: "white"
+    color: 'white',
   },
-})
+});

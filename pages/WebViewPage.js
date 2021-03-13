@@ -16,13 +16,6 @@ export default class WebViewPage extends React.Component {
       return true;
     }
 
-    if (this.props.title !== newProps.title) {
-      this.props.navigation.setParams({
-        title: newProps.title,
-      });
-      return true;
-    }
-
     if (this.props.uri !== newProps.uri) {
       this.setState({loading: true});
       return true;

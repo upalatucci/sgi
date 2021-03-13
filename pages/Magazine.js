@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Image, Dimensions, Text} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Image,
+  Dimensions,
+  Text,
+  View,
+} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {getJsonData} from '../api';
@@ -7,10 +14,11 @@ import Loading from '../components/Loading';
 import {subscriptionDataForMagazine} from '../services/auth';
 import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
 import ArticleSection from '../components/magazine/ArticleSection';
-import {PrimaryButtonStyle, PrimaryButtonTitleStyle} from '../styles';
+import {Colors} from '../styles';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
-import {downloadAndOpenPDF} from '../utils';
+import {downloadAndOpenPDF, MAGAZINE_NAMES} from '../utils';
 import {SET_MAGAZINE_CACHE, SHOW_MODAL} from '../store/mutations';
+import LinearGradient from 'react-native-linear-gradient';
 
 const windowHeight = Dimensions.get('window').height;
 const Magazine = React.memo(
@@ -36,6 +44,7 @@ const Magazine = React.memo(
     }
 
     useEffect(() => {
+      console.log(magazine, number);
       if (!subscriptionInfo || !magazine || !number) {
         return;
       }
@@ -76,11 +85,24 @@ const Magazine = React.memo(
 
     return (
       <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerItem} />
+          <Text style={[styles.headerItem, styles.headerTitle]}>
+            {MAGAZINE_NAMES[magazine]}
+          </Text>
+          <Text style={[styles.headerItem, styles.headerNumber]}>
+            {number.number}
+          </Text>
+        </View>
         <Image style={styles.image} source={{uri: number.cover}} />
-        <TouchableHighlight
-          onPress={downloadPDFRequest}
-          style={styles.loginButton}>
-          <Text style={styles.loginTextButton}>Scarica PDF</Text>
+        <TouchableHighlight onPress={downloadPDFRequest}>
+          <LinearGradient
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
+            colors={[Colors.lightBlue, Colors.darkBlue]}
+            style={styles.downloadButton}>
+            <Text style={styles.downloadButtonText}>Scarica PDF</Text>
+          </LinearGradient>
         </TouchableHighlight>
         {Object.entries(magazineContent.summary).map(([key, section]) => (
           <ArticleSection key={key} section={section} magazine={magazine} />
@@ -110,6 +132,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Magazine);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.background,
   },
   image: {
     width: '100%',
@@ -117,14 +140,41 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
     margin: 10,
   },
-  loginButton: {
-    ...PrimaryButtonStyle,
+  downloadButton: {
+    backgroundColor: Colors.darkBlue,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
     alignSelf: 'center',
-    width: 200,
+    width: 120,
     marginTop: 20,
+    height: 35,
     marginBottom: 0,
   },
-  loginTextButton: {
-    ...PrimaryButtonTitleStyle,
+  downloadButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  header: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 20,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    width: '80%',
+    textAlign: 'center',
+  },
+  headerNumber: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.orange,
+  },
+  headerItem: {
+    width: '10%',
   },
 });
