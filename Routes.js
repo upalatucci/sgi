@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {BackHandler, StyleSheet} from 'react-native';
 import {Drawer, Router, Scene, Stack, Actions} from 'react-native-router-flux';
 
 import {Colors} from './styles';
@@ -18,6 +18,7 @@ import PostPage from './pages/PostPage';
 import Home from './pages/Home';
 import Article from './pages/Article';
 import Magazine from './pages/Magazine';
+import Login from './pages/Login';
 
 import ChangeFontSizeContainer from './components/ChangeFontSizeContainer';
 import CustomDrawer from './components/Drawer';
@@ -35,10 +36,12 @@ function Routes() {
           backButtonTintColor={Colors.primary}>
           <Scene
             key="home"
+            type="reset"
             component={Home}
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}
           />
+          <Scene key="login" component={Login} hideNavBar type="reset" />
           <Scene
             key="posts"
             navigationBarStyle={styles.navbar}

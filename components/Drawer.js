@@ -8,9 +8,11 @@ import X from '../assets/x.svg';
 
 export default () => (
   <View style={styles.container}>
-    <View style={styles.x}>
-      <TouchableHighlight onPress={() => Actions.pop()}>
-        <WithLocalSvg width={20} height={20} asset={X} />
+    <View>
+      <TouchableHighlight
+        style={styles.xTouchWidth}
+        onPress={() => Actions.pop()}>
+        <WithLocalSvg style={styles.x} width={20} height={20} asset={X} />
       </TouchableHighlight>
     </View>
     <TouchableHighlight onPress={() => Actions.home()}>
@@ -63,9 +65,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'white',
   },
+  xTouchWidth: {
+    width: 60,
+  },
   x: {
-    paddingVertical: 15,
-    marginHorizontal: 15,
+    margin: 15,
     fontSize: 30,
     color: 'white',
     width: 20,

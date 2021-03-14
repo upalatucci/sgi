@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
-import {SGI_ENTRYPOINT} from '../api';
+import {SGI_ENTRYPOINT, VOLO_ENTRYPOINT} from '../api';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import HomeMagazineCard from '../components/home/HomeMagazineCard';
 import {login} from '../services/auth';
@@ -17,7 +17,7 @@ import {
 } from '../store/magazineAction';
 import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
 import {Colors, DefaultShadow} from '../styles';
-import {MAGAZINE_TYPES} from '../utils';
+import {MAGAZINE_NAMES, MAGAZINE_TYPES} from '../utils';
 
 const Home = ({
   lastBS,
@@ -132,7 +132,16 @@ const Home = ({
         </View>
         <HomeMagazineCard magazine={lastNR} magazineType={MAGAZINE_TYPES.NR} />
         <HomeMagazineCard magazine={lastBS} magazineType={MAGAZINE_TYPES.BS} />
-        <HomeMagazineCard magazineType={MAGAZINE_TYPES.VC} />
+        <HomeMagazineCard
+          magazineType={MAGAZINE_TYPES.VC}
+          onPress={() =>
+            Actions.posts({
+              title: MAGAZINE_NAMES.VC,
+              uri: 'posts',
+              entrypoint: VOLO_ENTRYPOINT,
+            })
+          }
+        />
 
         {/* <View style={styles.homeSection}>
           <Text style={styles.homeTitle}>LA SOKA GAKKAI ITALIANA NEL WEB</Text>

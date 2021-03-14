@@ -7,7 +7,7 @@ import CustomWebView from '../components/CustomWebView';
 import {SET_POST_CACHE} from '../store/mutations';
 
 function PostPage(props) {
-  const {id, uri, entrypoint, title, storedPosts, cachePost} = props;
+  const {id, uri, entrypoint, storedPosts, cachePost} = props;
   const [content, setContent] = useState(null);
 
   useEffect(() => {

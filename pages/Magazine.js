@@ -29,6 +29,7 @@ const Magazine = React.memo(
     storedMagazines,
     cacheMagazine,
     launchError,
+    isLogged,
   }) => {
     const [magazineContent, setMagazineContent] = useState();
     const [loadingPDF, setLoadingPDF] = useState(false);
@@ -75,6 +76,16 @@ const Magazine = React.memo(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [number, magazine, subscriptionInfo]);
 
+    if (!isLogged) {
+      Actions.login({
+        nextScene: 'magazine',
+        nextSceneProps: {
+          number,
+          magazine,
+        },
+      });
+    }
+
     if (!subscriptionInfo) {
       Actions.magazines({onBack: () => Actions.home()});
     }
@@ -116,6 +127,7 @@ function mapStateToProps(state) {
   return {
     subscriptionInfo: state.magazine.subscriptionInfo,
     storedMagazines: state.magazine.cachedMagazines,
+    isLogged: state.magazine.isLogged,
   };
 }
 

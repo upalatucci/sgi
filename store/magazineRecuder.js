@@ -6,6 +6,7 @@ import {
   SET_MAGAZINE_CACHE,
   SET_ARTICLE_CACHE,
   SET_POST_CACHE,
+  LOGIN,
 } from './mutations';
 
 import {generateSignToken} from '../services/auth';
@@ -18,11 +19,17 @@ const initialState = {
   cachedMagazines: {},
   cachedArticles: {},
   cachedPosts: {},
+  isLogged: false,
 };
 
 export default function (state = initialState, {type, payload}) {
   console.log(type, payload);
   switch (type) {
+    case LOGIN:
+      return {
+        ...state,
+        isLogged: true,
+      };
     case SET_MAGAZINE_CACHE:
       return {
         ...state,

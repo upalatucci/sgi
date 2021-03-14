@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, {Line, G} from 'react-native-svg';
 
 export default () => (
-  <Svg width={30} height={7} viewBox="0 0 32 7">
+  <Svg width={50} height={50} style={{marginLeft: 6}} viewBox="0 0 50 7">
     <G transform="translate(-19.5 -37.5)">
       <Line
         x2={30}

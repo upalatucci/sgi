@@ -6,11 +6,13 @@ import HomeLinearGradient from './HomeLinearGradient';
 import {Actions} from 'react-native-router-flux';
 import {Colors, FontFamilies, DefaultShadow} from '../../styles';
 
-export default ({magazine, magazineType}) => (
+export default ({magazine, magazineType, onPress}) => (
   <TouchableHighlight
     style={styles.margin}
     onPress={() => {
-      if (Actions.currentScene !== 'magazine' && magazine) {
+      if (onPress) {
+        onPress();
+      } else if (Actions.currentScene !== 'magazine' && magazine) {
         console.log(magazine, magazineType);
         Actions.magazine({
           number: magazine,
@@ -48,13 +50,13 @@ const styles = StyleSheet.create({
   },
   magazineImage: {
     height: 220,
-    width: 200,
+    width: 150,
     resizeMode: 'contain',
   },
   magazineImagesContainer: {
     position: 'absolute',
     top: 50,
-    left: '40%',
+    left: '50%',
     transform: [{rotateZ: '10deg'}],
     zIndex: 0,
   },
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     fontSize: 24,
     color: 'white',
-    width: '60%',
+    width: '50%',
   },
   cardTitleWide: {
     width: '100%',
