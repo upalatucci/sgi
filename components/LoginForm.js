@@ -12,9 +12,8 @@ import {
 import TouchableHighlight from './CustomTouchableHighlight';
 import {Colors, FontFamilies} from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
-import X from '../assets/x.svg';
-import {WithLocalSvg} from 'react-native-svg';
-import {Actions} from 'react-native-router-flux';
+import EmailIcon from '../assets/email.png';
+import PasswordIcon from '../assets/password.png';
 
 const LoginForm = ({onLogin}) => {
   const [username, setUsername] = useState('');
@@ -24,38 +23,41 @@ const LoginForm = ({onLogin}) => {
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <View style={styles.xView}>
-        <TouchableHighlight
-          style={styles.xTouchWidth}
-          onPress={() => Actions.home()}>
-          <WithLocalSvg style={styles.x} width={20} height={20} asset={X} />
-        </TouchableHighlight>
-      </View>
       <View style={styles.containerImages}>
         <View style={styles.logoView}>
           <Image source={require('../assets/sgi.png')} style={styles.image} />
         </View>
       </View>
       <View style={styles.containerLogin}>
-        <TextInput
-          style={styles.inputs}
-          autoCompleteType="username"
-          value={username}
-          placeholder="e-mail"
-          placeholderTextColor="white"
-          onChangeText={(text) => setUsername(text)}
-          keyboardType="email-address"
-        />
-        <TextInput
-          style={[styles.inputs, styles.lastInput]}
-          secureTextEntry
-          autoCompleteType="password"
-          value={password}
-          placeholder="password"
-          placeholderTextColor="white"
-          placeholderStyle={styles.placeholder}
-          onChangeText={(text) => setPassword(text)}
-        />
+        <View style={styles.inputContainer}>
+          <View style={styles.iconsView}>
+            <Image source={EmailIcon} style={styles.icons} />
+          </View>
+          <TextInput
+            style={styles.inputs}
+            autoCompleteType="username"
+            value={username}
+            placeholder="e-mail"
+            placeholderTextColor="white"
+            onChangeText={(text) => setUsername(text)}
+            keyboardType="email-address"
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <View style={styles.iconsView}>
+            <Image source={PasswordIcon} style={styles.icons} />
+          </View>
+          <TextInput
+            style={[styles.inputs, styles.lastInput]}
+            secureTextEntry
+            autoCompleteType="password"
+            value={password}
+            placeholder="password"
+            placeholderTextColor="white"
+            placeholderStyle={styles.placeholder}
+            onChangeText={(text) => setPassword(text)}
+          />
+        </View>
         <TouchableHighlight
           onPress={() =>
             Linking.openURL(
@@ -107,18 +109,6 @@ const styles = StyleSheet.create({
     margin: 40,
     justifyContent: 'space-between',
   },
-  xView: {
-    position: 'absolute',
-    width: 40,
-    height: 40,
-    top: -5,
-    left: -5,
-  },
-  xTouchWidth: {
-    width: '100%',
-    height: '100%',
-    padding: 10,
-  },
   containerLogin: {
     flex: 1,
     alignContent: 'center',
@@ -131,6 +121,15 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    marginLeft: 30,
+    marginRight: 10,
+    maxWidth: 500,
+    height: 60,
   },
   inputs: {
     width: '100%',
@@ -201,5 +200,15 @@ const styles = StyleSheet.create({
   },
   boldText: {
     fontWeight: 'bold',
+  },
+  icons: {
+    width: '90%',
+    height: '90%',
+  },
+  iconsView: {
+    width: 40,
+    height: 40,
+    borderBottomColor: 'white',
+    borderBottomWidth: 1,
   },
 });

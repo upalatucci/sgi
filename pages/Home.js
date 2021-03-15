@@ -17,7 +17,8 @@ import {
 } from '../store/magazineAction';
 import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
 import {Colors, DefaultShadow} from '../styles';
-import {MAGAZINE_NAMES, MAGAZINE_TYPES} from '../utils';
+import {MAGAZINE_NAMES, MAGAZINE_TYPES, SGI_SITES} from '../utils';
+import SiteCard from '../components/home/SiteCard';
 
 const Home = ({
   lastBS,
@@ -91,38 +92,6 @@ const Home = ({
             </TouchableHighlight>
           </View>
         </View>
-        {/* <TouchableHighlight
-          style={styles.cardHighlight}
-          onPress={() =>
-            Actions.posts({
-              title: 'News',
-              uri: 'news',
-              entrypoint: SGI_ENTRYPOINT,
-            })
-          }>
-          <View style={[styles.card, {backgroundColor: Colors.light}]}>
-            <Text style={[styles.cardTitle, {color: Colors.blue}]}>News</Text>
-            <View>
-              <TouchableHighlight
-                style={styles.cardHighlight}
-                onPress={() =>
-                  lastNews
-                    ? Actions.postPage({
-                        id: lastNews.id,
-                        entrypoint: SGI_ENTRYPOINT,
-                        uri: 'news',
-                        title: lastNews.title,
-                      })
-                    : null
-                }>
-                <Image
-                  source={{uri: lastNews ? lastNews.image : null}}
-                  style={styles.cardImage}
-                />
-              </TouchableHighlight>
-            </View>
-          </View>
-        </TouchableHighlight> */}
 
         <View style={styles.homeSection}>
           <Text style={styles.homeTitle}>LE ULTIME USCITE</Text>
@@ -134,6 +103,7 @@ const Home = ({
         <HomeMagazineCard magazine={lastBS} magazineType={MAGAZINE_TYPES.BS} />
         <HomeMagazineCard
           magazineType={MAGAZINE_TYPES.VC}
+          background={require('../assets/ilvolocontinuo.it.png')}
           onPress={() =>
             Actions.posts({
               title: MAGAZINE_NAMES.VC,
@@ -143,70 +113,14 @@ const Home = ({
           }
         />
 
-        {/* <View style={styles.homeSection}>
-          <Text style={styles.homeTitle}>LA SOKA GAKKAI ITALIANA NEL WEB</Text>
-        </View> */}
-        {/* <TouchableHighlight
-          style={styles.cardHighlight}
-          onPress={() => Actions.frasedelgiorno()}>
-          <View style={[styles.card, {backgroundColor: Colors.light}]}>
-            <View>
-              <FeatherWrite color={Colors.blue} height={120} width={100} />
-            </View>
-            <Text style={[styles.cardTitle, {color: Colors.blue}]}>
-              Frase Del Giorno
-            </Text>
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          style={styles.cardHighlight}
-          onPress={() =>
-            Actions.posts({
-              title: 'Il Volo Continuo',
-              uri: 'posts',
-              entrypoint: VOLO_ENTRYPOINT,
-            })
-          }>
-          <View
-            style={[
-              styles.card,
-              styles.cardImageVolo,
-              {backgroundColor: Colors.blue},
-            ]}>
-            <Image
-              source={voloContinuoImage}
-              style={[styles.cardImage, styles.imageVolo]}
-            />
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          style={styles.cardHighlight}
-          onPress={() =>
-            Actions.webview({
-              title: 'Spazio Aderenti',
-              uri: 'https://servizi.sgi-italia.org/aderenti/',
-            })
-          }>
-          <View style={[styles.card, {backgroundColor: Colors.light}]}>
-            <Text style={[styles.cardTitle, {color: Colors.blue}]}>
-              Spazio Aderenti
-            </Text>
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          style={styles.cardHighlight}
-          onPress={() =>
-            Linking.openURL('https://servizi.sgi-italia.org/abbonamenti/')
-          }>
-          <View style={[styles.card, {backgroundColor: Colors.light}]}>
-            <Text style={[styles.cardTitle, {color: Colors.blue}]}>
-              Spazio Abbonamenti
-            </Text>
-          </View>
-        </TouchableHighlight> */}
+        <ScrollView
+          style={styles.siteScroll}
+          horizontal={true}
+          contentContainerStyle={styles.siteScrollContainer}>
+          {SGI_SITES.map((site) => (
+            <SiteCard {...site} key={site.title} />
+          ))}
+        </ScrollView>
       </ScrollView>
     </View>
   );
@@ -293,6 +207,14 @@ const styles = StyleSheet.create({
   },
   homeLink: {
     color: Colors.orange,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+  },
+  siteScroll: {
+    height: 150,
+  },
+  siteScrollContainer: {
+    paddingHorizontal: 10,
   },
 });
 

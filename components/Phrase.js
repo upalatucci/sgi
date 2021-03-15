@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 20,
     maxWidth: 700,
-    minHeight: 400,
+    minHeight: 300,
   },
   flex: {
     flex: 1,

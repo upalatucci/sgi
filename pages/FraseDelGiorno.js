@@ -29,9 +29,7 @@ export default () => {
   } else {
     const phrases = Object.values(content);
     return (
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.container}>
+      <ScrollView style={styles.scroll}>
         <Phrase phrase={phrases[0]} />
         <Phrase phrase={phrases[1]} />
       </ScrollView>

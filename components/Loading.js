@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useCallback} from 'react';
 import {View, Text, StyleSheet, Animated, Easing} from 'react-native';
+import {Colors} from '../styles';
 
 export default ({absolutePositioning = true, withText = true}) => {
   const rotation = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
@@ -84,9 +85,9 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 40,
-    borderColor: 'rgb(200, 200, 200)',
-    borderTopColor: 'rgb(100, 100, 100)',
-    borderWidth: 5,
+    borderTopColor: 'white',
+    borderColor: Colors.lightBlue,
+    borderWidth: 2,
   },
   containerAbsolutePosition: {
     position: 'absolute',

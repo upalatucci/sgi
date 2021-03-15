@@ -36,6 +36,29 @@ export function downloadAndOpenPDF(pdfUri, name) {
   });
 }
 
+const monthNames = [
+  'gennaio',
+  'febbraio',
+  'marzo',
+  'aprile',
+  'maggio',
+  'giugno',
+  'luglio',
+  'agosto',
+  'settembre',
+  'ottobre',
+  'novembre',
+  'dicembre',
+];
+
+export function transformDate(dateString) {
+  const [day, month, year] = dateString.split('/');
+  const date = new Date(year, month - 1, day);
+  return `${date.getDate()} ${
+    monthNames[date.getMonth()]
+  } ${date.getFullYear()}`;
+}
+
 export const possibleTextSizes = [0, 1, 2];
 
 export function getFontSize(textSize) {
@@ -64,3 +87,36 @@ export const MAGAZINE_DESCRIPTION = {
   [MAGAZINE_TYPES.BS]:
     'Bimestrale pubblicato dal 1986 al 2000 con il nome di DuemilaUno e oggi mensile, approfondisce temi legati alla filosofia buddista e all’attualità. Riporta gli scritti di Nichiren Daishonin commentati da Daisaku Ikeda, che costituiscono il materiale di studio mensile e uno speciale monografico, corredato in genere da una o più interviste.',
 };
+
+export const SGI_SITES = [
+  {
+    icon: require('../assets/sites/senzatomica.svg'),
+    title: 'Senzatomnica',
+    link: 'https://www.senzatomica.it/',
+  },
+  {
+    icon: require('../assets/sites/esperia.svg'),
+    title: 'Esperia',
+    link: 'https://esperiashop.it/',
+  },
+  {
+    icon: require('../assets/sites/ottopermille.svg'),
+    title: '8x1000',
+    link: 'https://www.sgi-italia.org/8x1000/',
+  },
+  {
+    icon: require('../assets/sites/bs.svg'),
+    title: 'Buddismo e Società',
+    link: 'https://buddismoesocieta.org/',
+  },
+  {
+    icon: require('../assets/sites/nr.svg'),
+    title: 'Il Nuovo Rinascimento',
+    link: 'https://ilnuovorinascimento.org/',
+  },
+  {
+    icon: require('../assets/sites/ilvolocontinuo.svg'),
+    title: 'Il Volo Continuo',
+    link: 'https://www.ilvolocontinuo.it/',
+  },
+];

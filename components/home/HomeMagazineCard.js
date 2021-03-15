@@ -6,7 +6,7 @@ import HomeLinearGradient from './HomeLinearGradient';
 import {Actions} from 'react-native-router-flux';
 import {Colors, FontFamilies, DefaultShadow} from '../../styles';
 
-export default ({magazine, magazineType, onPress}) => (
+export default ({magazine, magazineType, onPress, background}) => (
   <TouchableHighlight
     style={styles.margin}
     onPress={() => {
@@ -21,6 +21,7 @@ export default ({magazine, magazineType, onPress}) => (
       }
     }}>
     <HomeLinearGradient style={[styles.card, {backgroundColor: Colors.light}]}>
+      <Image source={background} style={styles.backgroundImage} />
       <View style={styles.cardText}>
         {magazine?.number_desc ? (
           <Text style={[styles.cardDate]}>{magazine?.number_desc}</Text>
@@ -95,5 +96,10 @@ const styles = StyleSheet.create({
   cardSubtitle: {
     fontFamily: FontFamilies.primary,
     color: 'white',
+  },
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
   },
 });

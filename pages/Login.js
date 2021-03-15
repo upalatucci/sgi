@@ -1,5 +1,5 @@
 import React, {useEffect, useReducer} from 'react';
-import {BackHandler, SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -9,6 +9,9 @@ import Modal from '../components/Modal';
 import {login} from '../services/auth';
 import {LOGIN, SET_SUBSCRIPTION_INFO} from '../store/mutations';
 import {Colors} from '../styles';
+import X from '../assets/x.svg';
+import {WithLocalSvg} from 'react-native-svg';
+import TouchableHighlight from '../components/CustomTouchableHighlight';
 
 const initialState = {
   logged: false,
@@ -95,6 +98,13 @@ const Login = ({
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.xView}>
+        <TouchableHighlight
+          style={styles.xTouchWidth}
+          onPress={() => Actions.home()}>
+          <WithLocalSvg style={styles.x} width={20} height={20} asset={X} />
+        </TouchableHighlight>
+      </View>
       <LoginForm onLogin={onLogin} />
 
       <Modal
@@ -110,6 +120,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.blue,
+  },
+  xView: {
+    position: 'absolute',
+    width: 40,
+    height: 40,
+    top: 10,
+    left: 10,
+  },
+  xTouchWidth: {
+    width: '100%',
+    height: '100%',
+    padding: 10,
   },
 });
 

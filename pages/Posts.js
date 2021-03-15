@@ -59,8 +59,8 @@ export default ({uri, entrypoint, title}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
     paddingHorizontal: 10,
+    backgroundColor: Colors.background,
   },
   list: {
     flex: 1,
