@@ -113,6 +113,9 @@ const Home = ({
           }
         />
 
+        <View style={styles.homeSection}>
+          <Text style={styles.homeTitle}>LA SOKA GAKKAI ITALIANA NEL WEB</Text>
+        </View>
         <ScrollView
           style={styles.siteScroll}
           horizontal={true}
@@ -194,6 +197,7 @@ const styles = StyleSheet.create({
     maxWidth: 400,
   },
   homeSection: {
+    paddingTop: 20,
     paddingHorizontal: 20,
     flex: 1,
     flexDirection: 'row',
@@ -215,6 +219,7 @@ const styles = StyleSheet.create({
   },
   siteScrollContainer: {
     paddingHorizontal: 10,
+    alignItems: 'center',
   },
 });
 

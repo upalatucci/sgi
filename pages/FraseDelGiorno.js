@@ -29,7 +29,9 @@ export default () => {
   } else {
     const phrases = Object.values(content);
     return (
-      <ScrollView style={styles.scroll}>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContainer}>
         <Phrase phrase={phrases[0]} />
         <Phrase phrase={phrases[1]} />
       </ScrollView>
@@ -44,5 +46,8 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  scrollContainer: {
+    alignItems: 'center',
   },
 });

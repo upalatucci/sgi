@@ -91,7 +91,7 @@ export const MAGAZINE_DESCRIPTION = {
 export const SGI_SITES = [
   {
     icon: require('../assets/sites/senzatomica.svg'),
-    title: 'Senzatomnica',
+    title: 'Senzatomica',
     link: 'https://www.senzatomica.it/',
   },
   {
