@@ -15,7 +15,7 @@ import {
   fetchLastNews,
   fetchLastNRImage,
 } from '../store/magazineAction';
-import {SET_SUBSCRIPTION_INFO} from '../store/mutations';
+import {LOGIN, SET_SUBSCRIPTION_INFO} from '../store/mutations';
 import {Colors, DefaultShadow} from '../styles';
 import {MAGAZINE_NAMES, MAGAZINE_TYPES, SGI_SITES} from '../utils';
 import SiteCard from '../components/home/SiteCard';
@@ -27,6 +27,7 @@ const Home = ({
   fetchNR,
   fetchLastNewsAction,
   setSubscriptionInfo,
+  dispatchLogin,
 }) => {
   useEffect(() => {
     // Keychain.resetGenericPassword();
@@ -36,10 +37,11 @@ const Home = ({
           credentials.username,
           credentials.password,
         );
+        dispatchLogin();
         setSubscriptionInfo(response);
       }
     });
-  }, [setSubscriptionInfo]);
+  }, [setSubscriptionInfo, dispatchLogin]);
 
   useEffect(() => {
     fetchBS();
@@ -238,6 +240,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchLastNewsAction: () => dispatch(fetchLastNews()),
     setSubscriptionInfo: (subInfo) =>
       dispatch({type: SET_SUBSCRIPTION_INFO, payload: subInfo}),
+    dispatchLogin: () => dispatch({type: LOGIN}),
   };
 };
 
