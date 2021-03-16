@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BackHandler, StyleSheet} from 'react-native';
 import {Drawer, Router, Scene, Stack, Actions} from 'react-native-router-flux';
 
@@ -25,7 +25,30 @@ import CustomDrawer from './components/Drawer';
 import Menu from './components/icons/Menu';
 import SGILogo from './components/icons/SGILogoHome';
 
+function backHandler() {
+  console.log(Actions.currentScene);
+  switch (Actions.currentScene) {
+    case 'home':
+      BackHandler.exitApp();
+      break;
+    case 'login':
+      Actions.home();
+      break;
+    default:
+      Actions.pop();
+      break;
+  }
+}
+
 function Routes() {
+  useEffect(() => {
+    const backHandlerListener = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backHandler,
+    );
+    return () => backHandlerListener.remove();
+  }, []);
+
   return (
     <Router>
       <Drawer contentComponent={CustomDrawer} drawerIcon={Menu}>

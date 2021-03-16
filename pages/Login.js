@@ -55,11 +55,6 @@ function loginReducer(state, action) {
   }
 }
 
-function backHandler() {
-  console.log('Ciao');
-  Actions.home();
-}
-
 const Login = ({
   isLogged,
   setSubscriptionInfo,
@@ -83,14 +78,6 @@ const Login = ({
       setSubscriptionInfo(response);
     }
   };
-
-  useEffect(() => {
-    const backHandlerListener = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backHandler,
-    );
-    return () => backHandlerListener.remove();
-  }, []);
 
   useEffect(() => {
     if (subscriptionInfo) {

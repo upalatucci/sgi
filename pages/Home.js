@@ -1,12 +1,5 @@
 import React, {useEffect} from 'react';
-import {
-  BackHandler,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -26,11 +19,11 @@ import {
 import {LOGIN, SET_SUBSCRIPTION_INFO} from '../store/mutations';
 import {Colors, DefaultShadow} from '../styles';
 import {
+  deviceSize,
+  DEVICE_SIZES,
   MAGAZINE_NAMES,
   MAGAZINE_TYPES,
   SGI_SITES,
-  deviceSize,
-  DEVICE_SIZES,
 } from '../utils';
 
 const Home = ({
@@ -42,16 +35,6 @@ const Home = ({
   setSubscriptionInfo,
   dispatchLogin,
 }) => {
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        BackHandler.exitApp();
-      },
-    );
-    return () => backHandler.remove();
-  }, []);
-
   useEffect(() => {
     // Keychain.resetGenericPassword();
     Keychain.getGenericPassword().then(async (credentials) => {
