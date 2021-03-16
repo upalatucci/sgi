@@ -62,7 +62,6 @@ const Magazine = React.memo(
         subscriptionDataForMagazine(subscriptionInfo, magazine),
         magazine === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
       ).then((response) => {
-        console.log(response);
         if (response.data.status === 404) {
           Actions.pop();
           launchError(response.message);
@@ -86,11 +85,7 @@ const Magazine = React.memo(
       });
     }
 
-    if (!subscriptionInfo) {
-      Actions.magazines({onBack: () => Actions.home()});
-    }
-
-    if (!magazineContent || loadingPDF) {
+    if (!magazineContent || loadingPDF || !isLogged) {
       return <Loading />;
     }
 
@@ -151,6 +146,7 @@ const styles = StyleSheet.create({
     height: windowHeight / 3,
     resizeMode: 'center',
     margin: 10,
+    borderRadius: 40,
   },
   downloadButton: {
     backgroundColor: Colors.darkBlue,
@@ -178,15 +174,16 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    width: '80%',
+    width: '70%',
     textAlign: 'center',
   },
   headerNumber: {
     fontSize: 20,
     fontWeight: 'bold',
     color: Colors.orange,
+    textAlign: 'right',
   },
   headerItem: {
-    width: '10%',
+    width: '15%',
   },
 });

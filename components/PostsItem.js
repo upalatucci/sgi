@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     marginLeft: 14,
   },
   newsContainer: {
-    height: 150,
+    minHeight: 150,
     marginBottom: 30,
     flexDirection: 'row',
     backgroundColor: 'white',
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 150,
-    height: 150,
+    height: '100%',
     flexDirection: 'row',
     resizeMode: 'cover',
     borderRadius: 14,

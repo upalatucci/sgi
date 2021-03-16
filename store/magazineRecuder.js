@@ -7,9 +7,11 @@ import {
   SET_ARTICLE_CACHE,
   SET_POST_CACHE,
   LOGIN,
+  LOGOUT,
 } from './mutations';
 
 import {generateSignToken} from '../services/auth';
+import * as Keychain from 'react-native-keychain';
 
 const initialState = {
   lastBS: null,
@@ -25,6 +27,15 @@ const initialState = {
 export default function (state = initialState, {type, payload}) {
   console.log(type, payload);
   switch (type) {
+    case LOGOUT:
+      Keychain.resetGenericPassword();
+      return {
+        ...state,
+        isLogged: false,
+        subscriptionInfo: null,
+        cachedMagazines: {},
+        cachedArticles: {},
+      };
     case LOGIN:
       return {
         ...state,

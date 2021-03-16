@@ -3,6 +3,7 @@ import {format} from 'date-fns';
 import {it} from 'date-fns/locale';
 import RNFS from 'react-native-fs';
 import FileViewer from 'react-native-file-viewer';
+import {Dimensions} from 'react-native';
 
 export async function convertHTMLToText(htmlMessage) {
   return new Promise((resolve) => {
@@ -120,3 +121,13 @@ export const SGI_SITES = [
     link: 'https://www.ilvolocontinuo.it/',
   },
 ];
+
+export const DEVICE_SIZES = {
+  SMALL: 'small',
+  MEDIUM: 'medium',
+};
+
+const deviceWidth = Dimensions.get('window').width;
+
+export let deviceSize =
+  deviceWidth > 320 ? DEVICE_SIZES.MEDIUM : DEVICE_SIZES.SMALL;

@@ -31,6 +31,7 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
     <View style={[styles.container]}>
       <FlatList
         style={styles.scrollView}
+        contentContainerStyle={styles.scrollViewContent}
         horizontal
         data={magazines}
         keyExtractor={(item) => item.id.toString()}
@@ -80,5 +81,8 @@ const styles = StyleSheet.create({
   },
   magazineDesc: {
     color: Colors.textGray,
+  },
+  scrollViewContent: {
+    alignItems: 'center',
   },
 });

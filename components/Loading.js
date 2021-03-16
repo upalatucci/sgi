@@ -2,7 +2,11 @@ import React, {useEffect, useRef, useCallback} from 'react';
 import {View, Text, StyleSheet, Animated, Easing} from 'react-native';
 import {Colors} from '../styles';
 
-export default ({absolutePositioning = true, withText = true}) => {
+export default ({
+  absolutePositioning = true,
+  withText = true,
+  textColor = 'black',
+}) => {
   const rotation = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   const spin = useCallback(() => {
@@ -66,7 +70,9 @@ export default ({absolutePositioning = true, withText = true}) => {
             : null,
         ]}
       />
-      {withText ? <Text style={styles.text}>Caricamento...</Text> : null}
+      {withText ? (
+        <Text style={[styles.text, {color: textColor}]}>Caricamento...</Text>
+      ) : null}
     </View>
   );
 };

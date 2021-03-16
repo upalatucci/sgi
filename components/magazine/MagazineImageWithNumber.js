@@ -59,9 +59,9 @@ const styles = StyleSheet.create({
     color: Colors.orange,
   },
   image: {
-    height: 150,
-    flex: 1,
+    height: 100,
     resizeMode: 'contain',
+    borderRadius: 50,
   },
   firstMagazineImage: {
     height: 200,

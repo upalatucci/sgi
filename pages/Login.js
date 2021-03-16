@@ -1,17 +1,16 @@
 import React, {useEffect, useReducer} from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {BackHandler, SafeAreaView, StyleSheet, View} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
+import {WithLocalSvg} from 'react-native-svg';
 import {connect} from 'react-redux';
-import Loading from '../components/Loading';
+import X from '../assets/x.svg';
+import TouchableHighlight from '../components/CustomTouchableHighlight';
 import LoginForm from '../components/LoginForm';
 import Modal from '../components/Modal';
 import {login} from '../services/auth';
 import {LOGIN, SET_SUBSCRIPTION_INFO} from '../store/mutations';
 import {Colors} from '../styles';
-import X from '../assets/x.svg';
-import {WithLocalSvg} from 'react-native-svg';
-import TouchableHighlight from '../components/CustomTouchableHighlight';
 
 const initialState = {
   logged: false,
@@ -56,6 +55,11 @@ function loginReducer(state, action) {
   }
 }
 
+function backHandler() {
+  console.log('Ciao');
+  Actions.home();
+}
+
 const Login = ({
   isLogged,
   setSubscriptionInfo,
@@ -81,6 +85,14 @@ const Login = ({
   };
 
   useEffect(() => {
+    const backHandlerListener = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backHandler,
+    );
+    return () => backHandlerListener.remove();
+  }, []);
+
+  useEffect(() => {
     if (subscriptionInfo) {
       dispatch({type: 'logged'});
     } else {
@@ -88,13 +100,15 @@ const Login = ({
     }
   }, [subscriptionInfo]);
 
-  if (isLogged) {
-    Actions[nextScene](nextSceneProps);
-  }
-
-  if (state.loading || (state.logged && !subscriptionInfo)) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    if (isLogged) {
+      if (Actions[nextScene]) {
+        Actions[nextScene](nextSceneProps);
+      } else {
+        Actions.home();
+      }
+    }
+  }, [isLogged, nextScene, nextSceneProps]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -105,7 +119,10 @@ const Login = ({
           <WithLocalSvg style={styles.x} width={20} height={20} asset={X} />
         </TouchableHighlight>
       </View>
-      <LoginForm onLogin={onLogin} />
+      <LoginForm
+        onLogin={onLogin}
+        loading={state.loading || (state.logged && !subscriptionInfo)}
+      />
 
       <Modal
         modalVisible={state.error !== null}

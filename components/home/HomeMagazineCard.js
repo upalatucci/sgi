@@ -1,6 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import {MAGAZINE_NAMES, MAGAZINE_SUBTITLES, MAGAZINE_TYPES} from '../../utils';
+import {
+  deviceSize,
+  DEVICE_SIZES,
+  MAGAZINE_NAMES,
+  MAGAZINE_SUBTITLES,
+  MAGAZINE_TYPES,
+} from '../../utils';
 import TouchableHighlight from '../CustomTouchableHighlight';
 import HomeLinearGradient from './HomeLinearGradient';
 import {Actions} from 'react-native-router-flux';
@@ -24,16 +30,28 @@ export default ({magazine, magazineType, onPress, background}) => (
       <Image source={background} style={styles.backgroundImage} />
       <View style={styles.cardText}>
         {magazine?.number_desc ? (
-          <Text style={[styles.cardDate]}>{magazine?.number_desc}</Text>
+          <Text
+            style={[
+              styles.cardDate,
+              deviceSize === DEVICE_SIZES.SMALL ? styles.cardDateSmall : null,
+            ]}>
+            {magazine?.number_desc}
+          </Text>
         ) : null}
         <Text
+          textBreakStrategy="simple"
           style={[
             styles.cardTitle,
             magazineType === MAGAZINE_TYPES.VC ? styles.cardTitleWide : null,
+            deviceSize === DEVICE_SIZES.SMALL ? styles.cardTitleSmall : null,
           ]}>
           {MAGAZINE_NAMES[magazineType]}
         </Text>
-        <Text style={[styles.cardSubtitle]}>
+        <Text
+          style={[
+            styles.cardSubtitle,
+            deviceSize === DEVICE_SIZES.SMALL ? styles.cardSubtitleSmall : null,
+          ]}>
           {MAGAZINE_SUBTITLES[magazineType]}
         </Text>
       </View>
@@ -57,7 +75,7 @@ const styles = StyleSheet.create({
   magazineImagesContainer: {
     position: 'absolute',
     top: 50,
-    left: '50%',
+    left: '55%',
     transform: [{rotateZ: '10deg'}],
     zIndex: 0,
   },
@@ -81,10 +99,14 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontFamily: FontFamilies.primary,
-    flexWrap: 'wrap',
-    fontSize: 24,
+    fontSize: 20,
     color: 'white',
-    width: '50%',
+    width: '60%',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+  },
+  cardTitleSmall: {
+    fontSize: 16,
   },
   cardTitleWide: {
     width: '100%',
@@ -93,9 +115,15 @@ const styles = StyleSheet.create({
     fontFamily: FontFamilies.primary,
     color: '#EDF1F2',
   },
+  cardDateSmall: {
+    fontSize: 12,
+  },
   cardSubtitle: {
     fontFamily: FontFamilies.primary,
     color: 'white',
+  },
+  cardSubtitleSmall: {
+    fontSize: 12,
   },
   backgroundImage: {
     width: '100%',

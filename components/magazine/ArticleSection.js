@@ -26,7 +26,6 @@ export default ({section, magazine}) => {
         const formattedExcerpt = article.excerpt
           .trim()
           .replace(/(\r\n|\n|\r|<br ?\/>)/gm, ' ');
-        console.log(article);
         return (
           <TouchableHighlight
             key={key}
@@ -69,8 +68,8 @@ const styles = StyleSheet.create({
     ...DefaultShadow,
     borderRadius: DefaultBorderRadius,
     borderWidth: 1,
-    borderColor: Colors.light,
-    backgroundColor: Colors.light,
+    borderColor: 'white',
+    backgroundColor: 'white',
     padding: 15,
   },
   container: {

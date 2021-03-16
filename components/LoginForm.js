@@ -14,10 +14,15 @@ import {Colors, FontFamilies} from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
 import EmailIcon from '../assets/email.png';
 import PasswordIcon from '../assets/password.png';
+import Loading from './Loading';
 
-const LoginForm = ({onLogin}) => {
+const LoginForm = ({onLogin, loading}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  if (loading) {
+    return <Loading textColor="white" />;
+  }
 
   return (
     <KeyboardAvoidingView
@@ -41,6 +46,7 @@ const LoginForm = ({onLogin}) => {
             placeholderTextColor="white"
             onChangeText={(text) => setUsername(text)}
             keyboardType="email-address"
+            selectionColor="white"
           />
         </View>
         <View style={styles.inputContainer}>
@@ -56,6 +62,7 @@ const LoginForm = ({onLogin}) => {
             placeholderTextColor="white"
             placeholderStyle={styles.placeholder}
             onChangeText={(text) => setPassword(text)}
+            selectionColor="white"
           />
         </View>
         <TouchableHighlight

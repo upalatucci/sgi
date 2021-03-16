@@ -9,3 +9,4 @@ export const SET_MAGAZINE_CACHE = 'SET_MAGAZINE_CACHE';
 export const SET_ARTICLE_CACHE = 'SET_ARTICLE_CACHE';
 export const SET_POST_CACHE = 'SET_POST_CACHE';
 export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';

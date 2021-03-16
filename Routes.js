@@ -80,14 +80,26 @@ function Routes() {
             drawer
             renderRightButton={ChangeFontSizeContainer}
           />
-          <Scene key="magazine" component={Magazine} drawer />
+          <Scene
+            key="magazine"
+            component={Magazine}
+            drawer
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
+          />
           <Scene
             key="article"
             component={Article}
             drawer
             renderRightButton={ChangeFontSizeContainer}
           />
-          <Scene key="webview" component={WebViewPage} drawer />
+          <Scene
+            key="webview"
+            component={WebViewPage}
+            drawer
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
+          />
           <Scene
             key="downloadPdf"
             component={DownloadPDF}

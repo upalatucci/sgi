@@ -24,7 +24,6 @@ export const Colors = {
   danger: '#E02122',
   light: '#f8f9fa',
   dark: '#696969',
-  backgroundColorPrimary: '#eaf3f7',
   error: '#dc3545',
   voloContinuo: '#4a8eff',
   riviste: '#b8d6e0',

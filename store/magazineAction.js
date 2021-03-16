@@ -3,9 +3,14 @@ import {SET_LASR_NR_IMAGE, SET_LASR_BS_IMAGE, SET_LAST_NEWS} from './mutations';
 
 export function fetchLastNRImage() {
   return (dispatch) => {
-    return lastMaganize('nr').then((response) =>
-      dispatch({type: SET_LASR_NR_IMAGE, payload: response.data.number}),
-    );
+    return lastMaganize('nr')
+      .then((response) => {
+        console.log(response);
+        dispatch({type: SET_LASR_NR_IMAGE, payload: response.data.number});
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 }
 
