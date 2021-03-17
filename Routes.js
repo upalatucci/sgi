@@ -27,11 +27,10 @@ import SGILogo from './components/icons/SGILogoHome';
 
 function backHandler() {
   const routes = Actions.prevState.routes[0].routes;
-
   const prevRoute = routes[routes.length - 2];
 
   if (prevRoute && prevRoute.routeName === 'login') {
-    Actions.pop();
+    Actions.home();
     return;
   }
 
