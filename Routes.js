@@ -27,12 +27,14 @@ import SGILogo from './components/icons/SGILogoHome';
 
 function backHandler() {
   const routes = Actions.prevState.routes[0].routes;
+
   const prevRoute = routes[routes.length - 2];
 
-  if (prevRoute.routeName === 'login') {
+  if (prevRoute && prevRoute.routeName === 'login') {
     Actions.pop();
     return;
   }
+
   switch (Actions.currentScene) {
     case 'home':
       BackHandler.exitApp();
@@ -57,7 +59,7 @@ function Routes() {
 
   return (
     <Router>
-      <Drawer contentComponent={CustomDrawer} drawerIcon={Menu}>
+      <Drawer contentComponent={CustomDrawer} drawerIcon={Menu} key="drawer">
         <Stack
           key="root"
           navigationBarStyle={styles.navbar}
