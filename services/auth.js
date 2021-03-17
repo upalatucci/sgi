@@ -29,6 +29,10 @@ export async function login(username, password) {
 }
 
 export function subscriptionDataForMagazine(subscriptionInfo, magazine = 'nr') {
+  if (!subscriptionInfo) {
+    return;
+  }
+
   const magazineSubInfo = {
     riv_nome: subscriptionInfo.riv_nome,
     riv_cognome: subscriptionInfo.riv_cognome,

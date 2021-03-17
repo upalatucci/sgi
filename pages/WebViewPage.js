@@ -40,6 +40,7 @@ export default class WebViewPage extends React.Component {
           injectedJavaScript={
             'document.body.style.overflowX = "none"          '
           }
+          sharedCookiesEnabled={true}
         />
         {this.state.loading ? <Loading /> : null}
       </>

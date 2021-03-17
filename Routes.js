@@ -26,7 +26,9 @@ import Menu from './components/icons/Menu';
 import SGILogo from './components/icons/SGILogoHome';
 
 function backHandler() {
-  console.log(Actions.currentScene);
+  const routes = Actions.prevState.routes[0].routes;
+  const prevRoute = routes[routes.length - 2];
+
   switch (Actions.currentScene) {
     case 'home':
       BackHandler.exitApp();
@@ -35,7 +37,7 @@ function backHandler() {
       Actions.home();
       break;
     default:
-      Actions.pop();
+      Actions.popAndPush(prevRoute.routeName, prevRoute.params);
       break;
   }
 }

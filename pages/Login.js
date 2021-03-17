@@ -73,9 +73,9 @@ const Login = ({
       dispatch({type: 'error', payload: response.riv_message});
     } else {
       dispatch({type: 'logged', payload: response});
-      dispatchLogin();
       await Keychain.setGenericPassword(username, password);
       setSubscriptionInfo(response);
+      dispatchLogin();
     }
   };
 

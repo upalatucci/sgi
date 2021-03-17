@@ -19,6 +19,8 @@ import TouchableHighlight from '../components/CustomTouchableHighlight';
 import {downloadAndOpenPDF, MAGAZINE_NAMES} from '../utils';
 import {SET_MAGAZINE_CACHE, SHOW_MODAL} from '../store/mutations';
 import LinearGradient from 'react-native-linear-gradient';
+import {WithLocalSvg} from 'react-native-svg';
+import GoToMagazines from '../assets/goToMagazines.svg';
 
 const windowHeight = Dimensions.get('window').height;
 const Magazine = React.memo(
@@ -45,14 +47,12 @@ const Magazine = React.memo(
     }
 
     useEffect(() => {
-      console.log(magazine, number);
       if (!subscriptionInfo || !magazine || !number) {
         return;
       }
 
       const cacheKey = `${magazine}-${number.number}`;
 
-      console.log(storedMagazines[cacheKey], storedMagazines);
       if (storedMagazines[cacheKey]) {
         return setMagazineContent(storedMagazines[cacheKey]);
       }
@@ -92,7 +92,16 @@ const Magazine = React.memo(
     return (
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerItem} />
+          <TouchableHighlight
+            onPress={() => Actions.magazines()}
+            style={styles.headerItem}>
+            <WithLocalSvg
+              style={styles.goToMagazinesImage}
+              width={40}
+              height={40}
+              asset={GoToMagazines}
+            />
+          </TouchableHighlight>
           <Text style={[styles.headerItem, styles.headerTitle]}>
             {MAGAZINE_NAMES[magazine]}
           </Text>
@@ -142,7 +151,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   image: {
-    width: '100%',
     height: windowHeight / 3,
     resizeMode: 'center',
     margin: 10,
@@ -185,5 +193,9 @@ const styles = StyleSheet.create({
   },
   headerItem: {
     width: '15%',
+  },
+  goToMagazinesImage: {
+    width: 40,
+    height: 40,
   },
 });

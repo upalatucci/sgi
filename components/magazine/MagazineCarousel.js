@@ -14,6 +14,10 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
   const [loading, setLoading] = useState(true);
 
   const fetchMagazines = useCallback(() => {
+    if (!subInfo) {
+      return;
+    }
+
     setLoading(true);
     return getJsonData('magazines', subInfo, entrypoint)
       .then((newContent) => {

@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   firstMagazineContainer: {
-    width: windowWidth / 2,
+    width: windowWidth / 2.5,
   },
   text: {
     height: 30,
@@ -64,6 +64,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   firstMagazineImage: {
-    height: 200,
+    height: 150,
   },
 });

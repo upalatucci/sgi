@@ -112,21 +112,9 @@ const Home = ({
         </View>
 
         <View style={styles.homeSection}>
-          <Text
-            style={[
-              styles.homeTitle,
-              deviceSize === DEVICE_SIZES.SMALL ? styles.homeTitleSmall : null,
-            ]}>
-            LE ULTIME USCITE
-          </Text>
+          <Text style={[styles.homeTitle]}>LE ULTIME USCITE</Text>
           <TouchableHighlight onPress={() => Actions.magazines()}>
-            <Text
-              style={[
-                styles.homeLink,
-                deviceSize === DEVICE_SIZES.SMALL ? styles.homeLinkSmall : null,
-              ]}>
-              Sfoglia i numeri precedenti
-            </Text>
+            <Text style={[styles.homeLink]}>Sfoglia i numeri precedenti</Text>
           </TouchableHighlight>
         </View>
         <HomeMagazineCard magazine={lastNR} magazineType={MAGAZINE_TYPES.NR} />
@@ -144,11 +132,7 @@ const Home = ({
         />
 
         <View style={styles.homeSection}>
-          <Text
-            style={[
-              styles.homeTitle,
-              deviceSize === DEVICE_SIZES.SMALL ? styles.homeTitleSmall : null,
-            ]}>
+          <Text style={[styles.homeTitle]}>
             LA SOKA GAKKAI ITALIANA NEL WEB
           </Text>
         </View>
@@ -221,7 +205,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 14 : 16,
   },
   cardImage: {
     width: '60%',
@@ -242,19 +226,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   homeTitle: {
-    fontSize: 20,
+    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 16 : 20,
     fontWeight: 'bold',
-  },
-  homeTitleSmall: {
-    fontSize: 16,
   },
   homeLink: {
     color: Colors.orange,
     paddingHorizontal: 5,
     paddingVertical: 5,
-  },
-  homeLinkSmall: {
-    fontSize: 10,
+    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 10 : 16,
   },
   siteScroll: {
     height: 150,
