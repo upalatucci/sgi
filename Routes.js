@@ -29,6 +29,10 @@ function backHandler() {
   const routes = Actions.prevState.routes[0].routes;
   const prevRoute = routes[routes.length - 2];
 
+  if (prevRoute.routeName === 'login') {
+    Actions.pop();
+    return;
+  }
   switch (Actions.currentScene) {
     case 'home':
       BackHandler.exitApp();
