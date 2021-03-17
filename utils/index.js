@@ -128,6 +128,7 @@ export const DEVICE_SIZES = {
 };
 
 const deviceWidth = Dimensions.get('window').width;
+console.log("Device WIdth: ", deviceWidth)
 
 export let deviceSize =
-  deviceWidth > 320 ? DEVICE_SIZES.MEDIUM : DEVICE_SIZES.SMALL;
+  deviceWidth > 400 ? DEVICE_SIZES.MEDIUM : DEVICE_SIZES.SMALL;

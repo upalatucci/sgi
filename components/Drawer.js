@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text, Linking} from 'react-native';
+import {SafeAreaView, View, StyleSheet, Text, Linking} from 'react-native';
 import TouchableHighlight from './CustomTouchableHighlight';
 import {Actions} from 'react-native-router-flux';
 import {SGI_ENTRYPOINT} from '../api';
@@ -19,7 +19,7 @@ const Drawer = ({isLogged, logout}) => {
     }
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View>
         <TouchableHighlight
           style={styles.xTouchWidth}
@@ -64,7 +64,7 @@ const Drawer = ({isLogged, logout}) => {
       <TouchableHighlight onPress={loginOrOut}>
         <Text style={styles.text}>{isLogged ? 'Logout' : 'Login'}</Text>
       </TouchableHighlight>
-    </View>
+    </SafeAreaView>
   );
 };
 

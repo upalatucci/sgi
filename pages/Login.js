@@ -1,5 +1,5 @@
 import React, {useEffect, useReducer} from 'react';
-import {BackHandler, SafeAreaView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {WithLocalSvg} from 'react-native-svg';
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 40,
     height: 40,
-    top: 10,
+    top: 40,
     left: 10,
   },
   xTouchWidth: {
