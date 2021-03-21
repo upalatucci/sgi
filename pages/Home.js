@@ -25,6 +25,7 @@ import {
   MAGAZINE_TYPES,
   SGI_SITES,
 } from '../utils';
+import Loading from '../components/Loading';
 
 const Home = ({
   lastBS,
@@ -111,6 +112,31 @@ const Home = ({
               </View>
             </TouchableHighlight>
           </View>
+
+          {lastNews ? (
+            <View style={styles.newsContainer}>
+              <Text style={styles.newsDate}>{lastNews.date}</Text>
+              <Text style={styles.newsTitle}>{lastNews.title}</Text>
+              <Text style={styles.newsSubtitle}>{lastNews.excerpt}</Text>
+              <TouchableHighlight
+                onPress={() =>
+                  Actions.postPage({
+                    id: lastNews.id,
+                    entrypoint: SGI_ENTRYPOINT,
+                    uri: 'news',
+                    title: lastNews.title,
+                  })
+                }>
+                <Text style={styles.dipiu}>LEGGI DI PIU'</Text>
+              </TouchableHighlight>
+            </View>
+          ) : (
+            <Loading
+              absolutePositioning={false}
+              style={styles.newsLoading}
+              withText={false}
+            />
+          )}
         </View>
 
         <View style={styles.homeSection}>
@@ -243,6 +269,24 @@ const styles = StyleSheet.create({
   siteScrollContainer: {
     paddingHorizontal: 10,
     alignItems: 'center',
+  },
+  newsContainer: {
+    marginTop: 20,
+  },
+  newsTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  newsDate: {
+    color: Colors.textGray,
+    fontSize: 12,
+  },
+  dipiu: {
+    color: Colors.lightBlue,
+    alignSelf: 'flex-end',
+  },
+  newsLoading: {
+    height: 120,
   },
 });
 

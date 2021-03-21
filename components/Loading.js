@@ -4,6 +4,7 @@ import {Colors} from '../styles';
 
 export default ({
   absolutePositioning = true,
+  style,
   withText = true,
   textColor = 'black',
 }) => {
@@ -33,7 +34,7 @@ export default ({
     <View
       style={[
         styles.container,
-        absolutePositioning ? styles.containerAbsolutePosition : null,
+        absolutePositioning ? styles.containerAbsolutePosition : style,
       ]}>
       {/* <Svg width="100" height="100" viewBox="0 0 30 30">
         <Defs>

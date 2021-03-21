@@ -107,7 +107,7 @@ function Routes() {
           <Scene
             key="postPage"
             component={PostPage}
-            drawer
+            back
             renderRightButton={ChangeFontSizeContainer}
           />
           <Scene
@@ -120,7 +120,7 @@ function Routes() {
           <Scene
             key="article"
             component={Article}
-            drawer
+            back
             renderRightButton={ChangeFontSizeContainer}
           />
           <Scene
