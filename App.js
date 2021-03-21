@@ -41,7 +41,7 @@ const persistor = persistStore(store);
 export default () => {
   useEffect(() => {
     SplashScreen.hide();
-  });
+  }, []);
 
   return (
     <Provider store={store}>
