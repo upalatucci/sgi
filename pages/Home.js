@@ -29,6 +29,7 @@ import {
 const Home = ({
   lastBS,
   lastNR,
+  lastNews,
   fetchBS,
   fetchNR,
   fetchLastNewsAction,
@@ -52,6 +53,7 @@ const Home = ({
   useEffect(() => {
     fetchBS();
     fetchNR();
+    fetchLastNewsAction();
   }, [fetchNR, fetchBS, fetchLastNewsAction]);
 
   function welcomeText() {
@@ -112,9 +114,9 @@ const Home = ({
         </View>
 
         <View style={styles.homeSection}>
-          <Text style={[styles.homeTitle]}>LE ULTIME USCITE</Text>
+          <Text style={[styles.homeTitle]}>LE RIVISTE</Text>
           <TouchableHighlight onPress={() => Actions.magazines()}>
-            <Text style={[styles.homeLink]}>Sfoglia i numeri precedenti</Text>
+            <Text style={[styles.homeLink]}>Numeri precedenti</Text>
           </TouchableHighlight>
         </View>
         <HomeMagazineCard magazine={lastNR} magazineType={MAGAZINE_TYPES.NR} />

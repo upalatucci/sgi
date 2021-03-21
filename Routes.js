@@ -25,7 +25,7 @@ import CustomDrawer from './components/Drawer';
 import Menu from './components/icons/Menu';
 import SGILogo from './components/icons/SGILogoHome';
 
-function backHandler() {
+export function backHandler() {
   const routes = Actions.prevState.routes[0].routes;
   const prevRoute = routes[routes.length - 2];
 

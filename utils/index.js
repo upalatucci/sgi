@@ -1,5 +1,5 @@
 import {Parser} from 'htmlparser2';
-import {format} from 'date-fns';
+import {parse, startOfMonth} from 'date-fns';
 import {it} from 'date-fns/locale';
 import RNFS from 'react-native-fs';
 import FileViewer from 'react-native-file-viewer';
@@ -131,3 +131,12 @@ const deviceWidth = Dimensions.get('window').width;
 
 export let deviceSize =
   deviceWidth > 320 ? DEVICE_SIZES.MEDIUM : DEVICE_SIZES.SMALL;
+
+export function isSubscriptionExpired(subInfo) {
+  const endDate = parse(subInfo.riv_dig_scad_nr, 'yyyy-MM-dd', new Date());
+  const nowDate = startOfMonth(new Date());
+
+  console.log(endDate);
+  console.log(nowDate);
+  return endDate < nowDate;
+}

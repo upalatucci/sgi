@@ -21,6 +21,7 @@ import {SET_MAGAZINE_CACHE, SHOW_MODAL} from '../store/mutations';
 import LinearGradient from 'react-native-linear-gradient';
 import {WithLocalSvg} from 'react-native-svg';
 import GoToMagazines from '../assets/goToMagazines.svg';
+import {backHandler} from '../Routes';
 
 const windowHeight = Dimensions.get('window').height;
 const Magazine = React.memo(
@@ -83,6 +84,21 @@ const Magazine = React.memo(
           magazine,
         },
       });
+    }
+
+    if (subscriptionInfo) {
+      const expiredNR =
+        magazine === 'nr' && subscriptionInfo.riv_scad_nr < number.number;
+      const expiredBS =
+        magazine === 'bs' && subscriptionInfo.riv_scad_nr < number.number;
+
+      if (expiredBS || expiredNR) {
+        launchError(
+          'Il tuo abbonamento non è abilitato a consultare questa rivista',
+        );
+        backHandler();
+        return <Loading />;
+      }
     }
 
     if (!magazineContent || loadingPDF || !isLogged) {

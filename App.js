@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Actions} from 'react-native-router-flux';
 import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistStore, persistReducer} from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
 import Routes from './Routes';
+import SplashScreen from 'react-native-splash-screen';
 
 const persistConfig = {
   key: 'root',
@@ -37,17 +38,23 @@ const store = createStore(rootReduced, compose(applyMiddleware(thunk)));
 const persistor = persistStore(store);
 // persistor.purge();
 
-export default () => (
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <ErrorBoundary
-        FallbackComponent={ErrorFallback}
-        onReset={() => {
-          Actions.home();
-        }}>
-        <GlobalModal />
-        <Routes />
-      </ErrorBoundary>
-    </PersistGate>
-  </Provider>
-);
+export default () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  });
+
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ErrorBoundary
+          FallbackComponent={ErrorFallback}
+          onReset={() => {
+            Actions.home();
+          }}>
+          <GlobalModal />
+          <Routes />
+        </ErrorBoundary>
+      </PersistGate>
+    </Provider>
+  );
+};
