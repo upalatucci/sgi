@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
-    marginBottom: 30,
+    marginBottom: 20,
     ...DefaultShadow,
   },
   welcomeTitle: {

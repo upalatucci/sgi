@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     height: windowHeight / 3,
     resizeMode: 'center',
     margin: 10,
-    borderRadius: 40,
+    borderRadius: 20,
   },
   downloadButton: {
     backgroundColor: Colors.darkBlue,

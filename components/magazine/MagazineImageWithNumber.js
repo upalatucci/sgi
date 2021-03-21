@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   image: {
     height: 100,
     resizeMode: 'contain',
-    borderRadius: 50,
+    borderRadius: 20,
   },
   firstMagazineImage: {
     height: 150,
