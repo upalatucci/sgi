@@ -128,9 +128,10 @@ export const DEVICE_SIZES = {
 };
 
 const deviceWidth = Dimensions.get('window').width;
+console.log('Device WIdth: ', deviceWidth);
 
 export let deviceSize =
-  deviceWidth > 320 ? DEVICE_SIZES.MEDIUM : DEVICE_SIZES.SMALL;
+  deviceWidth > 400 ? DEVICE_SIZES.MEDIUM : DEVICE_SIZES.SMALL;
 
 export function isSubscriptionExpired(subInfo) {
   const endDate = parse(subInfo.riv_dig_scad_nr, 'yyyy-MM-dd', new Date());
