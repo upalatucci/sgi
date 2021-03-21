@@ -1,3 +1,4 @@
+import {format} from 'date-fns';
 import React, {useEffect} from 'react';
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import * as Keychain from 'react-native-keychain';
@@ -109,6 +110,23 @@ const Home = ({
                 <Image source={FraseDelGiornoIcon} style={styles.cardImage} />
                 <Text style={[styles.cardTitle]}>La frase del giorno</Text>
               </View>
+            </TouchableHighlight>
+          </View>
+
+          <View style={styles.newsContainer}>
+            <Text style={styles.newsDate}>{lastNews.date}</Text>
+            <Text style={styles.newsTitle}>{lastNews.title}</Text>
+            <Text style={styles.newsSubtitle}>{lastNews.excerpt}</Text>
+            <TouchableHighlight
+              onPress={() =>
+                Actions.postPage({
+                  id: lastNews.id,
+                  entrypoint: SGI_ENTRYPOINT,
+                  uri: 'news',
+                  title: lastNews.title,
+                })
+              }>
+              <Text style={styles.dipiu}>LEGGI DI PIU'</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -243,6 +261,21 @@ const styles = StyleSheet.create({
   siteScrollContainer: {
     paddingHorizontal: 10,
     alignItems: 'center',
+  },
+  newsContainer: {
+    marginTop: 20,
+  },
+  newsTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  newsDate: {
+    color: Colors.textGray,
+    fontSize: 12,
+  },
+  dipiu: {
+    color: Colors.lightBlue,
+    alignSelf: 'flex-end',
   },
 });
 
