@@ -7,12 +7,12 @@ import Phrase from '../components/Phrase';
 import {Colors} from '../styles';
 import GiornoPerGiorno from '../assets/giornopergiorno.png';
 import MappaDellaFelicita from '../assets/mappadellafelicita.png';
-
+import {it} from 'date-fns/locale';
 export default () => {
   const [content, setContent] = useState();
+  const now = new Date();
 
   useEffect(() => {
-    const now = new Date();
     getJsonData(
       'aderenti/index.php/site/wsFrase',
       {
@@ -38,7 +38,10 @@ export default () => {
         <Text style={styles.title}>La frase del giorno</Text>
         <Text style={styles.subtitle}>
           Gli incoraggiamenti del
-          <Text style={{fontWeight: 'bold'}}> 17 marzo.</Text>
+          <Text style={{fontWeight: 'bold'}}>
+            {' '}
+            {format(now, 'dd MMMM', {locale: it})}.
+          </Text>
         </Text>
         <Phrase
           phrase={phrases[0]}
