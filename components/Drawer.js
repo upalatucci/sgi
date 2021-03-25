@@ -14,7 +14,6 @@ import {WithLocalSvg} from 'react-native-svg';
 import X from '../assets/x.svg';
 import {connect} from 'react-redux';
 import {LOGOUT} from '../store/mutations';
-import DeviceInfo from 'react-native-device-info';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 const Drawer = ({isLogged, logout}) => {
@@ -79,7 +78,10 @@ const Drawer = ({isLogged, logout}) => {
           <Text style={styles.text}>{isLogged ? 'Logout' : 'Login'}</Text>
         </TouchableHighlight>
         <Text style={styles.version}>
-          {DeviceInfo.getVersion()} {DeviceInfo.getBuildNumber()}
+          {Platform.select({
+            ios: "2.0.4 24",
+            android: "2.0.0 200"
+          })}
         </Text>
       </GestureRecognizer>
     </SafeAreaView>

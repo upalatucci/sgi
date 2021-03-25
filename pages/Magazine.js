@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: windowHeight / 3,
-    resizeMode: 'center',
+    resizeMode: 'contain',
     margin: 10,
     borderRadius: 20,
   },
