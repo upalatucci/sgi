@@ -66,22 +66,20 @@ const styles = StyleSheet.create({
   },
   title: {
     alignSelf: 'flex-start',
-    marginLeft: 20,
     marginTop: 20,
     fontWeight: 'bold',
     fontSize: 20,
   },
   subtitle: {
     alignSelf: 'flex-start',
-    marginLeft: 20,
     color: Colors.textGray,
   },
   scroll: {
     flex: 1,
   },
   scrollContainer: {
-    alignItems: 'center',
     backgroundColor: Colors.background,
     flex: 1,
+    paddingHorizontal: 20
   },
 });

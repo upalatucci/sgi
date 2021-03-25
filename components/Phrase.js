@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20,
     marginBottom: 20,
-    marginHorizontal: 20,
     maxWidth: 700,
     padding: 10,
     backgroundColor: 'white',
