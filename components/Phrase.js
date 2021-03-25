@@ -1,14 +1,17 @@
 import React from 'react';
-import {StyleSheet, View, Text, Share} from 'react-native';
+import {StyleSheet, View, Text, Share, Image} from 'react-native';
 import CustomHTML from './CustomHTML';
-import PrimaryButton from './PrimaryButton';
 import {convertHTMLToText, italianFormat} from '../utils';
+import {WithLocalSvg} from 'react-native-svg';
+import ShareIcon from '../assets/share.svg';
+import CustomTouchableHighlight from './CustomTouchableHighlight';
+import {DefaultShadow, Colors} from '../styles';
 
-export default React.memo(({phrase}) => {
+export default React.memo(({phrase, image, origin}) => {
   const now = new Date();
 
   function addStrong(string) {
-    return `<p style="text-align: center;"><strong>Tratto da ${string}</strong></p>`;
+    return `<p style="text-align: left;"><strong>Tratto da ${string}</strong></p>`;
   }
 
   function addNote(string) {
@@ -16,7 +19,7 @@ export default React.memo(({phrase}) => {
   }
 
   function addCenter(string) {
-    return `<p style="text-align: center; margin-bottom: 10px;">${string}</p>`;
+    return `<p style="text-align: left; margin-bottom: 10px;">${string}</p>`;
   }
 
   async function sharePhrase() {
@@ -39,23 +42,81 @@ export default React.memo(({phrase}) => {
       {phrase.note ? (
         <CustomHTML content={addNote(phrase.note)} style={styles.flex} />
       ) : null}
-      <CustomHTML content={addStrong(phrase.origine)} style={styles.flex} />
-      <PrimaryButton text="Condividi" onPress={sharePhrase} />
+      <View style={styles.bottomView}>
+        <View style={styles.originView}>
+          <Image source={image} style={styles.image} />
+          <View style={styles.originTextView}>
+            <Text style={styles.origin}>{origin}</Text>
+            <Text style={styles.ikeda}>Daisaku Ikeda</Text>
+          </View>
+        </View>
+        <CustomTouchableHighlight
+          onPress={sharePhrase}
+          style={styles.shareView}>
+          <>
+            <Text style={styles.shareText}>Condividi</Text>
+            <WithLocalSvg
+              style={styles.shareIcon}
+              width={20}
+              height={20}
+              asset={ShareIcon}
+            />
+          </>
+        </CustomTouchableHighlight>
+      </View>
     </View>
   );
 });
 
 const styles = StyleSheet.create({
   phraseContainer: {
-    flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 20,
     marginBottom: 20,
     marginHorizontal: 20,
     maxWidth: 700,
-    minHeight: 300,
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    ...DefaultShadow,
   },
   flex: {
     flex: 1,
+  },
+  bottomView: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  image: {
+    width: 60,
+    height: 120,
+    resizeMode: 'contain',
+  },
+  originView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  originTextView: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignContent: 'center',
+    width: 100,
+    marginLeft: 10,
+  },
+  origin: {
+    fontWeight: 'bold',
+  },
+  ikeda: {},
+  shareView: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    marginBottom: 10,
+  },
+  shareText: {
+    color: Colors.lightBlue,
+    marginRight: 5,
   },
 });

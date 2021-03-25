@@ -18,7 +18,13 @@ const contentStyles = {
   magazine: MagazineStyle,
 };
 
-const CustomWebView = ({style, content, textSize, onLoadEnd}) => {
+const CustomWebView = ({
+  style,
+  content,
+  textSize,
+  onLoadEnd,
+  subtractHeight = 80,
+}) => {
   const [height, setHeight] = useState(maxSize);
 
   Dimensions.addEventListener('change', ({window}) => {
@@ -40,6 +46,7 @@ const CustomWebView = ({style, content, textSize, onLoadEnd}) => {
       scalesPageToFit={true}
       javaScriptEnabled={true}
       domStorageEnabled={true}
+      useWebkit={true}
       originWhitelist={['*']}
       source={{
         html: `<html>
@@ -58,7 +65,7 @@ const CustomWebView = ({style, content, textSize, onLoadEnd}) => {
         </body>
         </html>`,
       }}
-      style={{height: height - 80}}
+      style={{height: height - subtractHeight}}
       onShouldStartLoadWithRequest={handleLoadPageRequest}
       onLoadEnd={onLoadEnd}
     />

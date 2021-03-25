@@ -13,6 +13,7 @@ import {persistStore, persistReducer} from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
 import Routes from './Routes';
 import SplashScreen from 'react-native-splash-screen';
+import {StatusBar} from 'react-native';
 
 const persistConfig = {
   key: 'root',

@@ -2,9 +2,9 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import FontSizeIcon from './icons/FontSizeIcon';
 
-export default function ChangeFontSizeContainer() {
+export default function ChangeFontSizeContainer({style}) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <FontSizeIcon />
     </View>
   );

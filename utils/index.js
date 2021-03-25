@@ -1,5 +1,5 @@
 import {Parser} from 'htmlparser2';
-import {parse, startOfMonth} from 'date-fns';
+import {format, parse, startOfMonth} from 'date-fns';
 import {it} from 'date-fns/locale';
 import RNFS from 'react-native-fs';
 import FileViewer from 'react-native-file-viewer';

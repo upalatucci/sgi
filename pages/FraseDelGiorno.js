@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, Text} from 'react-native';
 import {format} from 'date-fns';
 import {getJsonData, SGI_SERVICES} from '../api';
 import Loading from '../components/Loading';
 import Phrase from '../components/Phrase';
+import {Colors} from '../styles';
+import GiornoPerGiorno from '../assets/giornopergiorno.png';
+import MappaDellaFelicita from '../assets/mappadellafelicita.png';
 
 export default () => {
   const [content, setContent] = useState();
@@ -32,8 +35,21 @@ export default () => {
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContainer}>
-        <Phrase phrase={phrases[0]} />
-        <Phrase phrase={phrases[1]} />
+        <Text style={styles.title}>La frase del giorno</Text>
+        <Text style={styles.subtitle}>
+          Gli incoraggiamenti del
+          <Text style={{fontWeight: 'bold'}}> 17 marzo.</Text>
+        </Text>
+        <Phrase
+          phrase={phrases[0]}
+          image={GiornoPerGiorno}
+          origin="Giorno per giorno"
+        />
+        <Phrase
+          phrase={phrases[1]}
+          image={MappaDellaFelicita}
+          origin="La mappa della felicità"
+        />
       </ScrollView>
     );
   }
@@ -43,11 +59,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: Colors.background,
+  },
+  title: {
+    alignSelf: 'flex-start',
+    marginLeft: 20,
+    marginTop: 20,
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  subtitle: {
+    alignSelf: 'flex-start',
+    marginLeft: 20,
+    color: Colors.textGray,
   },
   scroll: {
     flex: 1,
   },
   scrollContainer: {
     alignItems: 'center',
+    backgroundColor: Colors.background,
+    flex: 1,
   },
 });

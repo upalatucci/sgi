@@ -24,6 +24,7 @@ import ChangeFontSizeContainer from './components/ChangeFontSizeContainer';
 import CustomDrawer from './components/Drawer';
 import Menu from './components/icons/Menu';
 import SGILogo from './components/icons/SGILogoHome';
+import MultiUtilsRightButton from './components/MultiUtilsRightButtons';
 
 export function backHandler() {
   const routes = Actions.prevState.routes[0].routes;
@@ -121,7 +122,7 @@ function Routes() {
             key="article"
             component={Article}
             back
-            renderRightButton={ChangeFontSizeContainer}
+            renderRightButton={MultiUtilsRightButton}
           />
           <Scene
             key="webview"

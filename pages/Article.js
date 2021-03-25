@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {getJsonData} from '../api';
@@ -9,6 +9,11 @@ import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
 import CustomWebView from '../components/CustomWebView';
 import {Colors, TitleStyle} from '../styles';
 import {SET_ARTICLE_CACHE} from '../store/mutations';
+import ChangeFontSizeContainer from '../components/ChangeFontSizeContainer';
+import {WithLocalSvg} from 'react-native-svg';
+import GoToMagazines from '../assets/goToMagazines.svg';
+import ShareIcon from '../assets/share.svg';
+import TouchableHighlight from '../components/CustomTouchableHighlight';
 
 const Article = React.memo(
   ({
@@ -21,6 +26,8 @@ const Article = React.memo(
     cacheArticle,
   }) => {
     const [articleContent, setArticleContent] = useState();
+
+    function shareArticle() {}
 
     useEffect(() => {
       if (!subscriptionInfo || !magazine || !articleId) {
@@ -58,6 +65,7 @@ const Article = React.memo(
     return (
       <SafeAreaView style={styles.flex}>
         <CustomWebView
+          subtractHeight={140}
           content={`
           <div class="post-category entry-category"></div>
           <h1 class="entry-title">${articleTitle}</h1>

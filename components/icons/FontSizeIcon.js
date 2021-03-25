@@ -48,15 +48,15 @@ const styles = new StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   textsmall: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.gray,
   },
   textmedium: {
-    fontSize: 24,
+    fontSize: 20,
     color: Colors.gray,
   },
   textlarge: {
-    fontSize: 32,
+    fontSize: 28,
     color: Colors.gray,
   },
   selected: {
