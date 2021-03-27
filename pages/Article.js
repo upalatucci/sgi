@@ -9,12 +9,15 @@ import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
 import CustomWebView from '../components/CustomWebView';
 import {Colors, TitleStyle} from '../styles';
 import {SET_ARTICLE_CACHE} from '../store/mutations';
+<<<<<<< HEAD
 import ChangeFontSizeContainer from '../components/ChangeFontSizeContainer';
 import {WithLocalSvg} from 'react-native-svg';
 import GoToMagazines from '../assets/goToMagazines.svg';
 import ShareIcon from '../assets/share.svg';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import {categoriesArrayToString} from '../utils';
+=======
+>>>>>>> 6f41b5a19ce009d1b5d0a7ba2cc67e7a0bf6c2c0
 
 const Article = React.memo(
   ({
@@ -28,6 +31,7 @@ const Article = React.memo(
     cacheArticle,
   }) => {
     const [articleContent, setArticleContent] = useState();
+    const [loading, setLoading] = useState(true)
 
     function shareArticle() {}
 
@@ -66,9 +70,10 @@ const Article = React.memo(
 
     return (
       <SafeAreaView style={styles.flex}>
-        <CustomWebView
-          subtractHeight={140}
-          content={`
+        {articleContent && (
+          <CustomWebView
+            subtractHeight={100}
+            content={`
           <div class="post-category entry-category">${categoriesArrayToString(
             categories,
             magazine,
@@ -78,8 +83,11 @@ const Article = React.memo(
           <div class="post-content entry-content">
             ${articleContent.full}
           </div>`}
-          style="magazine"
-        />
+            style="magazine"
+            onLoadEnd={() => {setLoading(false)}}
+          />
+        )}
+        {loading && <Loading /> }
       </SafeAreaView>
     );
   },

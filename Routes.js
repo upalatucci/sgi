@@ -26,6 +26,8 @@ import Menu from './components/icons/Menu';
 import SGILogo from './components/icons/SGILogoHome';
 import MultiUtilsRightButton from './components/MultiUtilsRightButtons';
 
+import NavBar from './components/NavBar';
+
 export function backHandler() {
   const routes = Actions.prevState.routes[0].routes;
   const prevRoute = routes[routes.length - 2];
@@ -63,6 +65,7 @@ function Routes() {
         <Stack
           key="root"
           navigationBarStyle={styles.navbar}
+          navBar={NavBar}
           titleStyle={styles.title}
           backButtonTintColor={Colors.primary}>
           <Scene
@@ -86,7 +89,6 @@ function Routes() {
             drawer
             key="buddismo"
             component={Buddismo}
-            icon={LotusIcon}
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}
           />
@@ -102,7 +104,6 @@ function Routes() {
             drawer
             key="frasedelgiorno"
             component={FraseDelGiorno}
-            icon={FraseDelGiornoIcon}
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}
           />

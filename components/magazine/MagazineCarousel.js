@@ -8,8 +8,13 @@ import {
   MAGAZINE_NAMES,
   MAGAZINE_TYPES,
 } from '../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { SET_MAGAZINE_CACHE } from '../../store/mutations';
 
 export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
+  const dispatch = useDispatch()
+  const cachedMagazines = useSelector(state => state.magazine.cachedMagazines)
+
   const [magazines, setMagazines] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,11 +22,20 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
     if (!subInfo) {
       return;
     }
+    const cacheKey = `all-${magazine}`
+
+    console.log(cachedMagazines)
+    if (cachedMagazines[cacheKey]) {
+      setMagazines(cachedMagazines[cacheKey]);
+      setLoading(false)
+      return
+    }
 
     setLoading(true);
     return getJsonData('magazines', subInfo, entrypoint)
       .then((newContent) => {
-        setMagazines([...newContent.data]);
+        setMagazines(newContent.data);
+        dispatch({type: SET_MAGAZINE_CACHE, payload: {[cacheKey]: newContent.data}})
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));

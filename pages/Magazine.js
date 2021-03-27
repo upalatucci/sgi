@@ -6,6 +6,7 @@ import {
   Dimensions,
   Text,
   View,
+  SafeAreaView,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -106,39 +107,41 @@ const Magazine = React.memo(
     }
 
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableHighlight
-            onPress={() => Actions.magazines()}
-            style={styles.headerItem}>
-            <WithLocalSvg
-              style={styles.goToMagazinesImage}
-              width={40}
-              height={40}
-              asset={GoToMagazines}
-            />
+      <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
+          <View style={styles.header}>
+            <TouchableHighlight
+              onPress={() => Actions.magazines()}
+              style={styles.headerItem}>
+              <WithLocalSvg
+                style={styles.goToMagazinesImage}
+                width={40}
+                height={40}
+                asset={GoToMagazines}
+              />
+            </TouchableHighlight>
+            <Text style={[styles.headerItem, styles.headerTitle]}>
+              {MAGAZINE_NAMES[magazine]}
+            </Text>
+            <Text style={[styles.headerItem, styles.headerNumber]}>
+              {number.number}
+            </Text>
+          </View>
+          <Image style={styles.image} source={{uri: number.cover}} />
+          <TouchableHighlight onPress={downloadPDFRequest}>
+            <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              colors={[Colors.lightBlue, Colors.darkBlue]}
+              style={styles.downloadButton}>
+              <Text style={styles.downloadButtonText}>Scarica PDF</Text>
+            </LinearGradient>
           </TouchableHighlight>
-          <Text style={[styles.headerItem, styles.headerTitle]}>
-            {MAGAZINE_NAMES[magazine]}
-          </Text>
-          <Text style={[styles.headerItem, styles.headerNumber]}>
-            {number.number}
-          </Text>
-        </View>
-        <Image style={styles.image} source={{uri: number.cover}} />
-        <TouchableHighlight onPress={downloadPDFRequest}>
-          <LinearGradient
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}
-            colors={[Colors.lightBlue, Colors.darkBlue]}
-            style={styles.downloadButton}>
-            <Text style={styles.downloadButtonText}>Scarica PDF</Text>
-          </LinearGradient>
-        </TouchableHighlight>
-        {Object.entries(magazineContent.summary).map(([key, section]) => (
-          <ArticleSection key={key} section={section} magazine={magazine} />
-        ))}
-      </ScrollView>
+          {Object.entries(magazineContent.summary).map(([key, section]) => (
+            <ArticleSection key={key} section={section} magazine={magazine} />
+          ))}
+        </ScrollView>
+      </SafeAreaView>
     );
   },
 );
@@ -168,6 +171,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: windowHeight / 3,
+    maxHeight: 400,
     resizeMode: 'contain',
     margin: 10,
     borderRadius: 20,

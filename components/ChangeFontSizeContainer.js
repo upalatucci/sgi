@@ -12,10 +12,9 @@ export default function ChangeFontSizeContainer({style}) {
 
 const styles = new StyleSheet.create({
   container: {
-    width: 60,
-    height: '100%',
+    width: 40,
+    height: 40,
     marginRight: 20,
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     alignContent: 'center',
