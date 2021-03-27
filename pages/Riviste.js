@@ -8,6 +8,7 @@ import {Actions} from 'react-native-router-flux';
 import Loading from '../components/Loading';
 import {isSubscriptionExpired} from '../utils';
 import {format, parse} from 'date-fns';
+import { SET_MAGAZINE_CACHE } from '../store/mutations';
 
 const Riviste = ({lastBS, lastNR, subscriptionInfo, isLogged}) => {
   if (!isLogged) {

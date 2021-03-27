@@ -1,21 +1,28 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, StatusBar} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Actions} from 'react-native-router-flux';
 import CustomTouchableHighlight from './CustomTouchableHighlight';
 import {BackButton} from 'react-native-router-flux/src/NavBar';
+import BackButtonImage from '../assets/backButton.png'
 
 export default (props) => {
-  console.log(props.renderRightButton(props))
+  const headerHeight = Platform.select({
+    ios: 80,
+    android: 50,
+  });
+
   return (
-    <View style={styles.container}>
+    <>
+    <StatusBar />
+    <View style={[styles.container, {height: headerHeight}]}>
       <LinearGradient
         style={styles.linearGradinet}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
         colors={['#fff', '#F4F4F4']}>
         {props.back ? (
-          <BackButton {...props} />
+          <BackButton {...props} backButtonImage={BackButtonImage} leftButtonStyle={styles.backButtonStyle} />
         ) : (
           <CustomTouchableHighlight
             style={styles.drawerIconContainer}
@@ -29,12 +36,12 @@ export default (props) => {
         </CustomTouchableHighlight>
       </LinearGradient>
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 100,
     borderBottomWidth: 1,
     borderBottomColor: '#f4f4f4',
     shadowColor: '#000',
@@ -58,7 +65,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 10,
   },
-  rightContainer: {
-    
-  }
+  backButtonStyle: {
+    marginTop: 6,
+    marginLeft: 5
+  },
+  rightContainer: {},
 });
