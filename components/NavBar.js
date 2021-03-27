@@ -73,8 +73,7 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   drawerIconContainer: {
-    marginBottom: 10,
-    marginLeft: 10,
+    padding: 10,
   },
   backButtonStyle: {
     marginTop: 6,
