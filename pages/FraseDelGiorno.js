@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text} from 'react-native';
 import {format} from 'date-fns';
 import {getJsonData, SGI_SERVICES} from '../api';
 import Loading from '../components/Loading';
@@ -32,6 +32,7 @@ export default () => {
   } else {
     const phrases = Object.values(content);
     return (
+      <SafeAreaView style={styles.container}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContainer}>
@@ -54,6 +55,7 @@ export default () => {
           origin="La mappa della felicità"
         />
       </ScrollView>
+      </SafeAreaView>
     );
   }
 };
@@ -74,8 +76,9 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     color: Colors.textGray,
   },
-  scroll: {
+  container: {
     flex: 1,
+    backgroundColor: Colors.background,
   },
   scrollContainer: {
     backgroundColor: Colors.background,
