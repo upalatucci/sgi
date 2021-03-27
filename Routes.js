@@ -87,7 +87,8 @@ function Routes() {
             key="buddismo"
             component={Buddismo}
             icon={LotusIcon}
-            renderRightButton={ChangeFontSizeContainer}
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
           />
           <Scene
             drawer
@@ -146,6 +147,8 @@ function Routes() {
 const styles = StyleSheet.create({
   navbar: {
     backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f4f4f4',
   },
   title: {
     color: Colors.primary,

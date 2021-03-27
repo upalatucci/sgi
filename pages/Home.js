@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    backgroundColor: Colors.light,
+    backgroundColor: Colors.background,
   },
   cardImageVolo: {
     justifyContent: 'center',
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 14 : 16,
+    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 15 : 16,
   },
   cardImage: {
     width: '60%',
@@ -254,14 +254,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   homeTitle: {
-    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 16 : 20,
+    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 17 : 20,
     fontWeight: 'bold',
   },
   homeLink: {
     color: Colors.orange,
     paddingHorizontal: 5,
     paddingVertical: 5,
-    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 10 : 16,
+    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 14 : 16,
   },
   siteScroll: {
     height: 150,

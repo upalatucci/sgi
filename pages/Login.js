@@ -4,7 +4,7 @@ import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {WithLocalSvg} from 'react-native-svg';
 import {connect} from 'react-redux';
-import X from '../assets/x.svg';
+import X from '../assets/x_dark.svg';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import LoginForm from '../components/LoginForm';
 import Modal from '../components/Modal';
@@ -123,7 +123,7 @@ const Login = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.blue,
+    backgroundColor: Colors.darkBlue,
   },
   xView: {
     position: 'absolute',

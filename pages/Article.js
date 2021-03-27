@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {getJsonData} from '../api';
@@ -14,6 +14,7 @@ import {WithLocalSvg} from 'react-native-svg';
 import GoToMagazines from '../assets/goToMagazines.svg';
 import ShareIcon from '../assets/share.svg';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
+import {categoriesArrayToString} from '../utils';
 
 const Article = React.memo(
   ({
@@ -21,6 +22,7 @@ const Article = React.memo(
     magazine,
     articleTitle,
     articleSubtitle,
+    categories,
     subscriptionInfo,
     storedArticles,
     cacheArticle,
@@ -67,7 +69,10 @@ const Article = React.memo(
         <CustomWebView
           subtractHeight={140}
           content={`
-          <div class="post-category entry-category"></div>
+          <div class="post-category entry-category">${categoriesArrayToString(
+            categories,
+            magazine,
+          )}</div>
           <h1 class="entry-title">${articleTitle}</h1>
           <div class="post-teaser entry-teaser">${articleSubtitle}</div>
           <div class="post-content entry-content">

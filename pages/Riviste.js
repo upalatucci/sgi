@@ -8,6 +8,7 @@ import {Actions} from 'react-native-router-flux';
 import Loading from '../components/Loading';
 import {isSubscriptionExpired} from '../utils';
 import {format, parse} from 'date-fns';
+import {Colors} from '../styles';
 
 const Riviste = ({lastBS, lastNR, subscriptionInfo, isLogged}) => {
   if (!isLogged) {
@@ -27,7 +28,7 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, isLogged}) => {
     <View style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.text}>Le riviste</Text>
-        <Text style={styles.subInfo}>
+        <Text style={[styles.subInfo]}>
           Il tuo abbonamento digitale è {isExpired ? 'scaduto' : 'attivo'}
         </Text>
         {!isExpired && (
@@ -66,14 +67,16 @@ export default connect(mapStateToProps)(Riviste);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.background,
   },
   text: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 26,
     paddingTop: 20,
     paddingHorizontal: 20,
   },
   subInfo: {
     paddingHorizontal: 20,
+    fontWeight: 'bold',
   },
 });

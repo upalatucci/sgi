@@ -80,11 +80,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   magazineTitle: {
+    fontWeight: 'bold',
     fontSize: 20,
     color: Colors.lightBlue,
+    marginBottom: 2,
   },
   magazineDesc: {
     color: Colors.textGray,
+    fontSize: 14,
   },
   scrollViewContent: {
     alignItems: 'center',

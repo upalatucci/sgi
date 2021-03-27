@@ -71,7 +71,7 @@ export default React.memo(({phrase, image, origin}) => {
 const styles = StyleSheet.create({
   phraseContainer: {
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 20,
     maxWidth: 700,
     padding: 10,

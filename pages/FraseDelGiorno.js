@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 20,
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 26,
   },
   subtitle: {
     alignSelf: 'flex-start',

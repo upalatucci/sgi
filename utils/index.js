@@ -131,7 +131,7 @@ const deviceWidth = Dimensions.get('window').width;
 console.log('Device WIdth: ', deviceWidth);
 
 export let deviceSize =
-  deviceWidth > 400 ? DEVICE_SIZES.MEDIUM : DEVICE_SIZES.SMALL;
+  deviceWidth > 360 ? DEVICE_SIZES.MEDIUM : DEVICE_SIZES.SMALL;
 
 export function isSubscriptionExpired(subInfo) {
   const endDate = parse(subInfo.riv_dig_scad_nr, 'yyyy-MM-dd', new Date());
@@ -140,4 +140,11 @@ export function isSubscriptionExpired(subInfo) {
   console.log(endDate);
   console.log(nowDate);
   return endDate < nowDate;
+}
+
+export function categoriesArrayToString(categories, magazine) {
+  if (magazine === MAGAZINE_TYPES.BS) {
+    return categories[0];
+  }
+  return categories.map((c) => c.toUpperCase()).join(', ');
 }

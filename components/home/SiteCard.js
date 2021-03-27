@@ -8,7 +8,11 @@ export default ({title, icon, link}) => (
     onPress={() => Linking.openURL(link)}
     style={styles.container}>
     <View style={styles.viewContainer}>
-      <WithLocalSvg asset={icon} width={40} height={40} />
+      {title === 'Senzatomica' ? (
+        <WithLocalSvg asset={icon} width={50} height={40} />
+      ) : (
+        <WithLocalSvg asset={icon} width={40} height={40} />
+      )}
       <Text style={styles.text}>{title}</Text>
     </View>
   </TouchableHighlight>

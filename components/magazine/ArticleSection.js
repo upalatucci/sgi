@@ -9,18 +9,18 @@ import {
 import TouchableHighlight from '../CustomTouchableHighlight';
 import {Actions} from 'react-native-router-flux';
 import CustomHTML from '../CustomHTML';
+import {categoriesArrayToString} from '../../utils';
 
 export default ({section, magazine}) => {
   const sectionArticles = Object.entries(section.articles);
 
+  console.log(sectionArticles);
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.category}>
         {sectionArticles.length > 1
           ? section.category.toUpperCase()
-          : sectionArticles[0][1].categories
-              .map((c) => c.toUpperCase())
-              .join(', ')}
+          : categoriesArrayToString(sectionArticles[0][1].categories, magazine)}
       </Text>
       {sectionArticles.map(([key, article]) => {
         const formattedExcerpt = article.excerpt
@@ -35,6 +35,7 @@ export default ({section, magazine}) => {
                 articleId: article.id,
                 articleTitle: article.title,
                 articleSubtitle: article.subtitle,
+                categories: article.categories,
               })
             }>
             <View style={styles.container}>
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     margin: 20,
+    marginVertical: 10,
     ...DefaultShadow,
     borderRadius: DefaultBorderRadius,
     borderWidth: 1,

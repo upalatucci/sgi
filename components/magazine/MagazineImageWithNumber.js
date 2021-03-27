@@ -42,11 +42,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    width: windowWidth / 3.5,
+    width: windowWidth / 4,
+    maxWidth: 200,
     padding: 10,
   },
   firstMagazineContainer: {
-    width: windowWidth / 2.5,
+    width: windowWidth / 2.6,
   },
   text: {
     height: 30,

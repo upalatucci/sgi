@@ -82,7 +82,7 @@ const LoginForm = ({onLogin, loading}) => {
           <LinearGradient
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}
-            colors={[Colors.blue, '#004664', Colors.blue]}
+            colors={[Colors.darkBlue, '#003850', Colors.darkBlue]}
             style={styles.gradient}>
             <Text style={styles.loginTextButton}>ENTRA</Text>
           </LinearGradient>

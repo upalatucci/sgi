@@ -79,8 +79,8 @@ const Drawer = ({isLogged, logout}) => {
         </TouchableHighlight>
         <Text style={styles.version}>
           {Platform.select({
-            ios: "2.0.5 25",
-            android: "2.0.0 200"
+            ios: '2.0.5 25',
+            android: '2.0.0 200',
           })}
         </Text>
       </GestureRecognizer>
@@ -105,7 +105,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Drawer);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#47A3C4',
+    backgroundColor: '#00A2C3',
   },
   text: {
     paddingVertical: 20,

@@ -17,7 +17,7 @@ import TouchableHighlight from '../components/CustomTouchableHighlight';
 export default () => {
   const textSize = useSelector((state) => state.ui.textSize);
 
-  const fontSize = 18 + textSize * 2;
+  const fontSize = 16 + textSize * 2;
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -168,9 +168,11 @@ const styles = StyleSheet.create({
     marginBottom: 80,
   },
   title: {
-    fontSize: 32,
+    fontSize: 26,
+    fontWeight: 'bold',
     marginHorizontal: 20,
     marginBottom: 10,
+    marginTop: 20,
   },
   image: {
     height: 200,
