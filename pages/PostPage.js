@@ -9,6 +9,7 @@ import {SET_POST_CACHE} from '../store/mutations';
 function PostPage(props) {
   const {id, uri, entrypoint, storedPosts, cachePost} = props;
   const [content, setContent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const cacheKey = `${uri}-${id}`;
@@ -24,21 +25,20 @@ function PostPage(props) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, uri, entrypoint]);
-
-  if (!content) {
-    return <Loading />;
-  }
-
   return (
     <SafeAreaView style={styles.flex}>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.container}>
-        <CustomWebView
-          content={content + '<br/><br/>'}
-          style={entrypoint === SGI_ENTRYPOINT ? 'sito' : 'volocontinuo'}
-        />
-      </ScrollView>
+      {content && (
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.container}>
+          <CustomWebView
+            content={content + '<br/><br/>'}
+            style={entrypoint === SGI_ENTRYPOINT ? 'sito' : 'volocontinuo'}
+            onLoadEnd={() => setLoading(false)}
+          />
+        </ScrollView>
+      )}
+      {loading && <Loading />}
     </SafeAreaView>
   );
 }
