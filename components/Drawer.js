@@ -6,6 +6,7 @@ import {
   Text,
   Linking,
   Platform,
+  ScrollView,
 } from 'react-native';
 import TouchableHighlight from './CustomTouchableHighlight';
 import {Actions} from 'react-native-router-flux';
@@ -38,51 +39,55 @@ const Drawer = ({isLogged, logout}) => {
             <WithLocalSvg style={styles.x} width={20} height={20} asset={X} />
           </TouchableHighlight>
         </View>
-        <TouchableHighlight onPress={() => Actions.home()}>
-          <Text style={styles.text}>Home</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => Actions.buddismo()}>
-          <Text style={styles.text}>Buddismo</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() =>
-            Actions.posts({
-              title: 'In primo piano',
-              uri: 'news',
-              entrypoint: SGI_ENTRYPOINT,
-            })
-          }>
-          <Text style={styles.text}>In primo piano</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => Actions.magazines()}>
-          <Text style={styles.text}>Le riviste</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() =>
-            Linking.openURL('https://servizi.sgi-italia.org/abbonamenti/')
-          }>
-          <Text style={styles.text}>
+        <ScrollView style={styles.container}>
+          <TouchableHighlight onPress={() => Actions.home()}>
+            <Text style={styles.text}>Home</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => Actions.buddismo()}>
+            <Text style={styles.text}>Buddismo</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() =>
+              Actions.posts({
+                title: 'In primo piano',
+                uri: 'news',
+                entrypoint: SGI_ENTRYPOINT,
+              })
+            }>
+            <Text style={styles.text}>In primo piano</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => Actions.magazines()}>
+            <Text style={styles.text}>Le riviste</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() =>
+              Linking.openURL('https://servizi.sgi-italia.org/abbonamenti/')
+            }>
+            <Text style={styles.text}>
+              {Platform.select({
+                ios: 'Pubblicazioni',
+                android: 'Spazio Abbonamenti',
+              })}
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() =>
+              Linking.openURL('https://servizi.sgi-italia.org/aderenti/')
+            }>
+            <Text style={styles.text}>Spazio Aderenti</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={loginOrOut}>
+            <Text style={[styles.text, styles.lastText]}>
+              {isLogged ? 'Logout' : 'Login'}
+            </Text>
+          </TouchableHighlight>
+          <Text style={styles.version}>
             {Platform.select({
-              ios: 'Pubblicazioni',
-              android: 'Spazio Abbonamenti',
+              ios: '2.0.6 26',
+              android: '2.0.0 200',
             })}
           </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() =>
-            Linking.openURL('https://servizi.sgi-italia.org/aderenti/')
-          }>
-          <Text style={styles.text}>Spazio Aderenti</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={loginOrOut}>
-          <Text style={styles.text}>{isLogged ? 'Logout' : 'Login'}</Text>
-        </TouchableHighlight>
-        <Text style={styles.version}>
-          {Platform.select({
-            ios: '2.0.6 26',
-            android: '2.0.0 200',
-          })}
-        </Text>
+        </ScrollView>
       </GestureRecognizer>
     </SafeAreaView>
   );
@@ -114,6 +119,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderBottomWidth: 1,
     borderBottomColor: 'white',
+  },
+  lastText: {
+    marginBottom: 30,
   },
   xTouchWidth: {
     width: 60,
