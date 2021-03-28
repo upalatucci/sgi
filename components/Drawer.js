@@ -83,7 +83,7 @@ const Drawer = ({isLogged, logout}) => {
           </TouchableHighlight>
           <Text style={styles.version}>
             {Platform.select({
-              ios: '2.0.6 26',
+              ios: '2.0.7 27',
               android: '2.0.0 200',
             })}
           </Text>
