@@ -4,6 +4,7 @@ import {Actions} from 'react-native-router-flux';
 import TouchableHighlight from './CustomTouchableHighlight';
 import {TitleStyle, Colors} from '../styles';
 import {transformDate} from '../utils';
+import {VOLO_ENTRYPOINT} from '../api';
 
 export default ({title, date, image, id, entrypoint, uri}) => (
   <TouchableHighlight
@@ -11,7 +12,15 @@ export default ({title, date, image, id, entrypoint, uri}) => (
     onPress={() => Actions.postPage({id, entrypoint, uri, title})}>
     <View style={[styles.container, styles.newsContainer]}>
       {image ? (
-        <Image source={image ? {uri: image} : null} style={styles.image} />
+        <Image
+          source={image ? {uri: image} : null}
+          style={[
+            styles.image,
+            entrypoint === VOLO_ENTRYPOINT
+              ? {aspectRatio: 2 / 3}
+              : {width: 150},
+          ]}
+        />
       ) : null}
       <View style={[styles.container, styles.textContainer]}>
         <Text style={styles.subtitle}>{transformDate(date)}</Text>
@@ -40,9 +49,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     borderRadius: 14,
+    paddingRight: 4,
   },
   image: {
-    width: 150,
     height: '100%',
     flexDirection: 'row',
     resizeMode: 'cover',
