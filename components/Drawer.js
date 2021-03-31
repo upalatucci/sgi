@@ -15,7 +15,7 @@ import {WithLocalSvg} from 'react-native-svg';
 import X from '../assets/x.svg';
 import {connect} from 'react-redux';
 import {LOGOUT} from '../store/mutations';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import {Swipeable} from 'react-native-gesture-handler';
 
 const Drawer = ({isLogged, logout}) => {
   const loginOrOut = () => {
@@ -29,9 +29,11 @@ const Drawer = ({isLogged, logout}) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <GestureRecognizer
+      <Swipeable
         style={styles.container}
-        onSwipeLeft={() => Actions.drawerClose()}>
+        containerStyle={styles.container}
+        childrenContainerStyle={styles.container}
+        onSwipeLeftOpen={() => Actions.drawerClose()}>
         <View>
           <TouchableHighlight
             style={styles.xTouchWidth}
@@ -39,7 +41,7 @@ const Drawer = ({isLogged, logout}) => {
             <WithLocalSvg style={styles.x} width={20} height={20} asset={X} />
           </TouchableHighlight>
         </View>
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.scrollView}>
           <TouchableHighlight onPress={() => Actions.home()}>
             <Text style={styles.text}>Home</Text>
           </TouchableHighlight>
@@ -83,12 +85,12 @@ const Drawer = ({isLogged, logout}) => {
           </TouchableHighlight>
           <Text style={styles.version}>
             {Platform.select({
-              ios: '2.0.7 27',
-              android: '2.0.0 200',
+              ios: '2.0.8 28',
+              android: '2.0.1 201',
             })}
           </Text>
         </ScrollView>
-      </GestureRecognizer>
+      </Swipeable>
     </SafeAreaView>
   );
 };
@@ -137,5 +139,8 @@ const styles = StyleSheet.create({
     bottom: 10,
     left: 20,
     color: 'white',
+  },
+  scrollView: {
+    flex: 1,
   },
 });

@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   welcomeTitle: {
     fontWeight: 'bold',
     fontSize: 26,
+    marginBottom: 4,
   },
   welcomeSubtitle: {
     fontSize: 14,
@@ -276,6 +277,7 @@ const styles = StyleSheet.create({
   newsTitle: {
     fontWeight: 'bold',
     fontSize: 18,
+    marginBottom: 4,
   },
   newsDate: {
     color: Colors.textGray,

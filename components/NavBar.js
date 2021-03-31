@@ -1,11 +1,10 @@
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  Text,
   View,
   StatusBar,
   Platform,
+  useWindowDimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Actions} from 'react-native-router-flux';
@@ -14,9 +13,13 @@ import {BackButton} from 'react-native-router-flux/src/NavBar';
 import BackButtonImage from '../assets/backButton.png';
 
 export default (props) => {
+  const {width: screenWidth, height: screenHeight} = useWindowDimensions();
+
+  const isLandscape = screenWidth > screenHeight;
+
   const headerHeight = Platform.select({
-    ios: 80,
-    android: 50,
+    ios: isLandscape ? 64 : 84,
+    android: 54,
   });
 
   return (

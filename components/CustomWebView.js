@@ -1,16 +1,11 @@
-import React, {useState} from 'react';
-import {Dimensions, Linking} from 'react-native';
+import React from 'react';
+import {Linking, useWindowDimensions} from 'react-native';
 import {WebView} from 'react-native-webview';
 import SitoStyle from '../utils/sitoStyle';
 import VoloContinuoStyle from '../utils/volocontinuoStyle';
 import MagazineStyle from '../utils/magazineStyle';
 import {connect} from 'react-redux';
 import {getFontSize} from '../utils';
-
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
-
-const maxSize = Math.max(deviceHeight, deviceWidth);
 
 const contentStyles = {
   volocontinuo: VoloContinuoStyle,
@@ -25,12 +20,8 @@ const CustomWebView = ({
   onLoadEnd,
   subtractHeight = 80,
 }) => {
-  const [height, setHeight] = useState(maxSize);
-
-  Dimensions.addEventListener('change', ({window}) => {
-    const max = Math.max(window.height, window.width);
-    setHeight(max);
-  });
+  const {width: windowWidth, height: windowHeight} = useWindowDimensions();
+  const height = Math.max(windowHeight, windowWidth);
 
   function handleLoadPageRequest(req) {
     console.log('WebView Load Request', req);
