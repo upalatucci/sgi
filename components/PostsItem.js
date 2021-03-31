@@ -4,31 +4,38 @@ import {Actions} from 'react-native-router-flux';
 import TouchableHighlight from './CustomTouchableHighlight';
 import {TitleStyle, Colors} from '../styles';
 import {transformDate} from '../utils';
-import {VOLO_ENTRYPOINT} from '../api';
+import {useImageSizeType, IMAGE_SIZE_TYPE} from '../utils/customHooks';
 
-export default ({title, date, image, id, entrypoint, uri}) => (
-  <TouchableHighlight
-    style={styles.container}
-    onPress={() => Actions.postPage({id, entrypoint, uri, title})}>
-    <View style={[styles.container, styles.newsContainer]}>
-      {image ? (
-        <Image
-          source={image ? {uri: image} : null}
-          style={[
-            styles.image,
-            entrypoint === VOLO_ENTRYPOINT
-              ? {aspectRatio: 2 / 3}
-              : {width: 150},
-          ]}
-        />
-      ) : null}
-      <View style={[styles.container, styles.textContainer]}>
-        <Text style={styles.subtitle}>{transformDate(date)}</Text>
-        <Text style={styles.title}>{title}</Text>
+const ResizableImage = ({image}) => {
+  const imageSize = useImageSizeType(image);
+  return (
+    <Image
+      source={{uri: image}}
+      style={[
+        styles.image,
+        imageSize === IMAGE_SIZE_TYPE.PORTRAIT
+          ? styles.imagePortrait
+          : styles.imageLandscape,
+      ]}
+    />
+  );
+};
+
+export default ({title, date, image, id, entrypoint, uri}) => {
+  return (
+    <TouchableHighlight
+      style={styles.container}
+      onPress={() => Actions.postPage({id, entrypoint, uri, title})}>
+      <View style={[styles.container, styles.newsContainer]}>
+        {image ? <ResizableImage image={image} /> : null}
+        <View style={[styles.container, styles.textContainer]}>
+          <Text style={styles.subtitle}>{transformDate(date)}</Text>
+          <Text style={styles.title}>{title}</Text>
+        </View>
       </View>
-    </View>
-  </TouchableHighlight>
-);
+    </TouchableHighlight>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +48,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop: 10,
-    marginLeft: 14,
+    marginLeft: 164,
   },
   newsContainer: {
     minHeight: 150,
@@ -50,14 +57,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 14,
     paddingRight: 4,
+    overflow: 'hidden',
   },
   image: {
     height: '100%',
     flexDirection: 'row',
     resizeMode: 'cover',
     borderRadius: 14,
+    position: 'absolute',
+    width: 150,
   },
   subtitle: {
     color: Colors.textGray,
+  },
+  imageLandscape: {},
+  imagePortrait: {
+    height: 200,
   },
 });

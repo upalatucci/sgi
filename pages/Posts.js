@@ -50,7 +50,7 @@ export default ({uri, entrypoint, title}) => {
         onRefresh={() => setPostsPage(1)}
         refreshing={loading}
         onEndReached={fetchMorePosts}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );
