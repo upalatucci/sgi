@@ -13,6 +13,14 @@ import {BackButton} from 'react-native-router-flux/src/NavBar';
 import BackButtonImage from '../assets/backButton.png';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
+function getPortraitIosHeight(topInsets) {
+  if (topInsets > 20) {
+    return 40 + topInsets;
+  } else {
+    return 44 + topInsets;
+  }
+}
+
 export default (props) => {
   const {top: topInsets} = useSafeAreaInsets();
   const {width: screenWidth, height: screenHeight} = useWindowDimensions();
@@ -20,7 +28,7 @@ export default (props) => {
   const isLandscape = screenWidth > screenHeight;
 
   const headerHeight = Platform.select({
-    ios: isLandscape ? 50 + topInsets : 40 + topInsets,
+    ios: isLandscape ? 50 + topInsets : getPortraitIosHeight(topInsets),
     android: 54,
   });
 
