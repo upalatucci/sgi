@@ -21,7 +21,7 @@ export default (props) => {
 
   const headerHeight = Platform.select({
     ios: isLandscape ? 50 + topInsets : 40 + topInsets,
-    android: 54,
+    android: 50,
   });
 
   return (
