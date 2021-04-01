@@ -13,7 +13,7 @@ import {persistStore, persistReducer} from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
 import Routes from './Routes';
 import SplashScreen from 'react-native-splash-screen';
-import {StatusBar} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const persistConfig = {
   key: 'root',
@@ -45,17 +45,19 @@ export default () => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ErrorBoundary
-          FallbackComponent={ErrorFallback}
-          onReset={() => {
-            Actions.home();
-          }}>
-          <GlobalModal />
-          <Routes />
-        </ErrorBoundary>
-      </PersistGate>
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+            onReset={() => {
+              Actions.home();
+            }}>
+            <GlobalModal />
+            <Routes />
+          </ErrorBoundary>
+        </PersistGate>
+      </Provider>
+    </SafeAreaProvider>
   );
 };

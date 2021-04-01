@@ -11,14 +11,16 @@ import {Actions} from 'react-native-router-flux';
 import CustomTouchableHighlight from './CustomTouchableHighlight';
 import {BackButton} from 'react-native-router-flux/src/NavBar';
 import BackButtonImage from '../assets/backButton.png';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export default (props) => {
+  const {top: topInsets} = useSafeAreaInsets();
   const {width: screenWidth, height: screenHeight} = useWindowDimensions();
 
   const isLandscape = screenWidth > screenHeight;
 
   const headerHeight = Platform.select({
-    ios: isLandscape ? 64 : 84,
+    ios: isLandscape ? 50 + topInsets : 40 + topInsets,
     android: 54,
   });
 
