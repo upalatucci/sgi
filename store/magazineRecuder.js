@@ -8,6 +8,7 @@ import {
   SET_POST_CACHE,
   LOGIN,
   LOGOUT,
+  HIGHLIGHT,
 } from './mutations';
 
 import {generateSignToken} from '../services/auth';
@@ -22,11 +23,29 @@ const initialState = {
   cachedArticles: {},
   cachedPosts: {},
   isLogged: false,
+  highlights: {},
 };
 
 export default function (state = initialState, {type, payload}) {
   console.log(type, payload);
   switch (type) {
+    case HIGHLIGHT:
+      const magazineKey = payload.key;
+      let newMagazineHighlights;
+      if (state.highlights[magazineKey]) {
+        newMagazineHighlights = [...state.highlights[magazineKey]];
+      } else {
+        newMagazineHighlights = [];
+      }
+
+      newMagazineHighlights.push(payload.value);
+      return {
+        ...state,
+        highlights: {
+          ...state.highlights,
+          [magazineKey]: newMagazineHighlights,
+        },
+      };
     case LOGOUT:
       Keychain.resetGenericPassword();
       return {

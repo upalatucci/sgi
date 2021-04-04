@@ -24,6 +24,7 @@ const Article = React.memo(
   }) => {
     const [articleContent, setArticleContent] = useState();
     const [loading, setLoading] = useState(true);
+    const cacheKey = `${magazine}-${articleId}`;
 
     function shareArticle() {}
 
@@ -32,9 +33,6 @@ const Article = React.memo(
         return;
       }
 
-      const cacheKey = `${magazine}-${articleId}`;
-
-      console.log(storedArticles[cacheKey], storedArticles);
       if (storedArticles[cacheKey]) {
         return setArticleContent(storedArticles[cacheKey]);
       }
@@ -64,6 +62,7 @@ const Article = React.memo(
       <SafeAreaView style={styles.flex}>
         {articleContent && (
           <CustomWebView
+            magazineKey={cacheKey}
             subtractHeight={100}
             content={`
           <div class="post-category entry-category">${categoriesArrayToString(

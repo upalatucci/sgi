@@ -1,11 +1,23 @@
-import React from 'react';
-import {Linking, useWindowDimensions} from 'react-native';
+import React, {useRef} from 'react';
+import {
+  Image,
+  Linking,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {WebView} from 'react-native-webview';
 import SitoStyle from '../utils/sitoStyle';
 import VoloContinuoStyle from '../utils/volocontinuoStyle';
 import MagazineStyle from '../utils/magazineStyle';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getFontSize} from '../utils';
+import CustomTouchableHighlight from './CustomTouchableHighlight';
+import {Selector} from '../getSelector';
+import {HIGHLIGHT} from '../store/mutations';
+import MarkerIcon from '../assets/marker.png';
+import GoBack from '../assets/go-back-arrow.png';
 
 const contentStyles = {
   volocontinuo: VoloContinuoStyle,
@@ -16,10 +28,17 @@ const contentStyles = {
 const CustomWebView = ({
   style,
   content,
-  textSize,
   onLoadEnd,
+  magazineKey,
   subtractHeight = 80,
 }) => {
+  const dispatch = useDispatch();
+  const {highlights, textSize} = useSelector((state) => ({
+    highlights: state.magazine.highlights,
+    textSize: state.ui.textSize,
+  }));
+
+  const webref = useRef();
   const {width: windowWidth, height: windowHeight} = useWindowDimensions();
   const height = Math.max(windowHeight, windowWidth);
 
@@ -32,15 +51,68 @@ const CustomWebView = ({
     return true;
   }
 
+  function handleOnMessage(event) {
+    const dataObj = JSON.parse(event.nativeEvent.data);
+
+    if ('log' in dataObj) {
+      console.log(dataObj.log);
+    } else {
+      dispatch({
+        type: HIGHLIGHT,
+        payload: {key: magazineKey, value: dataObj},
+      });
+    }
+  }
+
+  function hightlight() {
+    webref.current.injectJavaScript('highlightTextHTML()');
+  }
+
+  const documentReady = () => {
+    if (!webref.current) {
+      return;
+    }
+    webref.current.injectJavaScript(
+      `
+      try {
+        const allHighlights = ${JSON.stringify(storedHighlights)}
+        allHighlights.forEach(h => restoreHighlight(h))
+        window.ReactNativeWebView.postMessage(JSON.stringify({log: "Restored"}))
+      }catch(err){
+        window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
+      }`,
+    );
+
+    if (onLoadEnd) {
+      onLoadEnd();
+    }
+  };
+
+  const storedHighlights = highlights[magazineKey] ?? [];
+  console.log(storedHighlights);
   return (
-    <WebView
-      scalesPageToFit={true}
-      javaScriptEnabled={true}
-      domStorageEnabled={true}
-      useWebkit={true}
-      originWhitelist={['*']}
-      source={{
-        html: `<html>
+    <>
+      <View style={styles.buttons}>
+        <CustomTouchableHighlight
+          onPress={hightlight}
+          style={styles.iconContainer}>
+          <Image source={MarkerIcon} style={styles.icons} />
+        </CustomTouchableHighlight>
+        <CustomTouchableHighlight
+          onPress={hightlight}
+          style={styles.iconContainer}>
+          <Image source={GoBack} style={styles.icons} />
+        </CustomTouchableHighlight>
+      </View>
+      <WebView
+        ref={webref}
+        scalesPageToFit={true}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        useWebkit={true}
+        originWhitelist={['*']}
+        source={{
+          html: `<html>
         <head>
           <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
           <style>${contentStyles[style ? style : 'sito']}</style>
@@ -53,20 +125,110 @@ const CustomWebView = ({
         </head>
         <body> 
           ${content}
+            
+          <style>
+            span.highlight {
+              background-color: yellow;
+            }
+            
+            span.highlight * {
+              background-color: yellow;
+            }
+
+            span.highlight br {
+              background-color: white;
+            }
+          </style>
+          <script>
+              ${Selector}
+
+              function restoreHighlight(dataObj) {
+                try {
+                  const range = new Range()
+
+                  const startContainer = document.querySelector(dataObj.startContainerPath).childNodes[dataObj.startContainerIndex]
+                  const endContainer = document.querySelector(dataObj.endContainerPath).childNodes[dataObj.endContainerIndex]
+
+                  range.setStart(startContainer, dataObj.startOffset)
+                  range.setEnd(endContainer, dataObj.endOffset)
+
+                  highlight(range)
+                } catch(err) {
+                  window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
+                }
+              }
+
+              function highlightTextHTML() {
+                const selectionObj = window.getSelection()
+                const range = selectionObj.getRangeAt(0)
+
+                const parentStartContainer = range.startContainer.parentElement
+                const parentEndContainer = range.endContainer.parentElement
+                const data = {
+                  startContainerPath: UTILS.cssPath(parentStartContainer),
+                  startContainerIndex: getIndexNodeFromParent(range.startContainer),
+                  startOffset: range.startOffset,
+                  endContainerPath: UTILS.cssPath(parentEndContainer),
+                  endContainerIndex: getIndexNodeFromParent(range.endContainer),
+                  endOffset: range.endOffset
+                }
+
+                window.ReactNativeWebView.postMessage(JSON.stringify(data))
+
+                highlight(range)
+              }
+
+              function highlight(range) {
+                if (range.toString() !== "") {
+                  var newNode = document.createElement("span");
+                  newNode.classList.add('highlight');
+                  newNode.appendChild(range.extractContents()); 
+                  range.insertNode(newNode);
+                }
+              }
+
+              function getIndexNodeFromParent(node) {
+                const parentElement = node.parentElement
+                for(let i = 0; i < parentElement.childNodes.length; i++) {
+                  if (node.isSameNode(parentElement.childNodes[i]))
+                    return i
+                }
+              }
+
+          </script>
         </body>
         </html>`,
-      }}
-      style={{height: height - subtractHeight}}
-      onShouldStartLoadWithRequest={handleLoadPageRequest}
-      onLoadEnd={onLoadEnd}
-    />
+        }}
+        onMessage={handleOnMessage}
+        style={{height: height - subtractHeight}}
+        onShouldStartLoadWithRequest={handleLoadPageRequest}
+        onLoadEnd={documentReady}
+      />
+    </>
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    textSize: state.ui.textSize,
-  };
-}
-
-export default connect(mapStateToProps)(CustomWebView);
+const styles = StyleSheet.create({
+  buttons: {
+    position: 'absolute',
+    bottom: 10,
+    zIndex: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'white',
+    paddingHorizontal: 2,
+    paddingVertical: 2,
+    borderRadius: 10,
+  },
+  icons: {
+    width: 26,
+    height: 26,
+  },
+  iconContainer: {
+    marginHorizontal: 10,
+    overflow: 'hidden',
+  },
+});
+export default CustomWebView;
