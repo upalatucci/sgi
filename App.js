@@ -18,7 +18,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['subscriptionInfo', 'lastNR', 'lastBS', 'lastNews'],
+  whitelist: ['subscriptionInfo', 'lastNR', 'lastBS', 'lastNews', 'highlights'],
 };
 
 const persistedMagazineReducer = persistReducer(persistConfig, magazineReducer);
