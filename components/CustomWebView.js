@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
   Image,
   Linking,
@@ -34,6 +34,8 @@ const CustomWebView = ({
   subtractHeight = 80,
 }) => {
   const dispatch = useDispatch();
+
+  const [percentScroll, setPercentScroll] = useState(0);
   const {highlights, textSize} = useSelector((state) => ({
     highlights: state.magazine.highlights,
     textSize: state.ui.textSize,
@@ -44,7 +46,6 @@ const CustomWebView = ({
   const height = Math.max(windowHeight, windowWidth);
 
   const handleLoadPageRequest = useCallback((req) => {
-    console.log('WebView Load Request', req);
     if (req.navigationType === 'click') {
       Linking.openURL(req.url);
       return false;
@@ -58,6 +59,8 @@ const CustomWebView = ({
 
       if ('log' in dataObj) {
         console.log(dataObj.log);
+      } else if ('scroll' in dataObj) {
+        setPercentScroll(dataObj.scroll);
       } else {
         dispatch({
           type: HIGHLIGHT,
@@ -69,7 +72,7 @@ const CustomWebView = ({
   );
 
   const hightlight = useCallback(() => {
-    webref.current.injectJavaScript('highlightTextHTML()');
+    webref.current.injectJavaScript('highlightTextHTML(); true;');
   }, [webref]);
 
   const removeLastHighlight = useCallback(() => {
@@ -77,7 +80,7 @@ const CustomWebView = ({
       type: REMOVE_HIGHLIGHT,
       payload: magazineKey,
     });
-    webref.current.injectJavaScript('removeHighlight()');
+    webref.current.injectJavaScript('removeHighlight(); true;');
   }, [dispatch, magazineKey]);
 
   const documentReady = useCallback(() => {
@@ -92,28 +95,45 @@ const CustomWebView = ({
         window.ReactNativeWebView.postMessage(JSON.stringify({log: "Restored"}))
       }catch(err){
         window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
-      }`,
+      }
+      true;`,
     );
 
     if (onLoadEnd) {
       onLoadEnd();
     }
-  }, [webref, onLoadEnd, storedHighlights]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [webref, onLoadEnd]);
+
+  useEffect(() => {
+    if (!webref.current) {
+      return;
+    }
+
+    setTimeout(() => {
+      webref.current.injectJavaScript(
+        `
+      restoreScroll(${percentScroll});
+      true;
+      `,
+      );
+    }, 100);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textSize, webref]);
 
   const storedHighlights = highlights[magazineKey] ?? [];
-  console.log(storedHighlights);
   return (
     <>
       <View style={styles.buttons}>
         <CustomTouchableHighlight
           onPress={hightlight}
           style={styles.iconContainer}>
-          <Image source={MarkerIcon} style={styles.icons} />
+          <Image source={MarkerIcon} style={styles.hightlightIcon} />
         </CustomTouchableHighlight>
         <CustomTouchableHighlight
           onPress={removeLastHighlight}
           style={styles.iconContainer}>
-          <Image source={GoBack} style={styles.icons} />
+          <Image source={GoBack} style={styles.goBackIcon} />
         </CustomTouchableHighlight>
       </View>
       <WebView
@@ -153,6 +173,16 @@ const CustomWebView = ({
           </style>
           <script>
               ${Selector}
+              
+              document.addEventListener("scroll", event => {
+                const percentScroll = Math.round((window.scrollY / document.body.scrollHeight) * 100) / 100
+                window.ReactNativeWebView.postMessage(JSON.stringify({scroll: percentScroll}))
+              })
+
+              function restoreScroll(percent) {
+                const scrollY = document.body.scrollHeight * percent;
+                window.scrollTo({left:0, top: scrollY, behavior: "smooth"});
+              }
 
               const rangeSpans = []
               function restoreHighlight(dataObj) {
@@ -199,15 +229,24 @@ const CustomWebView = ({
                  pa.insertBefore(who.firstChild, who);
                 }
 
-                for(i=1; i < pa.children.length; i++) {
-                  const a = pa.children[i]
-                  const b = pa.children[i - 1]
+                mergeSameNodes(pa)
+              }
+
+              function mergeSameNodes(node) {
+                if (node.children.length < 2) {
+                  return
+                }
+
+                for(i=1; i < node.children.length; i++) {
+                  const a = node.children[i]
+                  const b = node.children[i - 1]
 
                   if (a.className === b.className && a.tagName === b.tagName) {
                     while(a.firstChild) {
                       b.appendChild(a.firstChild)
                       a.removeChild(a.firstChild)
                     }
+                    mergeSameNodes(b);
                   }
                 }
               }
@@ -229,7 +268,6 @@ const CustomWebView = ({
                     return i
                 }
               }
-
           </script>
         </body>
         </html>`,
@@ -246,23 +284,31 @@ const CustomWebView = ({
 const styles = StyleSheet.create({
   buttons: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 40,
+    right: 20,
     zIndex: 10,
-    flexDirection: 'row',
+    flexDirection: 'column-reverse',
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: 'white',
     paddingHorizontal: 2,
     paddingVertical: 2,
     borderRadius: 10,
   },
-  icons: {
+  goBackIcon: {
     width: 26,
     height: 26,
+    backgroundColor: 'white',
+  },
+  hightlightIcon: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'white',
   },
   iconContainer: {
-    marginHorizontal: 10,
+    marginVertical: 4,
+    padding: 6,
+    borderRadius: 30,
     overflow: 'hidden',
   },
 });
