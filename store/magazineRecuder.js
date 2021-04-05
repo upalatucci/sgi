@@ -9,6 +9,7 @@ import {
   LOGIN,
   LOGOUT,
   HIGHLIGHT,
+  REMOVE_HIGHLIGHT,
 } from './mutations';
 
 import {generateSignToken} from '../services/auth';
@@ -29,6 +30,20 @@ const initialState = {
 export default function (state = initialState, {type, payload}) {
   console.log(type, payload);
   switch (type) {
+    case REMOVE_HIGHLIGHT:
+      if (state.highlights[payload]) {
+        newMagazineHighlights = [...state.highlights[payload]];
+        newMagazineHighlights.pop();
+        return {
+          ...state,
+          highlights: {
+            ...state.highlights,
+            [payload]: newMagazineHighlights,
+          },
+        };
+      } else {
+        return state;
+      }
     case HIGHLIGHT:
       const magazineKey = payload.key;
       let newMagazineHighlights;

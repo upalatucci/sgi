@@ -15,9 +15,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getFontSize} from '../utils';
 import CustomTouchableHighlight from './CustomTouchableHighlight';
 import {Selector} from '../getSelector';
-import {HIGHLIGHT} from '../store/mutations';
+import {HIGHLIGHT, REMOVE_HIGHLIGHT} from '../store/mutations';
 import MarkerIcon from '../assets/marker.png';
 import GoBack from '../assets/go-back-arrow.png';
+import {useCallback} from 'react';
 
 const contentStyles = {
   volocontinuo: VoloContinuoStyle,
@@ -42,33 +43,44 @@ const CustomWebView = ({
   const {width: windowWidth, height: windowHeight} = useWindowDimensions();
   const height = Math.max(windowHeight, windowWidth);
 
-  function handleLoadPageRequest(req) {
+  const handleLoadPageRequest = useCallback((req) => {
     console.log('WebView Load Request', req);
     if (req.navigationType === 'click') {
       Linking.openURL(req.url);
       return false;
     }
     return true;
-  }
+  }, []);
 
-  function handleOnMessage(event) {
-    const dataObj = JSON.parse(event.nativeEvent.data);
+  const handleOnMessage = useCallback(
+    (event) => {
+      const dataObj = JSON.parse(event.nativeEvent.data);
 
-    if ('log' in dataObj) {
-      console.log(dataObj.log);
-    } else {
-      dispatch({
-        type: HIGHLIGHT,
-        payload: {key: magazineKey, value: dataObj},
-      });
-    }
-  }
+      if ('log' in dataObj) {
+        console.log(dataObj.log);
+      } else {
+        dispatch({
+          type: HIGHLIGHT,
+          payload: {key: magazineKey, value: dataObj},
+        });
+      }
+    },
+    [magazineKey, dispatch],
+  );
 
-  function hightlight() {
+  const hightlight = useCallback(() => {
     webref.current.injectJavaScript('highlightTextHTML()');
-  }
+  }, [webref]);
 
-  const documentReady = () => {
+  const removeLastHighlight = useCallback(() => {
+    dispatch({
+      type: REMOVE_HIGHLIGHT,
+      payload: magazineKey,
+    });
+    webref.current.injectJavaScript('removeHighlight()');
+  }, [dispatch, magazineKey]);
+
+  const documentReady = useCallback(() => {
     if (!webref.current) {
       return;
     }
@@ -86,7 +98,7 @@ const CustomWebView = ({
     if (onLoadEnd) {
       onLoadEnd();
     }
-  };
+  }, [webref, onLoadEnd, storedHighlights]);
 
   const storedHighlights = highlights[magazineKey] ?? [];
   console.log(storedHighlights);
@@ -99,7 +111,7 @@ const CustomWebView = ({
           <Image source={MarkerIcon} style={styles.icons} />
         </CustomTouchableHighlight>
         <CustomTouchableHighlight
-          onPress={hightlight}
+          onPress={removeLastHighlight}
           style={styles.iconContainer}>
           <Image source={GoBack} style={styles.icons} />
         </CustomTouchableHighlight>
@@ -115,7 +127,7 @@ const CustomWebView = ({
           html: `<html>
         <head>
           <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
-          <style>${contentStyles[style ? style : 'sito']}</style>
+          <style>${contentStyles[style ?? 'sito']}</style>
           <style> 
             img, iframe, video { display: block; max-width: 90% !important; height: auto; margin: 0 auto; } 
             body { margin: 0 30px 50px; font-size: ${getFontSize(
@@ -142,6 +154,7 @@ const CustomWebView = ({
           <script>
               ${Selector}
 
+              const rangeSpans = []
               function restoreHighlight(dataObj) {
                 try {
                   const range = new Range()
@@ -178,12 +191,34 @@ const CustomWebView = ({
                 highlight(range)
               }
 
+              function removeHighlight() {
+                const who = rangeSpans.pop()
+                var pa= who.parentNode;
+
+                while(who.firstChild){
+                 pa.insertBefore(who.firstChild, who);
+                }
+
+                for(i=1; i < pa.children.length; i++) {
+                  const a = pa.children[i]
+                  const b = pa.children[i - 1]
+
+                  if (a.className === b.className && a.tagName === b.tagName) {
+                    while(a.firstChild) {
+                      b.appendChild(a.firstChild)
+                      a.removeChild(a.firstChild)
+                    }
+                  }
+                }
+              }
+
               function highlight(range) {
                 if (range.toString() !== "") {
                   var newNode = document.createElement("span");
-                  newNode.classList.add('highlight');
+                  newNode.classList.add('highlight'); 
                   newNode.appendChild(range.extractContents()); 
                   range.insertNode(newNode);
+                  rangeSpans.push(newNode)
                 }
               }
 

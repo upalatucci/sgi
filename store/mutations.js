@@ -11,3 +11,4 @@ export const SET_POST_CACHE = 'SET_POST_CACHE';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const HIGHLIGHT = 'HIGHLIGHT';
+export const REMOVE_HIGHLIGHT = 'REMOVE_HIGHLIGHT';
