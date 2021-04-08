@@ -17,6 +17,7 @@ function FontSizeIcon() {
     <TouchableHighlight onPress={changeTextSize}>
       <View style={styles.container}>
         <Text
+          allowFontScaling={false}
           style={[
             styles.textsmall,
             textSize === possibleTextSizes[0] ? styles.selected : null,
@@ -24,6 +25,7 @@ function FontSizeIcon() {
           A
         </Text>
         <Text
+          allowFontScaling={false}
           style={[
             styles.textmedium,
             textSize === possibleTextSizes[1] ? styles.selected : null,
@@ -31,6 +33,7 @@ function FontSizeIcon() {
           A
         </Text>
         <Text
+          allowFontScaling={false}
           style={[
             styles.textlarge,
             textSize === possibleTextSizes[2] ? styles.selected : null,

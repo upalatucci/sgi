@@ -33,6 +33,7 @@ const Drawer = ({isLogged, logout}) => {
         style={styles.container}
         containerStyle={styles.container}
         childrenContainerStyle={styles.container}
+        onSwipeableLeftOpen={() => console.log('Ciao')}
         onSwipeLeftOpen={() => Actions.drawerClose()}>
         <View>
           <TouchableHighlight

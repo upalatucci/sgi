@@ -90,7 +90,9 @@ const Home = ({
               }>
               <View style={styles.card}>
                 <Image source={NewsIcon} style={styles.cardImage} />
-                <Text style={[styles.cardTitle]}>In primo piano</Text>
+                <Text style={[styles.cardTitle]} allowFontScaling={false}>
+                  In primo piano
+                </Text>
               </View>
             </TouchableHighlight>
 
@@ -99,7 +101,9 @@ const Home = ({
               onPress={() => Actions.buddismo()}>
               <View style={styles.card}>
                 <Image source={BuddismoIcon} style={styles.cardImage} />
-                <Text style={[styles.cardTitle]}>Il Buddismo</Text>
+                <Text style={[styles.cardTitle]} allowFontScaling={false}>
+                  Il Buddismo
+                </Text>
               </View>
             </TouchableHighlight>
 
@@ -108,7 +112,9 @@ const Home = ({
               onPress={() => Actions.frasedelgiorno()}>
               <View style={styles.card}>
                 <Image source={FraseDelGiornoIcon} style={styles.cardImage} />
-                <Text style={[styles.cardTitle]}>La frase del giorno</Text>
+                <Text style={[styles.cardTitle]} allowFontScaling={false}>
+                  La frase del giorno
+                </Text>
               </View>
             </TouchableHighlight>
           </View>

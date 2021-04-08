@@ -111,7 +111,7 @@ function Routes() {
             key="postPage"
             component={PostPage}
             back
-            renderRightButton={ChangeFontSizeContainer}
+            renderRightButton={MultiUtilsRightButton}
           />
           <Scene
             key="magazine"

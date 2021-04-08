@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     position: 'absolute',
     width: 150,
+    maxHeight: 200,
   },
   subtitle: {
     color: Colors.textGray,

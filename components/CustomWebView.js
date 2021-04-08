@@ -32,6 +32,7 @@ const CustomWebView = ({
   onLoadEnd,
   magazineKey,
   subtractHeight = 80,
+  enableHighlight = false,
 }) => {
   const dispatch = useDispatch();
   const {highlights, textSize} = useSelector((state) => ({
@@ -69,8 +70,10 @@ const CustomWebView = ({
   );
 
   const hightlight = useCallback(() => {
-    webref.current.injectJavaScript('highlightTextHTML()');
-  }, [webref]);
+    if (enableHighlight) {
+      webref.current.injectJavaScript('highlightTextHTML()');
+    }
+  }, [webref, enableHighlight]);
 
   const removeLastHighlight = useCallback(() => {
     dispatch({
@@ -84,8 +87,10 @@ const CustomWebView = ({
     if (!webref.current) {
       return;
     }
-    webref.current.injectJavaScript(
-      `
+
+    if (enableHighlight) {
+      webref.current.injectJavaScript(
+        `
       try {
         const allHighlights = ${JSON.stringify(storedHighlights)}
         allHighlights.forEach(h => restoreHighlight(h))
@@ -93,29 +98,32 @@ const CustomWebView = ({
       }catch(err){
         window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
       }`,
-    );
+      );
+    }
 
     if (onLoadEnd) {
       onLoadEnd();
     }
-  }, [webref, onLoadEnd, storedHighlights]);
+  }, [webref, onLoadEnd, storedHighlights, enableHighlight]);
 
   const storedHighlights = highlights[magazineKey] ?? [];
-  console.log(storedHighlights);
+
   return (
     <>
-      <View style={styles.buttons}>
-        <CustomTouchableHighlight
-          onPress={hightlight}
-          style={styles.iconContainer}>
-          <Image source={MarkerIcon} style={styles.icons} />
-        </CustomTouchableHighlight>
-        <CustomTouchableHighlight
-          onPress={removeLastHighlight}
-          style={styles.iconContainer}>
-          <Image source={GoBack} style={styles.icons} />
-        </CustomTouchableHighlight>
-      </View>
+      {enableHighlight && (
+        <View style={styles.buttons}>
+          <CustomTouchableHighlight
+            onPress={hightlight}
+            style={styles.iconContainer}>
+            <Image source={MarkerIcon} style={styles.icons} />
+          </CustomTouchableHighlight>
+          <CustomTouchableHighlight
+            onPress={removeLastHighlight}
+            style={styles.iconContainer}>
+            <Image source={GoBack} style={styles.icons} />
+          </CustomTouchableHighlight>
+        </View>
+      )}
       <WebView
         ref={webref}
         scalesPageToFit={true}
