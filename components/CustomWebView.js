@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
   Image,
   Linking,
@@ -35,6 +35,8 @@ const CustomWebView = ({
   enableHighlight = false,
 }) => {
   const dispatch = useDispatch();
+
+  const [percentScroll, setPercentScroll] = useState(0);
   const {highlights, textSize} = useSelector((state) => ({
     highlights: state.magazine.highlights,
     textSize: state.ui.textSize,
@@ -45,7 +47,6 @@ const CustomWebView = ({
   const height = Math.max(windowHeight, windowWidth);
 
   const handleLoadPageRequest = useCallback((req) => {
-    console.log('WebView Load Request', req);
     if (req.navigationType === 'click') {
       Linking.openURL(req.url);
       return false;
@@ -71,7 +72,7 @@ const CustomWebView = ({
 
   const hightlight = useCallback(() => {
     if (enableHighlight) {
-      webref.current.injectJavaScript('highlightTextHTML()');
+      webref.current.injectJavaScript('highlightTextHTML(); true;');
     }
   }, [webref, enableHighlight]);
 
@@ -80,7 +81,7 @@ const CustomWebView = ({
       type: REMOVE_HIGHLIGHT,
       payload: magazineKey,
     });
-    webref.current.injectJavaScript('removeHighlight()');
+    webref.current.injectJavaScript('removeHighlight(); true;');
   }, [dispatch, magazineKey]);
 
   const documentReady = useCallback(() => {
@@ -97,7 +98,9 @@ const CustomWebView = ({
         window.ReactNativeWebView.postMessage(JSON.stringify({log: "Restored"}))
       }catch(err){
         window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
-      }`,
+      }
+      true;
+      `,
       );
     }
 
@@ -105,6 +108,10 @@ const CustomWebView = ({
       onLoadEnd();
     }
   }, [webref, onLoadEnd, storedHighlights, enableHighlight]);
+
+  const onScroll = useCallback((event) => {
+    console.log(event.nativeEvent);
+  }, []);
 
   const storedHighlights = highlights[magazineKey] ?? [];
 
@@ -126,6 +133,7 @@ const CustomWebView = ({
       )}
       <WebView
         ref={webref}
+        onScroll={onScroll}
         scalesPageToFit={true}
         javaScriptEnabled={true}
         domStorageEnabled={true}
@@ -161,6 +169,11 @@ const CustomWebView = ({
           </style>
           <script>
               ${Selector}
+              
+              function restoreScroll(percent) {
+                const scrollY = document.body.scrollHeight * percent;
+                window.scrollTo({left:0, top: scrollY, behavior: "smooth"});
+              }
 
               const rangeSpans = []
               function restoreHighlight(dataObj) {
@@ -207,15 +220,24 @@ const CustomWebView = ({
                  pa.insertBefore(who.firstChild, who);
                 }
 
-                for(i=1; i < pa.children.length; i++) {
-                  const a = pa.children[i]
-                  const b = pa.children[i - 1]
+                mergeSameNodes(pa)
+              }
+
+              function mergeSameNodes(node) {
+                if (node.children.length < 2) {
+                  return
+                }
+
+                for(i=1; i < node.children.length; i++) {
+                  const a = node.children[i]
+                  const b = node.children[i - 1]
 
                   if (a.className === b.className && a.tagName === b.tagName) {
                     while(a.firstChild) {
                       b.appendChild(a.firstChild)
                       a.removeChild(a.firstChild)
                     }
+                    mergeSameNodes(b);
                   }
                 }
               }
@@ -237,7 +259,6 @@ const CustomWebView = ({
                     return i
                 }
               }
-
           </script>
         </body>
         </html>`,
@@ -254,23 +275,31 @@ const CustomWebView = ({
 const styles = StyleSheet.create({
   buttons: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 40,
+    right: 20,
     zIndex: 10,
-    flexDirection: 'row',
+    flexDirection: 'column-reverse',
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: 'white',
     paddingHorizontal: 2,
     paddingVertical: 2,
     borderRadius: 10,
   },
-  icons: {
+  goBackIcon: {
     width: 26,
     height: 26,
+    backgroundColor: 'white',
+  },
+  hightlightIcon: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'white',
   },
   iconContainer: {
-    marginHorizontal: 10,
+    marginVertical: 4,
+    padding: 6,
+    borderRadius: 30,
     overflow: 'hidden',
   },
 });
