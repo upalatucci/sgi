@@ -29,9 +29,18 @@ export default ({title, date, image, id, entrypoint, uri}) => {
       onPress={() => Actions.postPage({id, entrypoint, uri, title})}>
       <View style={[styles.container, styles.newsContainer]}>
         {image ? <ResizableImage image={image} /> : null}
-        <View style={[styles.container, styles.textContainer]}>
-          <Text style={styles.subtitle}>{transformDate(date)}</Text>
-          <Text style={styles.title}>{title}</Text>
+        <View
+          style={[
+            styles.container,
+            styles.textContainer,
+            image ? styles.textLeft : styles.textNoImage,
+          ]}>
+          <Text style={styles.subtitle} allowFontScaling={false}>
+            {transformDate(date)}
+          </Text>
+          <Text style={styles.title} allowFontScaling={false}>
+            {title}
+          </Text>
         </View>
       </View>
     </TouchableHighlight>
@@ -49,7 +58,12 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop: 10,
+  },
+  textLeft: {
     marginLeft: 164,
+  },
+  textNoImage: {
+    marginLeft: 10,
   },
   newsContainer: {
     minHeight: 150,

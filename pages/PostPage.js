@@ -5,11 +5,27 @@ import {connect} from 'react-redux';
 import Loading from '../components/Loading';
 import CustomWebView from '../components/CustomWebView';
 import {SET_POST_CACHE} from '../store/mutations';
+import {formatDateNews} from '../utils';
 
 function PostPage(props) {
   const {id, uri, entrypoint, storedPosts, cachePost} = props;
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  function processContent(data) {
+    let postData = data.full.replace(/(\n\r|\n|\r)/gm, '<br/>');
+
+    if (entrypoint !== SGI_ENTRYPOINT) {
+      return postData;
+    } else {
+      return (
+        `<h1 class="entry-title">${data.title}</h1>
+        <p class="post-meta">${formatDateNews(
+          data.date,
+        )} <strong>${data.categories.join(', ')}</strong></p>` + postData
+      );
+    }
+  }
 
   useEffect(() => {
     const cacheKey = `${uri}-${id}`;
@@ -19,9 +35,10 @@ function PostPage(props) {
     }
 
     getJsonData(`${uri}/${id}`, null, entrypoint).then((news) => {
-      const newsData = news.data[0].full.replace(/(\n\r|\n|\r)/gm, '<br/>');
-      setContent(newsData);
-      cachePost(cacheKey, newsData);
+      console.log(news.data);
+      const processedPost = processContent(news.data[0]);
+      setContent(processedPost);
+      cachePost(cacheKey, processedPost);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, uri, entrypoint]);

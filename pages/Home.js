@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
   welcomeTitle: {
     fontSize: 26,
     marginBottom: 4,
+    fontWeight: 'bold',
   },
   welcomeSubtitle: {
     fontSize: 14,
@@ -245,7 +246,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardTitle: {
-    fontWeight: 'bold',
     textAlign: 'center',
     fontSize: deviceSize === DEVICE_SIZES.SMALL ? 15 : 16,
   },
