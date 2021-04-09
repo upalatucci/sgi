@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
+import Text from '../ui/Text';
 import {
   deviceSize,
   DEVICE_SIZES,
@@ -44,14 +45,16 @@ export default ({magazine, magazineType, onPress, background}) => (
             styles.cardTitle,
             magazineType === MAGAZINE_TYPES.VC ? styles.cardTitleWide : null,
             deviceSize === DEVICE_SIZES.SMALL ? styles.cardTitleSmall : null,
-          ]}>
+          ]}
+          allowFontScaling={false}>
           {MAGAZINE_NAMES[magazineType]}
         </Text>
         <Text
           style={[
             styles.cardSubtitle,
             deviceSize === DEVICE_SIZES.SMALL ? styles.cardSubtitleSmall : null,
-          ]}>
+          ]}
+          allowFontScaling={false}>
           {MAGAZINE_SUBTITLES[magazineType]}
         </Text>
       </View>

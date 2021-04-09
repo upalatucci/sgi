@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Image,
   Dimensions,
-  Text,
   View,
   SafeAreaView,
 } from 'react-native';
@@ -23,6 +22,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {WithLocalSvg} from 'react-native-svg';
 import GoToMagazines from '../assets/goToMagazines.svg';
 import {backHandler} from '../Routes';
+import Text from '../components/ui/Text';
 
 const windowHeight = Dimensions.get('window').height;
 const Magazine = React.memo(
@@ -120,10 +120,14 @@ const Magazine = React.memo(
                 asset={GoToMagazines}
               />
             </TouchableHighlight>
-            <Text style={[styles.headerItem, styles.headerTitle]}>
+            <Text
+              style={[styles.headerItem, styles.headerTitle]}
+              allowFontScaling={false}>
               {MAGAZINE_NAMES[magazine]}
             </Text>
-            <Text style={[styles.headerItem, styles.headerNumber]}>
+            <Text
+              style={[styles.headerItem, styles.headerNumber]}
+              allowFontScaling={false}>
               {number.number}
             </Text>
           </View>
@@ -134,7 +138,9 @@ const Magazine = React.memo(
               end={{x: 1, y: 0}}
               colors={[Colors.lightBlue, Colors.darkBlue]}
               style={styles.downloadButton}>
-              <Text style={styles.downloadButtonText}>Scarica PDF</Text>
+              <Text style={styles.downloadButtonText} allowFontScaling={false}>
+                Leggi PDF
+              </Text>
             </LinearGradient>
           </TouchableHighlight>
           {Object.entries(magazineContent.summary).map(([key, section]) => (

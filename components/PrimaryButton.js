@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import Text from './ui/Text';
 import TouchableHighlight from './CustomTouchableHighlight';
 import LinearGradient from 'react-native-linear-gradient';
 import {Colors} from '../styles';

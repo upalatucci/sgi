@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, Linking, StyleSheet} from 'react-native';
+import {View, Linking, StyleSheet} from 'react-native';
+import Text from '../ui/Text';
 import {WithLocalSvg} from 'react-native-svg';
 import TouchableHighlight from '../CustomTouchableHighlight';
 

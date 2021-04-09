@@ -141,10 +141,3 @@ export function isSubscriptionExpired(subInfo) {
   console.log(nowDate);
   return endDate < nowDate;
 }
-
-export function categoriesArrayToString(categories, magazine) {
-  if (magazine === MAGAZINE_TYPES.BS) {
-    return categories[0];
-  }
-  return categories.map((c) => c.toUpperCase()).join(', ');
-}

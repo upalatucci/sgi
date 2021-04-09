@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Text, Share, Image} from 'react-native';
+import {StyleSheet, View, Share, Image} from 'react-native';
+import Text from './ui/Text';
 import CustomHTML from './CustomHTML';
 import {convertHTMLToText, italianFormat} from '../utils';
 import {WithLocalSvg} from 'react-native-svg';

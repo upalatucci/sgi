@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
+import Text from '../components/ui/Text';
 import {connect} from 'react-redux';
 import {subscriptionDataForMagazine} from '../services/auth';
 import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';

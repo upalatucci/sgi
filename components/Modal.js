@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, Modal} from 'react-native';
+import {View, StyleSheet, Modal} from 'react-native';
 import TouchableHighlight from './CustomTouchableHighlight';
+import Text from './ui/Text';
 import {Colors} from '../styles';
 
 export default ({modalVisible, onClose, error, message}) => (

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, StyleSheet, Text} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {getJsonData} from '../api';
 import PostsItem from '../components/PostsItem';
 import {TitleStyle, Colors} from '../styles';

@@ -2,7 +2,6 @@ import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
   Image,
   ScrollView,
   Linking,
@@ -13,6 +12,7 @@ import {useSelector} from 'react-redux';
 import BuddismoBackground from '../assets/buddismo_background.png';
 import BuddismoText from '../components/BuddismoText';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
+import Text from '../components/ui/Text';
 
 export default () => {
   const textSize = useSelector((state) => state.ui.textSize);

@@ -9,7 +9,6 @@ import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
 import CustomWebView from '../components/CustomWebView';
 import {Colors, TitleStyle} from '../styles';
 import {SET_ARTICLE_CACHE} from '../store/mutations';
-import {categoriesArrayToString} from '../utils';
 
 const Article = React.memo(
   ({
@@ -17,7 +16,7 @@ const Article = React.memo(
     magazine,
     articleTitle,
     articleSubtitle,
-    categories,
+    category,
     subscriptionInfo,
     storedArticles,
     cacheArticle,
@@ -65,10 +64,7 @@ const Article = React.memo(
             magazineKey={cacheKey}
             subtractHeight={100}
             content={`
-          <div class="post-category entry-category">${categoriesArrayToString(
-            categories,
-            magazine,
-          )}</div>
+          <div class="post-category entry-category">${category}</div>
           <h1 class="entry-title">${articleTitle}</h1>
           <div class="post-teaser entry-teaser">${articleSubtitle}</div>
           <div class="post-content entry-content">

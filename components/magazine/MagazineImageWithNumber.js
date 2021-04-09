@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, Text, View, StyleSheet, Dimensions} from 'react-native';
+import {Image, View, StyleSheet, Dimensions} from 'react-native';
+import Text from '../ui/Text';
 import TouchableHighlight from '../CustomTouchableHighlight';
 import {Actions} from 'react-native-router-flux';
 import {Colors} from '../../styles';

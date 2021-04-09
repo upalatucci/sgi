@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useCallback} from 'react';
-import {View, Text, StyleSheet, Animated, Easing} from 'react-native';
+import {View, StyleSheet, Animated, Easing} from 'react-native';
+import Text from './ui/Text';
 import {Colors} from '../styles';
 
 export default ({

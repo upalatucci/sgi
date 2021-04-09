@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Text, Linking} from 'react-native';
+import {StyleSheet, View, Linking} from 'react-native';
 import {Colors, DefaultShadow} from '../styles';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
+import Text from './ui/Text';
 
 export default ({principalText, links, fontSize}) => {
   return (

@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import TouchableHighlight from './CustomTouchableHighlight';
+import Text from './ui/Text';
 import {
   TitleStyle,
   PrimaryButtonStyle,

@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   View,
   StyleSheet,
-  Text,
   Linking,
   Platform,
   ScrollView,
@@ -16,6 +15,7 @@ import X from '../assets/x.svg';
 import {connect} from 'react-redux';
 import {LOGOUT} from '../store/mutations';
 import {Swipeable} from 'react-native-gesture-handler';
+import Text from './ui/Text';
 
 const Drawer = ({isLogged, logout}) => {
   const loginOrOut = () => {

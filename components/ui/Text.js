@@ -1,0 +1,21 @@
+import React from 'react';
+import {StyleSheet, Text} from 'react-native';
+import {FontFamilies} from '../../styles';
+
+export default (props) => (
+  <Text
+    {...props}
+    style={
+      Array.isArray(props.style)
+        ? [...props.style, styles.text]
+        : [props.style, styles.text]
+    }>
+    {props.children}
+  </Text>
+);
+
+const styles = StyleSheet.create({
+  text: {
+    fontFamily: FontFamilies.primary,
+  },
+});

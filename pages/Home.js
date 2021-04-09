@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -11,6 +11,7 @@ import TouchableHighlight from '../components/CustomTouchableHighlight';
 import HomeMagazineCard from '../components/home/HomeMagazineCard';
 import SiteCard from '../components/home/SiteCard';
 import {login} from '../services/auth';
+import Text from '../components/ui/Text';
 import {
   fetchLastBSImage,
   fetchLastNews,
@@ -113,7 +114,7 @@ const Home = ({
               <View style={styles.card}>
                 <Image source={FraseDelGiornoIcon} style={styles.cardImage} />
                 <Text style={[styles.cardTitle]} allowFontScaling={false}>
-                  La frase del giorno
+                  Le frasi del giorno
                 </Text>
               </View>
             </TouchableHighlight>
@@ -146,9 +147,13 @@ const Home = ({
         </View>
 
         <View style={styles.homeSection}>
-          <Text style={[styles.homeTitle]}>LE RIVISTE</Text>
+          <Text style={[styles.homeTitle]} allowFontScaling={false}>
+            LE RIVISTE
+          </Text>
           <TouchableHighlight onPress={() => Actions.magazines()}>
-            <Text style={[styles.homeLink]}>Numeri precedenti</Text>
+            <Text style={[styles.homeLink]} allowFontScaling={false}>
+              Numeri precedenti
+            </Text>
           </TouchableHighlight>
         </View>
         <HomeMagazineCard magazine={lastNR} magazineType={MAGAZINE_TYPES.NR} />
@@ -166,7 +171,7 @@ const Home = ({
         />
 
         <View style={styles.homeSection}>
-          <Text style={[styles.homeTitle]}>
+          <Text style={[styles.homeTitle]} allowFontScaling={false}>
             LA SOKA GAKKAI ITALIANA NEL WEB
           </Text>
         </View>

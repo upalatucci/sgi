@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import Text from '../ui/Text';
 import {
   DefaultShadow,
   DefaultBorderRadius,
@@ -9,7 +10,6 @@ import {
 import TouchableHighlight from '../CustomTouchableHighlight';
 import {Actions} from 'react-native-router-flux';
 import CustomHTML from '../CustomHTML';
-import {categoriesArrayToString} from '../../utils';
 
 export default ({section, magazine}) => {
   const sectionArticles = Object.entries(section.articles);
@@ -20,7 +20,7 @@ export default ({section, magazine}) => {
       <Text style={styles.category}>
         {sectionArticles.length > 1
           ? section.category.toUpperCase()
-          : categoriesArrayToString(sectionArticles[0][1].categories, magazine)}
+          : sectionArticles[0][1].categories[0]}
       </Text>
       {sectionArticles.map(([key, article]) => {
         const formattedExcerpt = article.excerpt
@@ -35,7 +35,7 @@ export default ({section, magazine}) => {
                 articleId: article.id,
                 articleTitle: article.title,
                 articleSubtitle: article.subtitle,
-                categories: article.categories,
+                category: article.categories[0],
               })
             }>
             <View style={styles.container}>

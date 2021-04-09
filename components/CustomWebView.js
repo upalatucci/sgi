@@ -3,7 +3,6 @@ import {
   Image,
   Linking,
   StyleSheet,
-  Text,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -43,8 +42,7 @@ const CustomWebView = ({
   }));
 
   const webref = useRef();
-  const {width: windowWidth, height: windowHeight} = useWindowDimensions();
-  const height = Math.max(windowHeight, windowWidth);
+  const {height} = useWindowDimensions();
 
   const handleLoadPageRequest = useCallback((req) => {
     if (req.navigationType === 'click') {

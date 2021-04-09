@@ -32,6 +32,7 @@ function PostPage(props) {
           style={styles.scrollView}
           contentContainerStyle={styles.container}>
           <CustomWebView
+            subtractHeight={100}
             content={content + '<br/><br/>'}
             style={entrypoint === SGI_ENTRYPOINT ? 'sito' : 'volocontinuo'}
             onLoadEnd={() => setLoading(false)}

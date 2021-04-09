@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TextInput,
   Linking,
@@ -10,6 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import TouchableHighlight from './CustomTouchableHighlight';
+import Text from './ui/Text';
 import {Colors, FontFamilies} from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
 import EmailIcon from '../assets/email.png';
