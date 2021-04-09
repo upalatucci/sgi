@@ -32,7 +32,7 @@ export const Colors = {
 };
 
 export const FontFamilies = {
-  primary: Platform.OS === 'ios' ? 'Roboto-Medium' : 'Roboto-Medium',
+  primary: Platform.OS === 'ios' ? 'Roboto-Medium' : 'RobotoMedium',
 };
 
 export const TitleStyle = {

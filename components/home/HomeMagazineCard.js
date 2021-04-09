@@ -35,7 +35,8 @@ export default ({magazine, magazineType, onPress, background}) => (
             style={[
               styles.cardDate,
               deviceSize === DEVICE_SIZES.SMALL ? styles.cardDateSmall : null,
-            ]}>
+            ]}
+            allowFontScaling={false}>
             {magazine?.number_desc}
           </Text>
         ) : null}

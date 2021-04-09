@@ -141,3 +141,9 @@ export function isSubscriptionExpired(subInfo) {
   console.log(nowDate);
   return endDate < nowDate;
 }
+
+export function formatDateNews(dateString) {
+  return format(parse(dateString, 'dd/MM/yyyy', new Date()), 'dd MMMM yyyy', {
+    locale: it,
+  });
+}

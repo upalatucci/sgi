@@ -22,6 +22,7 @@ import {Colors, DefaultShadow} from '../styles';
 import {
   deviceSize,
   DEVICE_SIZES,
+  formatDateNews,
   MAGAZINE_NAMES,
   MAGAZINE_TYPES,
   SGI_SITES,
@@ -122,7 +123,9 @@ const Home = ({
 
           {lastNews ? (
             <View style={styles.newsContainer}>
-              <Text style={styles.newsDate}>{lastNews.date}</Text>
+              <Text style={styles.newsDate}>
+                {formatDateNews(lastNews.date)}
+              </Text>
               <Text style={styles.newsTitle}>{lastNews.title}</Text>
               <Text style={styles.newsSubtitle}>{lastNews.excerpt}</Text>
               <TouchableHighlight
@@ -203,7 +206,6 @@ const styles = StyleSheet.create({
     ...DefaultShadow,
   },
   welcomeTitle: {
-    fontWeight: 'bold',
     fontSize: 26,
     marginBottom: 4,
   },
