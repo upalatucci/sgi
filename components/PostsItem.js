@@ -7,15 +7,18 @@ import {TitleStyle, Colors} from '../styles';
 import {transformDate} from '../utils';
 import {useImageSizeType, IMAGE_SIZE_TYPE} from '../utils/customHooks';
 
+const IMAGE_WIDTH = 150;
+
 const ResizableImage = ({image}) => {
-  const imageSize = useImageSizeType(image);
+  const {imageType, aspectRatio} = useImageSizeType(image);
+
   return (
     <Image
       source={{uri: image}}
       style={[
         styles.image,
-        imageSize === IMAGE_SIZE_TYPE.PORTRAIT
-          ? styles.imagePortrait
+        imageType === IMAGE_SIZE_TYPE.PORTRAIT && aspectRatio
+          ? {height: IMAGE_WIDTH / aspectRatio, resizeMode: 'contain'}
           : styles.imageLandscape,
       ]}
     />
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   newsContainer: {
-    minHeight: 150,
+    minHeight: IMAGE_WIDTH,
     marginBottom: 30,
     flexDirection: 'row',
     backgroundColor: 'white',
@@ -80,7 +83,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 14,
     position: 'absolute',
-    width: 150,
+    width: IMAGE_WIDTH,
     maxHeight: 200,
   },
   subtitle: {

@@ -8,12 +8,14 @@ export const IMAGE_SIZE_TYPE = {
 
 export function useImageSizeType(imageUrl) {
   const [imageType, setImageType] = useState();
+  const [aspectRatio, setAspectRatio] = useState();
 
   Image.getSize(imageUrl, (width, height) => {
     setImageType(
       width > height ? IMAGE_SIZE_TYPE.LANDSCAPE : IMAGE_SIZE_TYPE.PORTRAIT,
     );
+    setAspectRatio(Math.round((width / height) * 100) / 100);
   });
 
-  return imageType;
+  return {imageType, aspectRatio};
 }

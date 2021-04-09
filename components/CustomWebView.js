@@ -117,7 +117,7 @@ const CustomWebView = ({
   }, []);
 
   const storedHighlights = highlights[magazineKey] ?? [];
-
+  console.log(storedHighlights);
   return (
     <>
       {enableHighlight && (
@@ -125,12 +125,12 @@ const CustomWebView = ({
           <CustomTouchableHighlight
             onPress={hightlight}
             style={styles.iconContainer}>
-            <Image source={MarkerIcon} style={styles.icons} />
+            <Image source={MarkerIcon} style={styles.hightlightIcon} />
           </CustomTouchableHighlight>
           <CustomTouchableHighlight
             onPress={removeLastHighlight}
             style={styles.iconContainer}>
-            <Image source={GoBack} style={styles.icons} />
+            <Image source={GoBack} style={styles.goBackIcon} />
           </CustomTouchableHighlight>
         </View>
       )}

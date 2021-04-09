@@ -61,6 +61,7 @@ const Article = React.memo(
       <SafeAreaView style={styles.flex}>
         {articleContent && (
           <CustomWebView
+            enableHighlight={true}
             magazineKey={cacheKey}
             subtractHeight={100}
             content={`
