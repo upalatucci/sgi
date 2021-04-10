@@ -157,7 +157,9 @@ const CustomWebView = ({
           </style>
         </head>
         <body> 
-          ${content}
+            <div id="rn-container">
+              ${content}
+            </div>
             
           <style>
             span.highlight {
@@ -218,42 +220,19 @@ const CustomWebView = ({
               }
 
               function removeHighlight() {
-                const who = rangeSpans.pop()
-                var pa= who.parentNode;
+                const {node, htmlContainer} = rangeSpans.pop()
 
-                while(who.firstChild){
-                 pa.insertBefore(who.firstChild, who);
-                }
-
-                mergeSameNodes(pa)
-              }
-
-              function mergeSameNodes(node) {
-                if (node.children.length < 2) {
-                  return
-                }
-
-                for(i=1; i < node.children.length; i++) {
-                  const a = node.children[i]
-                  const b = node.children[i - 1]
-
-                  if (a.className === b.className && a.tagName === b.tagName) {
-                    while(a.firstChild) {
-                      b.appendChild(a.firstChild)
-                      a.removeChild(a.firstChild)
-                    }
-                    mergeSameNodes(b);
-                  }
-                }
+                document.getElementById("rn-container").innerHTML = htmlContainer
               }
 
               function highlight(range) {
                 if (range.toString() !== "") {
+                  const htmlContainer = document.getElementById("rn-container").innerHTML
                   var newNode = document.createElement("span");
                   newNode.classList.add('highlight'); 
                   newNode.appendChild(range.extractContents()); 
                   range.insertNode(newNode);
-                  rangeSpans.push(newNode)
+                  rangeSpans.push({node: newNode, htmlContainer })
                 }
               }
 
