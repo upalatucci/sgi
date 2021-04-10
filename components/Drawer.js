@@ -61,8 +61,8 @@ const Drawer = ({isLogged, logout}) => {
           }>
           <Text style={styles.text}>
             {Platform.select({
-              ios: 'Pubblicazioni',
-              android: 'Spazio Abbonamenti',
+              ios: 'Servizi riviste',
+              android: 'Spazio abbonamenti',
             })}
           </Text>
         </TouchableHighlight>
@@ -70,7 +70,7 @@ const Drawer = ({isLogged, logout}) => {
           onPress={() =>
             Linking.openURL('https://servizi.sgi-italia.org/aderenti/')
           }>
-          <Text style={styles.text}>Spazio Aderenti</Text>
+          <Text style={styles.text}>Spazio aderenti</Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={loginOrOut}>
           <Text style={[styles.text, styles.lastText]}>
