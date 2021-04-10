@@ -107,7 +107,7 @@ const CustomWebView = ({
       onLoadEnd();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [webref, onLoadEnd, storedHighlights, enableHighlight]);
+  }, [webref]);
 
   const onScroll = useCallback((event) => {
     const {contentOffset, contentSize} = event.nativeEvent;
