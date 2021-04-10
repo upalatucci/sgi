@@ -79,8 +79,8 @@ const Drawer = ({isLogged, logout}) => {
         </TouchableHighlight>
         <Text style={styles.version}>
           {Platform.select({
-            ios: '2.0.8 28',
-            android: '2.0.1 201',
+            ios: '2.0.9 29',
+            android: '2.0.2 202',
           })}
         </Text>
       </ScrollView>
