@@ -94,7 +94,7 @@ const CustomWebView = ({
       try {
         const allHighlights = ${JSON.stringify(storedHighlights)}
         allHighlights.forEach(h => restoreHighlight(h))
-        window.ReactNativeWebView.postMessage(JSON.stringify({log: "Restored"}))
+        window.ReactNativeWebView.postMessage(JSON.stringify({log: allHighlights}))
       }catch(err){
         window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
       }
@@ -107,17 +107,19 @@ const CustomWebView = ({
       onLoadEnd();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [webref]);
+  }, [webref, percentScroll, storedHighlights]);
 
   const onScroll = useCallback((event) => {
     const {contentOffset, contentSize} = event.nativeEvent;
     const percent =
       Math.round((contentOffset.y / contentSize.height) * 100) / 100;
-    setPercentScroll(percent);
+
+    if (percent !== 0) {
+      setPercentScroll(percent);
+    }
   }, []);
 
   const storedHighlights = highlights[magazineKey] ?? [];
-  console.log(storedHighlights);
   return (
     <>
       {enableHighlight && (
@@ -175,7 +177,6 @@ const CustomWebView = ({
               
               function restoreScroll(percent) {
                 const scrollY = document.body.scrollHeight * percent;
-                window.ReactNativeWebView.postMessage(JSON.stringify({log: document.body.scrollHeight}))
                 window.scrollTo({left:0, top: scrollY, behavior: "smooth"});
               }
 
