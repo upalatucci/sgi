@@ -41,12 +41,6 @@
 	<string/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>SFUIDisplay-Bold.otf</string>
-		<string>SFUIDisplay-Light.otf</string>
-		<string>SFUIDisplay-Medium.otf</string>
-		<string>SFUIDisplay-SemiBold.otf</string>
-		<string>SFUIDisplay-Thin.otf</string>
-		<string>SFUIDisplay-UltraThin.otf</string>
 		<string>Roboto-Black.ttf</string>
 		<string>Roboto-BlackItalic.ttf</string>
 		<string>Roboto-Bold.ttf</string>
