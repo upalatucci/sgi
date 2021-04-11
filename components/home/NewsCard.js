@@ -31,7 +31,7 @@ export default ({title, id, date}) => (
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 14,
     backgroundColor: Colors.background,
     height: '100%',
     borderRadius: 8,
@@ -42,9 +42,11 @@ const styles = StyleSheet.create({
     top: 8,
     right: 12,
     fontSize: 10,
+    color: Colors.textGray,
   },
   title: {
     marginTop: 14,
     fontSize: 14,
+    fontWeight: 'bold',
   },
 });
