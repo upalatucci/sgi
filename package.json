@@ -8,7 +8,7 @@
     "start": "react-native start",
     "build:android:test": "cd android && ./gradlew assembleRelease",
     "build:android:prod": "cd android && ./gradlew bundleRelease",
-    "clean:android": "cd android && ./gradlew clean && cd ../",
+    "clean:android": "cd android && ./gradlew clean && ./gradlew cleanBuildCache && cd ../",
     "clean:ios": "cd ios && xcodebuild clean && cd ../",
     "test": "jest",
     "lint": "eslint .",
