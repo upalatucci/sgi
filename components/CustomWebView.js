@@ -45,6 +45,7 @@ const CustomWebView = ({
   const {height} = useWindowDimensions();
 
   const handleLoadPageRequest = useCallback((req) => {
+    console.log(req);
     if (req.navigationType === 'click') {
       Linking.openURL(req.url);
       return false;
@@ -151,6 +152,7 @@ const CustomWebView = ({
           <style>${contentStyles[style ?? 'sito']}</style>
           <style> 
             img, iframe, video { display: block; max-width: 90% !important; height: auto; margin: 0 auto; } 
+            .soundcloud-player > * { max-width: 100% !important;}
             body { margin: 0 30px 50px; font-size: ${getFontSize(
               textSize,
             )}; word-wrap: break-word; overflow-wrap: break-word; }

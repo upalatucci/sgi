@@ -1387,4 +1387,32 @@ img[alt="image_print"] {
 	color: #666;
     font-weight: 600;
 }
+.et-shadow {
+	border: 1px solid #ddd;
+}
+
+.et-box {
+	margin: 0 0 10px;
+	-webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+	box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+	font-size: 14px;
+	position: relative;
+}
+
+.et-shadow .et-box-content {
+    color: #737373;
+    background: #fafafa;
+    border: 1px solid #fafafa;
+    -webkit-box-shadow: inset 0 0 45px #e7e7e7;
+    box-shadow: inset 0 0 45px #e7e7e7;
+}
+.et-box-content {
+    text-shadow: 1px 1px 1px #ffffff;
+    padding: 27px 43px 17px 66px;
+    min-height: 35px;
+}
+
+p {
+	margin-bottom: 1.6em;
+}
 */`;

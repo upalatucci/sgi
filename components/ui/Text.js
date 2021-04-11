@@ -9,7 +9,8 @@ export default (props) => (
       Array.isArray(props.style)
         ? [...props.style, styles.text]
         : [props.style, styles.text]
-    }>
+    }
+    allowFontScaling={props.allowFontScaling ?? false}>
     {props.children}
   </Text>
 );
