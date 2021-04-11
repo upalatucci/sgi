@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
   },
   date: {
     position: 'absolute',
-    top: 6,
-    right: 8,
+    top: 8,
+    right: 12,
     fontSize: 10,
   },
   title: {

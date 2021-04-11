@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   cardHighlight: {
-    width: '45%',
+    width: '48%',
   },
   newsButton: {
     width: '38%',
