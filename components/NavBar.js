@@ -34,7 +34,7 @@ export default (props) => {
 
   return (
     <>
-      <StatusBar />
+      <StatusBar barStyle="light-content" />
       <View style={[styles.container, {height: headerHeight}]}>
         <LinearGradient
           style={styles.linearGradinet}
