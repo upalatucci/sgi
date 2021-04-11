@@ -34,7 +34,12 @@ export default (props) => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar
+        barStyle={Platform.select({
+          ios: 'dark-content',
+          android: 'light-content',
+        })}
+      />
       <View style={[styles.container, {height: headerHeight}]}>
         <LinearGradient
           style={styles.linearGradinet}
