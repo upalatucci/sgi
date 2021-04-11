@@ -26,7 +26,7 @@ export function fetchLastNews() {
   return (dispatch) => {
     return lastNews().then((response) => {
       if (response.data && response.data.length > 0) {
-        dispatch({type: SET_LAST_NEWS, payload: response.data[0]});
+        dispatch({type: SET_LAST_NEWS, payload: response.data});
       }
     });
   };

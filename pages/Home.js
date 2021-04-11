@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {FlatList, Image, ScrollView, StyleSheet, View} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -22,12 +22,11 @@ import {Colors, DefaultShadow} from '../styles';
 import {
   deviceSize,
   DEVICE_SIZES,
-  formatDateNews,
   MAGAZINE_NAMES,
   MAGAZINE_TYPES,
   SGI_SITES,
 } from '../utils';
-import Loading from '../components/Loading';
+import NewsList from '../components/home/NewsList';
 
 const Home = ({
   lastBS,
@@ -80,9 +79,9 @@ const Home = ({
             consultare le riviste con gli ultimi incoraggiamenti.
           </Text>
 
-          <View style={styles.newsSsection}>
+          <View style={[styles.homeHeader, styles.newsSection]}>
             <TouchableHighlight
-              style={styles.cardHighlight}
+              style={[styles.cardHighlight, styles.newsButton]}
               onPress={() =>
                 Actions.posts({
                   title: 'In primo piano',
@@ -97,7 +96,11 @@ const Home = ({
                 </Text>
               </View>
             </TouchableHighlight>
-
+            <View style={[styles.cardHighlight, styles.newsList]}>
+              <NewsList lastNews={lastNews} />
+            </View>
+          </View>
+          <View style={[styles.homeHeader]}>
             <TouchableHighlight
               style={styles.cardHighlight}
               onPress={() => Actions.buddismo()}>
@@ -120,33 +123,6 @@ const Home = ({
               </View>
             </TouchableHighlight>
           </View>
-
-          {lastNews ? (
-            <View style={styles.newsContainer}>
-              <Text style={styles.newsDate}>
-                {formatDateNews(lastNews.date)}
-              </Text>
-              <Text style={styles.newsTitle}>{lastNews.title}</Text>
-              <Text style={styles.newsSubtitle}>{lastNews.excerpt}</Text>
-              <TouchableHighlight
-                onPress={() =>
-                  Actions.postPage({
-                    id: lastNews.id,
-                    entrypoint: SGI_ENTRYPOINT,
-                    uri: 'news',
-                    title: lastNews.title,
-                  })
-                }>
-                <Text style={styles.dipiu}>LEGGI DI PIU'</Text>
-              </TouchableHighlight>
-            </View>
-          ) : (
-            <Loading
-              absolutePositioning={false}
-              style={styles.newsLoading}
-              withText={false}
-            />
-          )}
         </View>
 
         <View style={styles.homeSection}>
@@ -214,10 +190,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.textGray,
   },
-  newsSsection: {
+  homeHeader: {
     marginTop: 20,
     width: '100%',
-    height: 120,
+    height: deviceSize === DEVICE_SIZES.SMALL ? 85 : 120,
     flex: 1,
     flexDirection: 'row',
     alignContent: 'center',
@@ -229,7 +205,13 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   cardHighlight: {
-    width: '30%',
+    width: '45%',
+  },
+  newsButton: {
+    width: '38%',
+  },
+  newsList: {
+    width: '58%',
   },
   card: {
     borderRadius: 10,
@@ -247,11 +229,12 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     textAlign: 'center',
-    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 15 : 16,
+    fontSize: deviceSize === DEVICE_SIZES.SMALL ? 13 : 14,
+    fontWeight: 'bold',
   },
   cardImage: {
-    width: '60%',
-    height: '60%',
+    width: '50%',
+    height: '50%',
     resizeMode: 'contain',
   },
   imageVolo: {
