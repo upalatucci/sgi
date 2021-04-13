@@ -18,6 +18,7 @@ import {HIGHLIGHT, REMOVE_HIGHLIGHT} from '../store/mutations';
 import MarkerIcon from '../assets/marker.png';
 import GoBack from '../assets/go-back-arrow.png';
 import {useCallback} from 'react';
+import ScrollToTopButton from './ScrollToTopButton';
 
 const contentStyles = {
   volocontinuo: VoloContinuoStyle,
@@ -36,6 +37,7 @@ const CustomWebView = ({
   const dispatch = useDispatch();
 
   const [percentScroll, setPercentScroll] = useState(0);
+  const [showScrollTopButton, setShowScrollTopButton] = useState(false);
   const {highlights, textSize} = useSelector((state) => ({
     highlights: state.magazine.highlights,
     textSize: state.ui.textSize,
@@ -110,10 +112,24 @@ const CustomWebView = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [webref, percentScroll, storedHighlights]);
 
+  const scrollToTop = useCallback(() => {
+    if (!webref.current) {
+      return;
+    }
+
+    webref.current.injectJavaScript('restoreScroll(0)');
+  }, []);
+
   const onScroll = useCallback((event) => {
-    const {contentOffset, contentSize} = event.nativeEvent;
+    const {contentOffset, contentSize, layoutMeasurement} = event.nativeEvent;
     const percent =
       Math.round((contentOffset.y / contentSize.height) * 100) / 100;
+
+    if (contentOffset.y > layoutMeasurement.height) {
+      setShowScrollTopButton(true);
+    } else {
+      setShowScrollTopButton(false);
+    }
 
     if (percent !== 0) {
       setPercentScroll(percent);
@@ -123,6 +139,7 @@ const CustomWebView = ({
   const storedHighlights = highlights[magazineKey] ?? [];
   return (
     <>
+      {showScrollTopButton && <ScrollToTopButton onPress={scrollToTop} />}
       {enableHighlight && (
         <View style={styles.buttons}>
           <CustomTouchableHighlight
@@ -156,6 +173,10 @@ const CustomWebView = ({
             body { margin: 0 30px 50px; font-size: ${getFontSize(
               textSize,
             )}; word-wrap: break-word; overflow-wrap: break-word; }
+            
+            #rn-container {
+              margin-bottom: 80px;
+            }
           </style>
         </head>
         <body> 

@@ -62,14 +62,14 @@ const Article = React.memo(
         {articleContent && (
           <CustomWebView
             magazineKey={cacheKey}
-            subtractHeight={100}
             content={`
-          <div class="post-category entry-category">${category}</div>
-          <h1 class="entry-title">${articleTitle}</h1>
-          <div class="post-teaser entry-teaser">${articleSubtitle}</div>
-          <div class="post-content entry-content">
-            ${articleContent.full}
-          </div>`}
+              <div class="post-category entry-category">${category}</div>
+              <h1 class="entry-title">${articleTitle}</h1>
+              <div class="post-teaser entry-teaser">${articleSubtitle}</div>
+              <div class="post-content entry-content">
+                ${articleContent.full}
+              </div>
+            `}
             style="magazine"
             onLoadEnd={() => {
               setLoading(false);

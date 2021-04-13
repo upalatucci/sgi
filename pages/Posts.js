@@ -3,10 +3,8 @@ import {useCallback} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {getJsonData} from '../api';
 import PostsItem from '../components/PostsItem';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 import {TitleStyle, Colors} from '../styles';
-import TouchableHighlight from '../components/CustomTouchableHighlight';
-import Up from '../assets/chevron-up-solid.svg';
-import {WithLocalSvg} from 'react-native-svg';
 
 export default ({uri, entrypoint, title}) => {
   const flatListRef = useRef();
@@ -75,11 +73,7 @@ export default ({uri, entrypoint, title}) => {
         onEndReachedThreshold={2}
       />
 
-      {showScrollToTopButton && (
-        <TouchableHighlight style={styles.buttonUp} onPress={scrollToTop}>
-          <WithLocalSvg asset={Up} />
-        </TouchableHighlight>
-      )}
+      {showScrollToTopButton && <ScrollToTopButton onPress={scrollToTop} />}
     </View>
   );
 };
@@ -97,17 +91,5 @@ const styles = StyleSheet.create({
     ...TitleStyle,
     paddingHorizontal: 10,
     color: Colors.dark,
-  },
-  buttonUp: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    width: 50,
-    height: 50,
-    padding: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    borderRadius: 30,
   },
 });

@@ -7,6 +7,7 @@ export default ({lastNews}) => (
   <View style={styles.container}>
     {lastNews ? (
       <FlatList
+        showsHorizontalScrollIndicator={false}
         style={styles.list}
         data={lastNews}
         horizontal

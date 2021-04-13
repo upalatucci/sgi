@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   homeHeader: {
     marginTop: 20,
     width: '100%',
-    height: deviceSize === DEVICE_SIZES.SMALL ? 85 : 120,
+    height: deviceSize === DEVICE_SIZES.SMALL ? 100 : 120,
     flex: 1,
     flexDirection: 'row',
     alignContent: 'center',

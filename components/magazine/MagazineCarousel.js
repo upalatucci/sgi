@@ -40,11 +40,12 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
         setMagazines(newContent.data);
         dispatch({
           type: SET_MAGAZINE_CACHE,
-          payload: {[cacheKey]: newContent.data},
+          payload: {[cacheKey]: newContent.datsa},
         });
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entrypoint, subInfo]);
 
   useEffect(() => {
@@ -56,6 +57,7 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
       <FlatList
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}
+        showsHorizontalScrollIndicator={false}
         horizontal
         data={magazines}
         keyExtractor={(item) => item.id.toString()}
