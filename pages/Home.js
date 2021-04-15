@@ -22,11 +22,12 @@ import {Colors, DefaultShadow} from '../styles';
 import {
   deviceSize,
   DEVICE_SIZES,
+  formatDateNews,
   MAGAZINE_NAMES,
   MAGAZINE_TYPES,
   SGI_SITES,
 } from '../utils';
-import NewsList from '../components/home/NewsList';
+import Loading from '../components/Loading';
 
 const Home = ({
   lastBS,
@@ -78,10 +79,9 @@ const Home = ({
             tramite la quale è possibile essere aggiornati sulle novità e
             consultare le riviste con gli ultimi incoraggiamenti.
           </Text>
-
-          <View style={[styles.homeHeader, styles.newsSection]}>
+          <View style={[styles.homeHeader]}>
             <TouchableHighlight
-              style={[styles.cardHighlight, styles.newsButton]}
+              style={[styles.cardHighlight]}
               onPress={() =>
                 Actions.posts({
                   title: 'In primo piano',
@@ -96,11 +96,6 @@ const Home = ({
                 </Text>
               </View>
             </TouchableHighlight>
-            <View style={[styles.cardHighlight, styles.newsList]}>
-              <NewsList lastNews={lastNews} />
-            </View>
-          </View>
-          <View style={[styles.homeHeader]}>
             <TouchableHighlight
               style={styles.cardHighlight}
               onPress={() => Actions.buddismo()}>
@@ -123,6 +118,32 @@ const Home = ({
               </View>
             </TouchableHighlight>
           </View>
+          {lastNews && lastNews.length > 0 ? (
+            <View style={styles.newsContainer}>
+              <Text style={styles.newsDate}>
+                {formatDateNews(lastNews[0].date)}
+              </Text>
+              <Text style={styles.newsTitle}>{lastNews[0].title}</Text>
+              <Text style={styles.newsSubtitle}>{lastNews[0].excerpt}</Text>
+              <TouchableHighlight
+                onPress={() =>
+                  Actions.postPage({
+                    id: lastNews[0].id,
+                    entrypoint: SGI_ENTRYPOINT,
+                    uri: 'news',
+                    title: lastNews[0].title,
+                  })
+                }>
+                <Text style={styles.dipiu}>LEGGI DI PIU'</Text>
+              </TouchableHighlight>
+            </View>
+          ) : (
+            <Loading
+              absolutePositioning={false}
+              style={styles.newsLoading}
+              withText={false}
+            />
+          )}
         </View>
 
         <View style={styles.homeSection}>
@@ -205,7 +226,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   cardHighlight: {
-    width: '48%',
+    width: '30%',
   },
   newsButton: {
     width: '38%',

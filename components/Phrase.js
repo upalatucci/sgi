@@ -26,7 +26,7 @@ export default React.memo(({phrase, image, origin}) => {
   async function sharePhrase() {
     const messageHTML =
       `${italianFormat(now, 'dd')} ${italianFormat(now, 'MMMM')}\n\n` +
-      `${phrase.frase}\n\n${phrase.origine}`;
+      `${phrase.frase}\n\n${phrase.origine}, Esperia`;
     const message = await convertHTMLToText(messageHTML);
     try {
       await Share.share({

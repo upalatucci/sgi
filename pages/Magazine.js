@@ -16,11 +16,17 @@ import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
 import ArticleSection from '../components/magazine/ArticleSection';
 import {Colors} from '../styles';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
-import {downloadAndOpenPDF, MAGAZINE_NAMES} from '../utils';
+import {
+  deviceSize,
+  DEVICE_SIZES,
+  downloadAndOpenPDF,
+  MAGAZINE_NAMES,
+} from '../utils';
 import {SET_MAGAZINE_CACHE, SHOW_MODAL} from '../store/mutations';
 import LinearGradient from 'react-native-linear-gradient';
 import {WithLocalSvg} from 'react-native-svg';
-import GoToMagazines from '../assets/goToMagazines.svg';
+import GoToMagazines from '../assets/components.svg';
+import Pdf from '../assets/pdf.svg';
 import {backHandler} from '../Routes';
 import Text from '../components/ui/Text';
 
@@ -110,39 +116,37 @@ const Magazine = React.memo(
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.container}>
           <View style={styles.header}>
-            <TouchableHighlight
-              onPress={() => Actions.magazines()}
-              style={styles.headerItem}>
-              <WithLocalSvg
-                style={styles.goToMagazinesImage}
-                width={40}
-                height={40}
-                asset={GoToMagazines}
-              />
-            </TouchableHighlight>
-            <Text
-              style={[styles.headerItem, styles.headerTitle]}
-              allowFontScaling={false}>
+            <Text style={[styles.headerTitle]} allowFontScaling={false}>
               {MAGAZINE_NAMES[magazine]}
             </Text>
-            <Text
-              style={[styles.headerItem, styles.headerNumber]}
-              allowFontScaling={false}>
-              {number.number}
-            </Text>
+            <View style={styles.headerIcons}>
+              <TouchableHighlight
+                onPress={() => Actions.magazines()}
+                style={styles.headerItem}>
+                <WithLocalSvg
+                  style={styles.goToMagazinesImage}
+                  width={30}
+                  height={30}
+                  asset={GoToMagazines}
+                />
+              </TouchableHighlight>
+              <TouchableHighlight
+                onPress={downloadPDFRequest}
+                style={styles.headerItem}>
+                <WithLocalSvg
+                  style={styles.goToMagazinesImage}
+                  width={30}
+                  height={30}
+                  asset={Pdf}
+                />
+              </TouchableHighlight>
+            </View>
           </View>
           <Image style={styles.image} source={{uri: number.cover}} />
-          <TouchableHighlight onPress={downloadPDFRequest}>
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              colors={[Colors.lightBlue, Colors.darkBlue]}
-              style={styles.downloadButton}>
-              <Text style={styles.downloadButtonText} allowFontScaling={false}>
-                Leggi PDF
-              </Text>
-            </LinearGradient>
-          </TouchableHighlight>
+          <Text style={[styles.number]}>{number.number}</Text>
+          <Text style={[styles.number, styles.numberDesc]}>
+            {number?.number_desc}
+          </Text>
           {Object.entries(magazineContent.summary).map(([key, section]) => (
             <ArticleSection key={key} section={section} magazine={magazine} />
           ))}
@@ -202,26 +206,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 60,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     marginHorizontal: 20,
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    width: '70%',
-    textAlign: 'center',
+    textAlign: 'left',
   },
-  headerNumber: {
+  number: {
     fontSize: 20,
     fontWeight: 'bold',
     color: Colors.orange,
-    textAlign: 'right',
+    textAlign: 'center',
+  },
+  numberDesc: {
+    color: 'black',
+    fontWeight: '300',
+    fontSize: 14,
   },
   headerItem: {
-    width: '15%',
+    marginLeft: deviceSize === DEVICE_SIZES.SMALL ? 10 : 20,
+  },
+  headerIcons: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
   },
   goToMagazinesImage: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
   },
 });
