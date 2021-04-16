@@ -52,7 +52,11 @@ export default ({section, magazine}) => {
                 </Text>
               ) : null}
               {formattedExcerpt.length ? (
-                <CustomHTML content={formattedExcerpt} />
+                <CustomHTML
+                  content={formattedExcerpt}
+                  allowFontScaling={false}
+                  fontSize={14}
+                />
               ) : null}
             </View>
           </TouchableHighlight>
@@ -83,8 +87,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   subtitle: {
-    fontSize: 16,
-    color: Colors.dark,
+    fontSize: 14,
+    color: Colors.textGray,
     marginBottom: 3,
   },
   titleMargin: {
@@ -93,6 +97,7 @@ const styles = StyleSheet.create({
   category: {
     fontWeight: 'bold',
     color: Colors.lightBlue,
+    fontSize: 14,
   },
   image: {
     position: 'absolute',

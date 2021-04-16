@@ -15,9 +15,9 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 function getPortraitIosHeight(topInsets) {
   if (topInsets > 20) {
-    return 40 + topInsets;
-  } else {
     return 44 + topInsets;
+  } else {
+    return 48 + topInsets;
   }
 }
 
@@ -28,8 +28,8 @@ export default (props) => {
   const isLandscape = screenWidth > screenHeight;
 
   const headerHeight = Platform.select({
-    ios: isLandscape ? 50 + topInsets : getPortraitIosHeight(topInsets),
-    android: 50,
+    ios: isLandscape ? 52 + topInsets : getPortraitIosHeight(topInsets),
+    android: 55,
   });
 
   return (

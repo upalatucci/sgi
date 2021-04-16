@@ -77,7 +77,7 @@ const Drawer = ({isLogged, logout}) => {
             {isLogged ? 'Logout' : 'Login'}
           </Text>
         </TouchableHighlight>
-        <Text style={styles.version}>2.0.13 213</Text>
+        <Text style={styles.version}>2.0.14 214</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -103,10 +103,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#00A2C3',
   },
   text: {
-    paddingVertical: 20,
+    paddingVertical: 15,
     marginHorizontal: 15,
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
     borderBottomWidth: 1,
     borderBottomColor: 'white',
   },

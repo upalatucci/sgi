@@ -125,8 +125,8 @@ const Magazine = React.memo(
                 style={styles.headerItem}>
                 <WithLocalSvg
                   style={styles.goToMagazinesImage}
-                  width={30}
-                  height={30}
+                  width={20}
+                  height={20}
                   asset={GoToMagazines}
                 />
               </TouchableHighlight>
@@ -135,8 +135,8 @@ const Magazine = React.memo(
                 style={styles.headerItem}>
                 <WithLocalSvg
                   style={styles.goToMagazinesImage}
-                  width={30}
-                  height={30}
+                  width={20}
+                  height={20}
                   asset={Pdf}
                 />
               </TouchableHighlight>
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     maxHeight: 400,
     resizeMode: 'contain',
     margin: 10,
-    borderRadius: 20,
+    borderRadius: 40,
   },
   downloadButton: {
     backgroundColor: Colors.darkBlue,
@@ -219,14 +219,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.orange,
     textAlign: 'center',
+    marginTop: 10,
   },
   numberDesc: {
     color: 'black',
     fontWeight: '300',
     fontSize: 14,
+    marginTop: 0,
+    marginBottom: 20,
   },
   headerItem: {
-    marginLeft: deviceSize === DEVICE_SIZES.SMALL ? 10 : 20,
+    marginLeft: 20,
   },
   headerIcons: {
     alignItems: 'flex-end',

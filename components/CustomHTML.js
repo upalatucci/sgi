@@ -20,7 +20,8 @@ export default (props) => (
     }}
     staticContentMaxWidth={minorSize}
     imagesMaxWidth={minorSize}
-    baseFontStyle={{fontSize: 16}}
+    baseFontStyle={props.fontSize || {fontSize: 16}}
+    allowFontScaling={props.allowFontScaling || true}
     {...props}
     html={props.content
       .replace(/height=['"].*?['"]/, '')

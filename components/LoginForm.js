@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     width: 300,
+    maxWidth: '90%',
     height: 50,
     alignItems: 'center',
     marginBottom: 10,
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
   loginTextButton: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 16,
   },
   gradient: {
     width: '100%',

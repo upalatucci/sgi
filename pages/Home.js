@@ -124,7 +124,9 @@ const Home = ({
                 {formatDateNews(lastNews[0].date)}
               </Text>
               <Text style={styles.newsTitle}>{lastNews[0].title}</Text>
-              <Text style={styles.newsSubtitle}>{lastNews[0].excerpt}</Text>
+              <Text style={styles.newsSubtitle} numberOfLines={4}>
+                {lastNews[0].excerpt}
+              </Text>
               <TouchableHighlight
                 onPress={() =>
                   Actions.postPage({
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     padding: 20,
-    paddingBottom: 40,
+    paddingBottom: 20,
     backgroundColor: 'white',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
@@ -293,8 +295,11 @@ const styles = StyleSheet.create({
   },
   newsTitle: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 4,
+  },
+  newsSubtitle: {
+    fontSize: 14,
   },
   newsDate: {
     color: Colors.textGray,
@@ -302,6 +307,7 @@ const styles = StyleSheet.create({
   },
   dipiu: {
     color: Colors.lightBlue,
+    padding: 4,
     alignSelf: 'flex-end',
   },
   newsLoading: {

@@ -37,7 +37,7 @@ export const FontFamilies = {
 
 export const TitleStyle = {
   color: Colors.primary,
-  fontSize: 20,
+  fontSize: 16,
   fontWeight: 'bold',
 };
 

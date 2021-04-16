@@ -53,19 +53,21 @@ const styles = StyleSheet.create({
   text: {
     height: 30,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     color: Colors.textGray,
   },
   firstMagazineText: {
     color: Colors.orange,
+    fontSize: 18,
   },
   image: {
     height: 100,
     resizeMode: 'contain',
-    borderRadius: 20,
+    borderRadius: 30,
   },
   firstMagazineImage: {
     height: 150,
+    borderRadius: 35,
   },
 });
