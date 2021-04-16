@@ -1,22 +1,24 @@
 import React from 'react';
 import {Image} from 'react-native';
-import TouchableHighlight from '../CustomTouchableHighlight';
-import {Actions} from 'react-native-router-flux';
+import {useImageSizeType} from '../../utils/customHooks';
+import {MAGAZINE_ASPECT_RATIO} from '../../utils';
 
-export default React.memo((props) => (
-  <TouchableHighlight
-    style={props.containerStyle}
-    onPress={() =>
-      props.number
-        ? Actions.magazine({
-            number: props.number,
-            magazine: props.magazine,
-          })
-        : null
-    }>
+export default React.memo((props) => {
+  const {aspectRatio} = useImageSizeType(props.number?.cover);
+
+  const aspectRatioStyle = {
+    aspectRatio: aspectRatio ?? MAGAZINE_ASPECT_RATIO[props.magazine],
+  };
+
+  return (
     <Image
       {...props}
       source={{uri: props.number ? props.number.cover : null}}
+      style={
+        Array.isArray(props.style)
+          ? [...props.style, aspectRatioStyle]
+          : [props.style, aspectRatioStyle]
+      }
     />
-  </TouchableHighlight>
-));
+  );
+});

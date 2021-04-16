@@ -1,9 +1,10 @@
 import React from 'react';
-import {Image, View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, Platform} from 'react-native';
 import Text from '../ui/Text';
 import TouchableHighlight from '../CustomTouchableHighlight';
 import {Actions} from 'react-native-router-flux';
 import {Colors} from '../../styles';
+import MagazineImage from './MagazineImage';
 
 const windowWidth = Dimensions.get('window').width;
 export default React.memo((props) => (
@@ -21,8 +22,9 @@ export default React.memo((props) => (
         styles.container,
         props.index === 0 ? styles.firstMagazineContainer : null,
       ]}>
-      <Image
-        source={{uri: props.number ? props.number.cover : null}}
+      <MagazineImage
+        number={props.number}
+        magazine={props.magazine}
         style={[
           styles.image,
           props.index === 0 ? styles.firstMagazineImage : null,
@@ -62,12 +64,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   image: {
-    height: 100,
+    height: 80,
     resizeMode: 'contain',
-    borderRadius: 30,
+    borderRadius: Platform.select({
+      android: 30,
+      ios: 20,
+    }),
+    alignSelf: 'center',
   },
   firstMagazineImage: {
-    height: 150,
-    borderRadius: 35,
+    height: 130,
+    borderRadius: Platform.select({
+      android: 35,
+      ios: 20,
+    }),
+    marginLeft: 0,
   },
 });

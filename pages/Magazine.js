@@ -28,6 +28,7 @@ import {WithLocalSvg} from 'react-native-svg';
 import GoToMagazines from '../assets/components.svg';
 import Pdf from '../assets/pdf.svg';
 import {backHandler} from '../Routes';
+import MagazineImage from '../components/magazine/MagazineImage';
 import Text from '../components/ui/Text';
 
 const windowHeight = Dimensions.get('window').height;
@@ -142,7 +143,11 @@ const Magazine = React.memo(
               </TouchableHighlight>
             </View>
           </View>
-          <Image style={styles.image} source={{uri: number.cover}} />
+          <MagazineImage
+            style={styles.image}
+            number={number}
+            magazine={magazine}
+          />
           <Text style={[styles.number]}>{number.number}</Text>
           <Text style={[styles.number, styles.numberDesc]}>
             {number?.number_desc}
@@ -185,6 +190,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     margin: 10,
     borderRadius: 40,
+    alignSelf: 'center',
   },
   downloadButton: {
     backgroundColor: Colors.darkBlue,
