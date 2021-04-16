@@ -40,11 +40,10 @@ buck-out/
 \.buckd/
 *.keystore
 *.jks
-*pem
+*.pem
 !debug.keystore
 
-android/gradle.properties
-
+*.properties
 
 # fastlane
 #
