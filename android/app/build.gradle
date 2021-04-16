@@ -132,13 +132,13 @@ android {
         applicationId "org.sgitalia.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 212
-        versionName "2.0.12"
+        versionCode 213
+        versionName "2.0.13"
         multiDexEnabled true
     }
     
     dexOptions {
-      javaMaxHeapSize: "4g"
+      javaMaxHeapSize "4g"
     }
 
     splits {
