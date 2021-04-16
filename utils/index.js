@@ -89,6 +89,11 @@ export const MAGAZINE_DESCRIPTION = {
     'Bimestrale pubblicato dal 1986 al 2000 con il nome di DuemilaUno e oggi mensile, approfondisce temi legati alla filosofia buddista e all’attualità. Riporta gli scritti di Nichiren Daishonin commentati da Daisaku Ikeda, che costituiscono il materiale di studio mensile e uno speciale monografico, corredato in genere da una o più interviste.',
 };
 
+export const MAGAZINE_ASPECT_RATIO = {
+  [MAGAZINE_TYPES.BS]: 264 / 339,
+  [MAGAZINE_TYPES.NR]: 265 / 374,
+};
+
 export const SGI_SITES = [
   {
     icon: require('../assets/sites/senzatomica.svg'),
