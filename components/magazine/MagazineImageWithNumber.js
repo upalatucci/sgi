@@ -64,18 +64,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   image: {
-    height: 100,
+    height: 80,
     resizeMode: 'contain',
     borderRadius: Platform.select({
       android: 30,
       ios: 20,
     }),
+    alignSelf: 'center',
   },
   firstMagazineImage: {
-    height: 150,
+    height: 130,
     borderRadius: Platform.select({
       android: 35,
       ios: 20,
     }),
+    marginLeft: 0,
   },
 });
