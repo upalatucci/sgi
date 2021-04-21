@@ -88,14 +88,14 @@ const Login = ({
   }, [subscriptionInfo]);
 
   useEffect(() => {
-    if (isLogged) {
+    if (isLogged || state.logged) {
       if (Actions[nextScene]) {
-        Actions[nextScene](nextSceneProps);
+        Actions.push(nextScene, nextSceneProps);
       } else {
         Actions.home();
       }
     }
-  }, [isLogged, nextScene, nextSceneProps]);
+  }, [isLogged, nextScene, nextSceneProps, state]);
 
   return (
     <SafeAreaView style={styles.container}>

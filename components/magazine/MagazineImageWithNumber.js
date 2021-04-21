@@ -5,41 +5,60 @@ import TouchableHighlight from '../CustomTouchableHighlight';
 import {Actions} from 'react-native-router-flux';
 import {Colors} from '../../styles';
 import MagazineImage from './MagazineImage';
+import {useDispatch, useSelector} from 'react-redux';
+import {cannotViewMagazine} from '../../utils';
+import {SHOW_MODAL} from '../../store/mutations';
 
 const windowWidth = Dimensions.get('window').width;
-export default React.memo((props) => (
-  <TouchableHighlight
-    onPress={() =>
-      props.number
-        ? Actions.magazine({
-            number: props.number,
-            magazine: props.magazine,
-          })
-        : null
-    }>
-    <View
-      style={[
-        styles.container,
-        props.index === 0 ? styles.firstMagazineContainer : null,
-      ]}>
-      <MagazineImage
-        number={props.number}
-        magazine={props.magazine}
+export default (props) => {
+  const dispatch = useDispatch();
+  const subInfo = useSelector((state) => state.magazine.subscriptionInfo);
+
+  function goToMagazine() {
+    if (
+      props.number &&
+      subInfo &&
+      cannotViewMagazine(subInfo, props.magazine, props.number.number)
+    ) {
+      dispatch({
+        type: SHOW_MODAL,
+        payload:
+          'Il tuo abbonamento non è abilitato a consultare questa rivista',
+      });
+    } else {
+      Actions.magazine({
+        number: props.number,
+        magazine: props.magazine,
+      });
+    }
+  }
+
+  return (
+    <TouchableHighlight onPress={goToMagazine}>
+      <View
         style={[
-          styles.image,
-          props.index === 0 ? styles.firstMagazineImage : null,
-        ]}
-      />
-      <Text
-        style={[
-          styles.text,
-          props.index === 0 ? styles.firstMagazineText : null,
+          styles.container,
+          props.index === 0 ? styles.firstMagazineContainer : null,
         ]}>
-        {props.number.number}
-      </Text>
-    </View>
-  </TouchableHighlight>
-));
+        <MagazineImage
+          number={props.number}
+          magazine={props.magazine}
+          style={[
+            styles.image,
+            props.index === 0 ? styles.firstMagazineImage : null,
+          ]}
+        />
+        <Text
+          style={[
+            styles.text,
+            props.index === 0 ? styles.firstMagazineText : null,
+          ]}>
+          {props.number.number}
+        </Text>
+      </View>
+    </TouchableHighlight>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

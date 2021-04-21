@@ -142,8 +142,6 @@ export function isSubscriptionExpired(subInfo) {
   const endDate = parse(subInfo.riv_dig_scad_nr, 'yyyy-MM-dd', new Date());
   const nowDate = startOfMonth(new Date());
 
-  console.log(endDate);
-  console.log(nowDate);
   return endDate < nowDate;
 }
 
@@ -151,4 +149,15 @@ export function formatDateNews(dateString) {
   return format(parse(dateString, 'dd/MM/yyyy', new Date()), 'dd MMMM yyyy', {
     locale: it,
   });
+}
+
+export function cannotViewMagazine(subInfo, magazine, number) {
+  const expiredNR =
+    magazine === MAGAZINE_TYPES.NR &&
+    parseInt(subInfo.riv_dig_last_nr, 10) < parseInt(number, 10);
+  const expiredBS =
+    magazine === MAGAZINE_TYPES.BS &&
+    parseInt(subInfo.riv_dig_last_bs, 10) < parseInt(number, 10);
+
+  return expiredBS || expiredNR;
 }

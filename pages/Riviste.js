@@ -25,6 +25,8 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, isLogged}) => {
     new Date(),
   );
 
+  const formattedEnd = format(subEndDate, 'dd/MM/yyyy');
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container}>
@@ -32,9 +34,14 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, isLogged}) => {
         <Text style={[styles.subInfo]}>
           Il tuo abbonamento digitale è {isExpired ? 'scaduto' : 'attivo'}
         </Text>
-        {!isExpired && (
+        {isExpired ? (
           <Text style={styles.subInfo}>
-            Ti ricordiamo che scadrà il {format(subEndDate, 'dd/MM/yyyy')}
+            Le ultime consultabili sono NR {subscriptionInfo.riv_dig_last_nr} e
+            BS {subscriptionInfo.riv_dig_last_bs} del {formattedEnd}
+          </Text>
+        ) : (
+          <Text style={styles.subInfo}>
+            Ti ricordiamo che scadrà il {formattedEnd}
           </Text>
         )}
         <MagazineCarousel

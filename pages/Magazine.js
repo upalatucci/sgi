@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
-  Image,
   Dimensions,
   View,
   SafeAreaView,
@@ -16,14 +15,8 @@ import {BS_ENTRYPOINT, NR_ENTRYPOINT} from '../api';
 import ArticleSection from '../components/magazine/ArticleSection';
 import {Colors} from '../styles';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
-import {
-  deviceSize,
-  DEVICE_SIZES,
-  downloadAndOpenPDF,
-  MAGAZINE_NAMES,
-} from '../utils';
+import {cannotViewMagazine, downloadAndOpenPDF, MAGAZINE_NAMES} from '../utils';
 import {SET_MAGAZINE_CACHE, SHOW_MODAL} from '../store/mutations';
-import LinearGradient from 'react-native-linear-gradient';
 import {WithLocalSvg} from 'react-native-svg';
 import GoToMagazines from '../assets/components.svg';
 import Pdf from '../assets/pdf.svg';
@@ -95,16 +88,11 @@ const Magazine = React.memo(
     }
 
     if (subscriptionInfo) {
-      const expiredNR =
-        magazine === 'nr' && subscriptionInfo.riv_dig_last_nr < number.number;
-      const expiredBS =
-        magazine === 'bs' && subscriptionInfo.riv_dig_last_bs < number.number;
-
-      if (expiredBS || expiredNR) {
+      if (cannotViewMagazine(subscriptionInfo, magazine, number.number)) {
         launchError(
           'Il tuo abbonamento non è abilitato a consultare questa rivista',
         );
-        backHandler();
+        Actions.home();
         return <Loading />;
       }
     }

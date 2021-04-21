@@ -20,7 +20,6 @@ import Article from './pages/Article';
 import Magazine from './pages/Magazine';
 import Login from './pages/Login';
 
-import ChangeFontSizeContainer from './components/ChangeFontSizeContainer';
 import CustomDrawer from './components/Drawer';
 import Menu from './components/icons/Menu';
 import SGILogo from './components/icons/SGILogoHome';
@@ -30,7 +29,7 @@ import NavBar from './components/NavBar';
 
 export function backHandler() {
   const routes = Actions.prevState.routes[0].routes;
-  const prevRoute = routes[routes.length - 2];
+  let prevRoute = routes[routes.length - 2];
 
   if (prevRoute && prevRoute.routeName === 'login') {
     Actions.home();
@@ -45,7 +44,11 @@ export function backHandler() {
       Actions.home();
       break;
     default:
-      Actions.popAndPush(prevRoute.routeName, prevRoute.params);
+      if (prevRoute) {
+        Actions.popAndPush(prevRoute.routeName, prevRoute.params);
+      } else {
+        Actions.home();
+      }
       break;
   }
 }
