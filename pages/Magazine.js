@@ -96,9 +96,9 @@ const Magazine = React.memo(
 
     if (subscriptionInfo) {
       const expiredNR =
-        magazine === 'nr' && subscriptionInfo.riv_scad_nr < number.number;
+        magazine === 'nr' && subscriptionInfo.riv_dig_last_nr < number.number;
       const expiredBS =
-        magazine === 'bs' && subscriptionInfo.riv_scad_nr < number.number;
+        magazine === 'bs' && subscriptionInfo.riv_dig_last_bs < number.number;
 
       if (expiredBS || expiredNR) {
         launchError(
