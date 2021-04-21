@@ -88,7 +88,7 @@ const Login = ({
   }, [subscriptionInfo]);
 
   useEffect(() => {
-    if (isLogged || state.logged) {
+    if (isLogged) {
       if (Actions[nextScene]) {
         Actions.push(nextScene, nextSceneProps);
       } else {
