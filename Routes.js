@@ -17,6 +17,7 @@ import FraseDelGiorno from './pages/FraseDelGiorno';
 import PostPage from './pages/PostPage';
 import Home from './pages/Home';
 import Article from './pages/Article';
+import News from './pages/News';
 import Magazine from './pages/Magazine';
 import Login from './pages/Login';
 
@@ -84,6 +85,15 @@ function Routes() {
             navigationBarStyle={styles.navbar}
             titleStyle={styles.title}
             component={Posts}
+            icon={HomeIcon}
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
+          />
+          <Scene
+            key="news"
+            navigationBarStyle={styles.navbar}
+            titleStyle={styles.title}
+            component={News}
             icon={HomeIcon}
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}

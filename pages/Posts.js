@@ -1,5 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useCallback} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {getJsonData} from '../api';
 import PostsItem from '../components/PostsItem';

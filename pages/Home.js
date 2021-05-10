@@ -83,10 +83,8 @@ const Home = ({
             <TouchableHighlight
               style={[styles.cardHighlight]}
               onPress={() =>
-                Actions.posts({
+                Actions.news({
                   title: 'In primo piano',
-                  uri: 'news',
-                  entrypoint: SGI_ENTRYPOINT,
                 })
               }>
               <View style={styles.card}>
@@ -125,7 +123,7 @@ const Home = ({
               </Text>
               <Text style={styles.newsTitle}>{lastNews[0].title}</Text>
               <Text style={styles.newsSubtitle} numberOfLines={4}>
-                {lastNews[0].excerpt}
+                {lastNews[0].excerpt ? lastNews[0].excerpt.trim() : null}
               </Text>
               <TouchableHighlight
                 onPress={() =>
