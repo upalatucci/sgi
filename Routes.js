@@ -15,6 +15,7 @@ import Buddismo from './pages/Buddismo';
 import Riviste from './pages/Riviste';
 import FraseDelGiorno from './pages/FraseDelGiorno';
 import PostPage from './pages/PostPage';
+import News from './pages/News';
 import Home from './pages/Home';
 import Article from './pages/Article';
 import Magazine from './pages/Magazine';
@@ -84,6 +85,15 @@ function Routes() {
             navigationBarStyle={styles.navbar}
             titleStyle={styles.title}
             component={Posts}
+            icon={HomeIcon}
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
+          />
+          <Scene
+            key="news"
+            navigationBarStyle={styles.navbar}
+            titleStyle={styles.title}
+            component={News}
             icon={HomeIcon}
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}
