@@ -19,12 +19,45 @@ import MarkerIcon from '../assets/marker.png';
 import GoBack from '../assets/go-back-arrow.png';
 import {useCallback} from 'react';
 import ScrollToTopButton from './ScrollToTopButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const contentStyles = {
   volocontinuo: VoloContinuoStyle,
   sito: SitoStyle,
   magazine: MagazineStyle,
 };
+
+async function removeHightlight(magazineKey) {
+  const allHightlight = (await getAllHighlights(magazineKey)) || [];
+  allHightlight.pop();
+
+  await setAllHighlights(magazineKey, allHightlight);
+
+  return getAllHighlights(magazineKey);
+}
+
+async function addHighlight(magazineKey, highlight) {
+  const allHightlight = (await getAllHighlights(magazineKey)) || [];
+
+  allHightlight.push(highlight);
+
+  await setAllHighlights(magazineKey, allHightlight);
+
+  return getAllHighlights(magazineKey);
+}
+
+async function getAllHighlights(magazineKey) {
+  return new Promise(async (resolve) => {
+    resolve(JSON.parse(await AsyncStorage.getItem(`highlight-${magazineKey}`)));
+  });
+}
+
+async function setAllHighlights(magazineKey, highlights) {
+  return AsyncStorage.setItem(
+    `highlight-${magazineKey}`,
+    JSON.stringify(highlights),
+  );
+}
 
 const CustomWebView = ({
   style,
@@ -34,12 +67,10 @@ const CustomWebView = ({
   subtractHeight = 80,
   enableHighlight = false,
 }) => {
-  const dispatch = useDispatch();
-
   const [percentScroll, setPercentScroll] = useState(0);
+  const [highlights, setHighlights] = useState([]);
   const [showScrollTopButton, setShowScrollTopButton] = useState(false);
-  const {highlights, textSize} = useSelector((state) => ({
-    highlights: state.magazine.highlights,
+  const {textSize} = useSelector((state) => ({
     textSize: state.ui.textSize,
   }));
 
@@ -56,19 +87,16 @@ const CustomWebView = ({
   }, []);
 
   const handleOnMessage = useCallback(
-    (event) => {
+    async (event) => {
       const dataObj = JSON.parse(event.nativeEvent.data);
 
       if ('log' in dataObj) {
         console.log(dataObj.log);
       } else {
-        dispatch({
-          type: HIGHLIGHT,
-          payload: {key: magazineKey, value: dataObj},
-        });
+        setHighlights(await addHighlight(magazineKey, dataObj));
       }
     },
-    [magazineKey, dispatch],
+    [magazineKey],
   );
 
   const hightlight = useCallback(() => {
@@ -77,13 +105,10 @@ const CustomWebView = ({
     }
   }, [webref, enableHighlight]);
 
-  const removeLastHighlight = useCallback(() => {
-    dispatch({
-      type: REMOVE_HIGHLIGHT,
-      payload: magazineKey,
-    });
+  const removeLastHighlight = useCallback(async () => {
+    setHighlights(await removeHightlight(magazineKey));
     webref.current.injectJavaScript('removeHighlight(); true;');
-  }, [dispatch, magazineKey]);
+  }, [magazineKey]);
 
   const documentReady = useCallback(() => {
     if (!webref.current) {
@@ -95,7 +120,7 @@ const CustomWebView = ({
         `
         restoreScroll(${percentScroll})
       try {
-        const allHighlights = ${JSON.stringify(storedHighlights)}
+        const allHighlights = ${JSON.stringify(highlights)}
         allHighlights.forEach(h => restoreHighlight(h))
         window.ReactNativeWebView.postMessage(JSON.stringify({log: allHighlights}))
       }catch(err){
@@ -110,7 +135,7 @@ const CustomWebView = ({
       onLoadEnd();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [webref, percentScroll, storedHighlights]);
+  }, [webref, percentScroll, highlights]);
 
   const scrollToTop = useCallback(() => {
     if (!webref.current) {
@@ -136,7 +161,12 @@ const CustomWebView = ({
     }
   }, []);
 
-  const storedHighlights = highlights[magazineKey] ?? [];
+  useEffect(() => {
+    getAllHighlights(magazineKey).then((h) => {
+      setHighlights(h);
+    });
+  }, [magazineKey]);
+
   return (
     <>
       {showScrollTopButton && <ScrollToTopButton onPress={scrollToTop} />}
@@ -282,25 +312,31 @@ const CustomWebView = ({
 const styles = StyleSheet.create({
   buttons: {
     position: 'absolute',
-    bottom: 40,
-    right: 20,
+    bottom: 20,
+    width: 110,
+    height: 50,
     zIndex: 10,
-    flexDirection: 'column-reverse',
+    flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     paddingHorizontal: 2,
     paddingVertical: 2,
-    borderRadius: 10,
+    borderRadius: 20,
+    backgroundColor: 'white',
   },
   goBackIcon: {
     width: 26,
     height: 26,
     backgroundColor: 'white',
+    marginLeft: 10,
+    marginRight: 5,
   },
   hightlightIcon: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
+    marginRight: 10,
+    marginLeft: 5,
     backgroundColor: 'white',
   },
   iconContainer: {
