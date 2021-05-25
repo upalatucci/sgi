@@ -4,7 +4,7 @@ import Text from './ui/Text';
 import {Actions} from 'react-native-router-flux';
 import TouchableHighlight from './CustomTouchableHighlight';
 
-const TEXT_HEIGHT = 100;
+export const TEXT_HEIGHT = 100;
 export default ({title, date, image, id, entrypoint, uri, excerpt, height}) => {
   const {width: screenWidth} = useWindowDimensions();
 
