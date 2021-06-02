@@ -5,6 +5,7 @@ import {
   FlatList,
   StyleSheet,
   useWindowDimensions,
+  SafeAreaView,
 } from 'react-native';
 import {getJsonData, SGI_ENTRYPOINT} from '../api';
 import PostsItem from '../components/PostsItem';
@@ -114,12 +115,14 @@ export default () => {
   }, []);
 
   return (
-    <>
+    <SafeAreaView>
       <ScrollView
         style={styles.scrollview}
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
-        onScroll={onScroll}>
+        onScroll={onScroll}
+        scrollEnabled={!flatListScroll}
+        scrollEventThrottle={5}>
         <Title style={styles.title}>In primo piano</Title>
         {chipSelected === CHIPS.ALL ? (
           <FlatList
@@ -143,26 +146,31 @@ export default () => {
             showsHorizontalScrollIndicator={false}
           />
         ) : null}
-        <View style={styles.chips}>
-          <Chip
-            label="Tutte le notizie"
-            selected={CHIPS.ALL === chipSelected}
-            onClick={() => SetChipSelected(CHIPS.ALL)}
-          />
-          <Chip
-            label="In evidenza"
-            selected={CHIPS.EVIDENZA === chipSelected}
-            onClick={() => SetChipSelected(CHIPS.EVIDENZA)}
-          />
-          <Chip
-            label="Comunicati"
-            selected={CHIPS.COMUNICATI === chipSelected}
-            onClick={() => SetChipSelected(CHIPS.COMUNICATI)}
-          />
-        </View>
+
         <FlatList
           ref={flatListRef}
-          style={[styles.list, {height: screenHeight - 90}]}
+          style={[styles.list, {height: screenHeight - 140}]}
+          stickyHeaderIndices={[0]}
+          scrollEventThrottle={5}
+          ListHeaderComponent={
+            <View style={styles.chips}>
+              <Chip
+                label="Tutte le notizie"
+                selected={CHIPS.ALL === chipSelected}
+                onClick={() => SetChipSelected(CHIPS.ALL)}
+              />
+              <Chip
+                label="In evidenza"
+                selected={CHIPS.EVIDENZA === chipSelected}
+                onClick={() => SetChipSelected(CHIPS.EVIDENZA)}
+              />
+              <Chip
+                label="Comunicati"
+                selected={CHIPS.COMUNICATI === chipSelected}
+                onClick={() => SetChipSelected(CHIPS.COMUNICATI)}
+              />
+            </View>
+          }
           data={content}
           keyExtractor={(item) => item.id.toString()}
           renderItem={filterNews(chipSelected)}
@@ -173,10 +181,11 @@ export default () => {
           nestedScrollEnabled={flatListScroll}
           onScroll={onScrollFlatList}
           showsVerticalScrollIndicator={false}
+          scrollEnabled={flatListScroll}
         />
         {showScrollToTopButton && <ScrollToTopButton onPress={scrollToTop} />}
       </ScrollView>
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -190,7 +199,6 @@ const styles = StyleSheet.create({
   },
   preview: {
     height: PREVIEW_HEIGHT,
-    marginBottom: 10,
   },
   title: {
     color: 'black',
@@ -201,5 +209,6 @@ const styles = StyleSheet.create({
   chips: {
     flexDirection: 'row',
     marginBottom: 4,
+    backgroundColor: Colors.background,
   },
 });
