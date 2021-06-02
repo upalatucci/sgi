@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, Image, ScrollView, StyleSheet, View} from 'react-native';
-import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {SGI_ENTRYPOINT, VOLO_ENTRYPOINT} from '../api';
