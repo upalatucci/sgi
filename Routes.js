@@ -1,6 +1,13 @@
 import React, {useEffect} from 'react';
 import {BackHandler, StyleSheet} from 'react-native';
-import {Drawer, Router, Scene, Stack, Actions} from 'react-native-router-flux';
+import {
+  Drawer,
+  Router,
+  Scene,
+  Stack,
+  Actions,
+  Tabs,
+} from 'react-native-router-flux';
 
 import {Colors} from './styles';
 import FraseDelGiornoIcon from './components/icons/FraseDelGiornoIcon';
@@ -27,6 +34,7 @@ import SGILogo from './components/icons/SGILogoHome';
 import MultiUtilsRightButton from './components/MultiUtilsRightButtons';
 
 import NavBar from './components/NavBar';
+import TabBar from './components/TabBar';
 
 export function backHandler() {
   const routes = Actions.prevState.routes[0].routes;
@@ -65,95 +73,102 @@ function Routes() {
 
   return (
     <Router>
-      <Drawer contentComponent={CustomDrawer} drawerIcon={Menu} key="drawer">
-        <Stack
-          key="root"
-          navigationBarStyle={styles.navbar}
-          navBar={NavBar}
-          titleStyle={styles.title}
-          backButtonTintColor={Colors.primary}>
+      <Stack
+        key="root"
+        navigationBarStyle={styles.navbar}
+        navBar={NavBar}
+        titleStyle={styles.title}
+        backButtonTintColor={Colors.primary}>
+        <Tabs
+          key="home"
+          type="reset"
+          hideNavBar
+          tabBarComponent={TabBar}
+          tabBarPosition="bottom">
           <Scene
-            key="home"
+            key="homepage"
             type="reset"
             component={Home}
+            hideNavBar
+            title="Home"
+          />
+
+          <Scene
+            key="frasedelgiorno"
+            component={FraseDelGiorno}
+            hideNavBar={false}
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}
+            title="Frase del Giorno"
           />
-          <Scene key="login" component={Login} hideNavBar type="reset" />
+
           <Scene
-            key="posts"
-            navigationBarStyle={styles.navbar}
-            titleStyle={styles.title}
-            component={Posts}
-            icon={HomeIcon}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            key="news"
-            navigationBarStyle={styles.navbar}
-            titleStyle={styles.title}
-            component={News}
-            icon={HomeIcon}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            drawer
-            key="buddismo"
-            component={Buddismo}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            drawer
             key="magazines"
             component={Riviste}
             icon={BookIcon}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
+            title="Riviste"
           />
-          <Scene
-            drawer
-            key="frasedelgiorno"
-            component={FraseDelGiorno}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            key="postPage"
-            component={PostPage}
-            back
-            renderRightButton={MultiUtilsRightButton}
-          />
-          <Scene
-            key="magazine"
-            component={Magazine}
-            drawer
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            key="article"
-            component={Article}
-            back
-            renderRightButton={MultiUtilsRightButton}
-          />
-          <Scene
-            key="webview"
-            component={WebViewPage}
-            drawer
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            key="downloadPdf"
-            component={DownloadPDF}
-            back
-            title="PDF Rivista"
-          />
-        </Stack>
-      </Drawer>
+        </Tabs>
+        <Scene key="login" component={Login} hideNavBar type="reset" />
+        <Scene
+          key="posts"
+          navigationBarStyle={styles.navbar}
+          titleStyle={styles.title}
+          component={Posts}
+          icon={HomeIcon}
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+        />
+        <Scene
+          key="news"
+          back
+          navigationBarStyle={styles.navbar}
+          titleStyle={styles.title}
+          component={News}
+          icon={HomeIcon}
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+        />
+        <Scene
+          back
+          key="buddismo"
+          component={Buddismo}
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+        />
+        <Scene
+          key="postPage"
+          component={PostPage}
+          back
+          renderRightButton={MultiUtilsRightButton}
+        />
+        <Scene
+          key="magazine"
+          component={Magazine}
+          drawer
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+        />
+        <Scene
+          key="article"
+          component={Article}
+          back
+          renderRightButton={MultiUtilsRightButton}
+        />
+        <Scene
+          key="webview"
+          component={WebViewPage}
+          drawer
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+        />
+        <Scene
+          key="downloadPdf"
+          component={DownloadPDF}
+          back
+          title="PDF Rivista"
+        />
+      </Stack>
     </Router>
   );
 }

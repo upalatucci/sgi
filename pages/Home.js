@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {FlatList, Image, ScrollView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, Image, ScrollView, StyleSheet, View} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -70,7 +70,7 @@ const Home = ({
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.welcome}>
           <Text style={styles.welcomeTitle}>{welcomeText()}</Text>
@@ -184,7 +184,7 @@ const Home = ({
           ))}
         </ScrollView>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
