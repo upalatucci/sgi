@@ -28,6 +28,8 @@ import {
   SGI_SITES,
 } from '../utils';
 import Loading from '../components/Loading';
+import {Linking} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 const Home = ({
   lastBS,
@@ -58,6 +60,18 @@ const Home = ({
     fetchNR();
     fetchLastNewsAction();
   }, [fetchNR, fetchBS, fetchLastNewsAction]);
+
+  useEffect(() => {
+    Linking.getInitialURL().then((url) => console.log(url));
+    SplashScreen.hide();
+    const onReceiveURL = (url) => {
+      console.log('URLLLLL', url);
+    };
+
+    Linking.addEventListener('url', onReceiveURL);
+
+    return () => Linking.removeEventListener('url', onReceiveURL);
+  }, []);
 
   function welcomeText() {
     const hourNow = new Date().getHours();
