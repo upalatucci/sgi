@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {FlatList, Image, ScrollView, StyleSheet, View} from 'react-native';
-import * as Keychain from 'react-native-keychain';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {SGI_ENTRYPOINT, VOLO_ENTRYPOINT} from '../api';
@@ -10,14 +9,13 @@ import NewsIcon from '../assets/news.png';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import HomeMagazineCard from '../components/home/HomeMagazineCard';
 import SiteCard from '../components/home/SiteCard';
-import {login} from '../services/auth';
 import Text from '../components/ui/Text';
 import {
   fetchLastBSImage,
   fetchLastNews,
   fetchLastNRImage,
+  fetchLogin,
 } from '../store/magazineAction';
-import {LOGIN, SET_SUBSCRIPTION_INFO} from '../store/mutations';
 import {Colors, DefaultShadow} from '../styles';
 import {
   deviceSize,
@@ -35,23 +33,12 @@ const Home = ({
   lastNews,
   fetchBS,
   fetchNR,
+  login,
   fetchLastNewsAction,
-  setSubscriptionInfo,
-  dispatchLogin,
 }) => {
   useEffect(() => {
-    // Keychain.resetGenericPassword();
-    Keychain.getGenericPassword().then(async (credentials) => {
-      if (credentials) {
-        const response = await login(
-          credentials.username,
-          credentials.password,
-        );
-        dispatchLogin();
-        setSubscriptionInfo(response);
-      }
-    });
-  }, [setSubscriptionInfo, dispatchLogin]);
+    login()
+  });
 
   useEffect(() => {
     fetchBS();
@@ -328,9 +315,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchBS: () => dispatch(fetchLastBSImage()),
     fetchNR: () => dispatch(fetchLastNRImage()),
     fetchLastNewsAction: () => dispatch(fetchLastNews()),
-    setSubscriptionInfo: (subInfo) =>
-      dispatch({type: SET_SUBSCRIPTION_INFO, payload: subInfo}),
-    dispatchLogin: () => dispatch({type: LOGIN}),
+    login: () => dispatch(fetchLogin())
   };
 };
 
