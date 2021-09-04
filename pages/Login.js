@@ -18,6 +18,13 @@ const initialState = {
   error: null,
 };
 
+function getInitState(logging) {
+  return {
+    ...initialState,
+    loading: logging || initialState.loading
+  }
+}
+
 function loginReducer(state, action) {
   switch (action.type) {
     case 'no_logged':
@@ -57,13 +64,14 @@ function loginReducer(state, action) {
 
 const Login = ({
   isLogged,
+  logging,
   setSubscriptionInfo,
   subscriptionInfo,
   nextScene,
   nextSceneProps,
   dispatchLogin,
 }) => {
-  const [state, dispatch] = useReducer(loginReducer, initialState);
+  const [state, dispatch] = useReducer(loginReducer, getInitState(logging));
 
   const onLogin = async (username, password) => {
     dispatch({type: 'loading'});
@@ -143,6 +151,7 @@ function mapStateToProps(state) {
   return {
     subscriptionInfo: state.magazine.subscriptionInfo,
     isLogged: state.magazine.isLogged,
+    logging: state.magazine.logging
   };
 }
 

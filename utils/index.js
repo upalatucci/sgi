@@ -108,7 +108,7 @@ export const SGI_SITES = [
   {
     icon: require('../assets/sites/ottopermille.svg'),
     title: '8x1000',
-    link: 'https://www.sgi-italia.org/8x1000/',
+    link: 'https://ottopermille.sokagakkai.it/',
   },
   {
     icon: require('../assets/sites/bs.svg'),
