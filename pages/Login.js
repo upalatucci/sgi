@@ -88,6 +88,8 @@ const Login = ({
   };
 
   useEffect(() => {
+    if (logging)  return
+
     if (subscriptionInfo) {
       dispatch({type: 'logged'});
     } else {

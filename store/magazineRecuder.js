@@ -30,7 +30,6 @@ const initialState = {
 };
 
 export default function (state = initialState, {type, payload}) {
-  console.log(type, payload);
   switch (type) {
     case REMOVE_HIGHLIGHT:
       if (state.highlights[payload]) {
