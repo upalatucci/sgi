@@ -77,7 +77,7 @@ const Drawer = ({isLogged, logout}) => {
             {isLogged ? 'Logout' : 'Login'}
           </Text>
         </TouchableHighlight>
-        <Text style={styles.version}>2.0.19 219</Text>
+        <Text style={styles.version}>2.0.20 220</Text>
       </ScrollView>
     </SafeAreaView>
   );

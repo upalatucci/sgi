@@ -1,6 +1,6 @@
 import {lastMaganize, lastNews} from '../api';
 import {login} from '../services/auth';
-import {SET_LASR_NR_IMAGE, SET_LASR_BS_IMAGE, SET_LAST_NEWS, LOGIN, SET_SUBSCRIPTION_INFO, LOGGING} from './mutations';
+import {SET_LASR_NR_IMAGE, SET_LASR_BS_IMAGE, SET_LAST_NEWS, LOGIN, SET_SUBSCRIPTION_INFO, LOGGING, LOGOUT} from './mutations';
 import * as Keychain from 'react-native-keychain';
 
 export function fetchLastNRImage() {
@@ -36,15 +36,19 @@ export function fetchLastNews() {
 
 export function fetchLogin() {
   return (dispatch) => {
-    dispatch({type: LOGGING})
     Keychain.getGenericPassword().then(async (credentials) => {
       if (credentials) {
-        const subInfo = await login(
-          credentials.username,
-          credentials.password,
-        );
-        dispatch({type: LOGIN})
-        dispatch({type: SET_SUBSCRIPTION_INFO, payload: subInfo})
+        dispatch({type: LOGGING})
+        try {
+          const subInfo = await login(
+            credentials.username,
+            credentials.password,
+          );
+          dispatch({type: LOGIN})
+          dispatch({type: SET_SUBSCRIPTION_INFO, payload: subInfo})
+        }catch(err) {
+          dispatch({type: LOGOUT})
+        }
       }
     });
   }
