@@ -730,7 +730,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SGIItalia/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0.20;
+				MARKETING_VERSION = 2.0.21;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -755,7 +755,7 @@
 				DEVELOPMENT_TEAM = FDFYL856VJ;
 				INFOPLIST_FILE = SGIItalia/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0.20;
+				MARKETING_VERSION = 2.0.21;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
