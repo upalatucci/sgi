@@ -10,6 +10,7 @@ import {
   LOGOUT,
   HIGHLIGHT,
   REMOVE_HIGHLIGHT,
+  LOGGING
 } from './mutations';
 
 import {generateSignToken} from '../services/auth';
@@ -24,11 +25,11 @@ const initialState = {
   cachedArticles: {},
   cachedPosts: {},
   isLogged: false,
+  logging: false,
   highlights: {},
 };
 
 export default function (state = initialState, {type, payload}) {
-  console.log(type, payload);
   switch (type) {
     case REMOVE_HIGHLIGHT:
       if (state.highlights[payload]) {
@@ -70,9 +71,15 @@ export default function (state = initialState, {type, payload}) {
         cachedMagazines: {},
         cachedArticles: {},
       };
+    case LOGGING:
+      return {
+        ...state,
+        logging: true
+      }
     case LOGIN:
       return {
         ...state,
+        logging: false,
         isLogged: true,
       };
     case SET_MAGAZINE_CACHE:

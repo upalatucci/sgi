@@ -1,4 +1,4 @@
-export default `
+export default `<style>
 
 #top-header {
 	background-color: #fff !important;
@@ -1415,4 +1415,4 @@ img[alt="image_print"] {
 p {
 	margin-bottom: 1.6em;
 }
-*/`;
+*/</style>`;

@@ -196,7 +196,7 @@ const CustomWebView = ({
           html: `<html>
         <head>
           <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
-          <style>${contentStyles[style ?? 'sito']}</style>
+          ${contentStyles[style ?? 'sito']}
           <style> 
             img, iframe, video { display: block; max-width: 90% !important; height: auto; margin: 0 auto; } 
             .soundcloud-player > * { max-width: 100% !important;}
