@@ -116,61 +116,11 @@ export default () => {
 
   return (
     <SafeAreaView>
-      <ScrollView
-        style={styles.scrollview}
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-        onScroll={onScroll}
-        scrollEnabled={!flatListScroll}
-        scrollEventThrottle={5}>
-        <Title style={styles.title}>In primo piano</Title>
-        {chipSelected === CHIPS.ALL ? (
-          <FlatList
-            horizontal
-            data={content.length === 0 ? new Array(3).fill(0) : content}
-            style={{height: PREVIEW_HEIGHT}}
-            keyExtractor={(item) => item.id?.toString()}
-            renderItem={({item}) =>
-              content.length !== 0 ? (
-                <PostsPreview
-                  {...item}
-                  uri={'news'}
-                  entrypoint={SGI_ENTRYPOINT}
-                  height={PREVIEW_HEIGHT}
-                />
-              ) : (
-                <PostsPreviewLoading height={PREVIEW_HEIGHT} />
-              )
-            }
-            refreshing={loading}
-            showsHorizontalScrollIndicator={false}
-          />
-        ) : null}
-
         <FlatList
           ref={flatListRef}
           style={[styles.list, {height: screenHeight - 140}]}
           stickyHeaderIndices={[0]}
           scrollEventThrottle={5}
-          ListHeaderComponent={
-            <View style={styles.chips}>
-              <Chip
-                label="Tutte le notizie"
-                selected={CHIPS.ALL === chipSelected}
-                onClick={() => SetChipSelected(CHIPS.ALL)}
-              />
-              <Chip
-                label="In evidenza"
-                selected={CHIPS.EVIDENZA === chipSelected}
-                onClick={() => SetChipSelected(CHIPS.EVIDENZA)}
-              />
-              <Chip
-                label="Comunicati"
-                selected={CHIPS.COMUNICATI === chipSelected}
-                onClick={() => SetChipSelected(CHIPS.COMUNICATI)}
-              />
-            </View>
-          }
           data={content}
           keyExtractor={(item) => item.id.toString()}
           renderItem={filterNews(chipSelected)}
@@ -184,7 +134,6 @@ export default () => {
           scrollEnabled={flatListScroll}
         />
         {showScrollToTopButton && <ScrollToTopButton onPress={scrollToTop} />}
-      </ScrollView>
     </SafeAreaView>
   );
 };
