@@ -74,7 +74,7 @@ const Article = React.memo(
             onLoadEnd={() => {
               setLoading(false);
             }}
-            enableHighlight={false}
+            enableHighlight={true}
           />
         )}
         {loading && <Loading />}

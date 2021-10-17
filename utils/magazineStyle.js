@@ -1421,11 +1421,12 @@ br {
 	content: " ";
 	display: block;
 	line-height:190%;
+    margin-bottom: 1.6rem;
 }
 
 br:before {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 1.6rem;
     content: " ";
 }
 </style>
