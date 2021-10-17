@@ -1415,4 +1415,20 @@ img[alt="image_print"] {
 p {
 	margin-bottom: 1.6em;
 }
-*/</style>`;
+*/
+
+br {
+	content: " ";
+	display: block;
+	line-height:190%;
+}
+
+br:before {
+    display: block;
+    margin-bottom: 10px;
+    content: " ";
+}
+</style>
+
+<link rel="stylesheet" href="https://ilnuovorinascimento.org/wp-content/themes/Extra/style.css" type="text/css" media="all">
+`;
