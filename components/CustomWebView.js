@@ -117,17 +117,17 @@ const CustomWebView = ({
 
     if (enableHighlight) {
       webref.current.injectJavaScript(
-        `
-        restoreScroll(${percentScroll})
-      try {
-        const allHighlights = ${JSON.stringify(highlights)}
-        allHighlights.forEach(h => restoreHighlight(h))
-        window.ReactNativeWebView.postMessage(JSON.stringify({log: allHighlights}))
-      }catch(err){
-        window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
-      }
-      true;
-      `,
+          `
+          restoreScroll(${percentScroll})
+        try {
+          const allHighlights = ${JSON.stringify(highlights)}
+          allHighlights.forEach(h => restoreHighlight(h))
+          window.ReactNativeWebView.postMessage(JSON.stringify({log: allHighlights}))
+        }catch(err){
+          window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
+        }
+        true;
+        `,
       );
     }
 
@@ -138,12 +138,13 @@ const CustomWebView = ({
   }, [webref, percentScroll, highlights]);
 
   const scrollToTop = useCallback(() => {
+    console.log(webref)
     if (!webref.current) {
       return;
     }
 
-    webref.current.injectJavaScript('restoreScroll(0)');
-  }, []);
+    webref.current.injectJavaScript(scrollScript);
+  }, [webref]);
 
   const onScroll = useCallback((event) => {
     const {contentOffset, contentSize, layoutMeasurement} = event.nativeEvent;
@@ -308,6 +309,14 @@ const CustomWebView = ({
     </>
   );
 };
+
+const scrollScript = `
+  try {
+    window.scrollTo({top: 0, left: 0, behavior: "smooth"});
+  } catch(err) {
+    window.scrollTo(0, 0);
+  }
+`
 
 const styles = StyleSheet.create({
   buttons: {
