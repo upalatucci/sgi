@@ -96,7 +96,7 @@ function Routes() {
           <Scene
             key="frasedelgiorno"
             component={FraseDelGiorno}
-            hideNavBar={false}
+            hideNavBar={true}
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}
             title="Frase del Giorno"
@@ -107,6 +107,7 @@ function Routes() {
             component={Riviste}
             icon={BookIcon}
             title="Riviste"
+            hideNavBar={true}
           />
         </Tabs>
         <Scene key="login" component={Login} hideNavBar type="reset" />

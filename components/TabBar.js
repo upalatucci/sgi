@@ -2,6 +2,13 @@ import React, {useState, useCallback, useRef} from 'react';
 import {View, SafeAreaView, StyleSheet, Animated, Easing} from 'react-native';
 import Text from './ui/Text';
 import TouchableHighlight from './CustomTouchableHighlight';
+import HomeIcon from '../assets/tabs/home.svg';
+import UserIcon from '../assets/tabs/user.svg';
+import FeatherIcon from '../assets/tabs/feather.svg';
+import BookIcon from '../assets/tabs/book-open.svg';
+import {WithLocalSvg} from 'react-native-svg';
+import {Actions} from 'react-native-router-flux';
+import {Colors} from '../styles';
 
 const AnimatedSafeView = Animated.createAnimatedComponent(SafeAreaView);
 export default (props) => {
@@ -15,7 +22,7 @@ export default (props) => {
       opacity.setValue(0);
 
       Animated.timing(height, {
-        toValue: -100,
+        toValue: -50,
         duration: 700,
         useNativeDriver: true,
         easing: Easing.linear,
@@ -66,26 +73,28 @@ export default (props) => {
       ]}>
       <View style={styles.tabsContainer}>
         <View>
-          <Text>Home</Text>
+          <TouchableHighlight onPress={() => Actions.home()}>
+            <WithLocalSvg asset={HomeIcon} />
+          </TouchableHighlight>
         </View>
         <View>
-          <Text>Frase</Text>
+          <TouchableHighlight onPress={() => Actions.frasedelgiorno()}>
+            <WithLocalSvg asset={FeatherIcon} />
+          </TouchableHighlight>
         </View>
         <View>
-          <Text>Riviste</Text>
+          <TouchableHighlight onPress={() => Actions.magazines()}>
+            <WithLocalSvg asset={BookIcon} />
+          </TouchableHighlight>
         </View>
         <TouchableHighlight onPress={showProfileWithAnimation}>
-          <Text>Profilo</Text>
+          <WithLocalSvg asset={UserIcon} />
         </TouchableHighlight>
       </View>
-      <Animated.View style={[opacity ? {opacity} : null]}>
-        <View>
-          <Text>Spazio Aderenti</Text>
-        </View>
-
-        <View>
-          <Text>Spazio Abbonamenti</Text>
-        </View>
+      <Animated.View
+        style={[styles.userSpaceStyle, opacity ? {opacity} : null]}>
+        <Text style={styles.menuText}>Spazio Aderenti</Text>
+        <Text style={styles.menuText}>Spazio Abbonamenti</Text>
       </Animated.View>
     </AnimatedSafeView>
   );
@@ -99,9 +108,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -200,
     paddingHorizontal: 10,
-    paddingTop: 10,
+    paddingTop: 13,
     width: '100%',
-    height: 270,
+    height: 250,
     zIndex: 8,
   },
   tabsContainer: {
@@ -109,5 +118,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  view: {},
+  userSpaceStyle: {
+    height: 60,
+    justifyContent: 'space-evenly',
+  },
+  menuText: {
+    color: Colors.textGray,
+  },
 });
