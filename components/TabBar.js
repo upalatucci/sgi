@@ -5,33 +5,50 @@ import TouchableHighlight from './CustomTouchableHighlight';
 
 const AnimatedSafeView = Animated.createAnimatedComponent(SafeAreaView);
 export default (props) => {
-  const [showProfile, setShowProfile] = useState(false);
   const height = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
   const opacity = useRef(new Animated.Value(0)).current;
+  const [tabOpen, setTabOpen] = useState(false);
 
   const showAdditionalTabs = useCallback(() => {
-    height.setValue(0);
-    opacity.setValue(0);
+    if (!tabOpen) {
+      height.setValue(0);
+      opacity.setValue(0);
 
-    Animated.timing(height, {
-      toValue: -100,
-      duration: 700,
-      useNativeDriver: true,
-      easing: Easing.linear,
-    }).start();
+      Animated.timing(height, {
+        toValue: -100,
+        duration: 700,
+        useNativeDriver: true,
+        easing: Easing.linear,
+      }).start();
 
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 700,
-      useNativeDriver: true,
-      easing: Easing.linear,
-    }).start();
-  }, [height, opacity]);
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 700,
+        useNativeDriver: true,
+        easing: Easing.linear,
+      }).start();
+    } else {
+      Animated.timing(height, {
+        toValue: 0,
+        duration: 700,
+        useNativeDriver: true,
+        easing: Easing.linear,
+      }).start();
+
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 700,
+        useNativeDriver: true,
+        easing: Easing.linear,
+      }).start();
+    }
+
+    setTabOpen(!tabOpen);
+  }, [height, opacity, tabOpen]);
 
   const showProfileWithAnimation = useCallback(() => {
-    setShowProfile(!showProfile);
     showAdditionalTabs();
-  }, [showAdditionalTabs, showProfile]);
+  }, [showAdditionalTabs]);
 
   return (
     <AnimatedSafeView
@@ -61,17 +78,15 @@ export default (props) => {
           <Text>Profilo</Text>
         </TouchableHighlight>
       </View>
-      {showProfile && (
-        <View style={[opacity ? {opacity} : null]}>
-          <View>
-            <Text>Spazio Aderenti</Text>
-          </View>
-
-          <View>
-            <Text>Spazio Abbonamenti</Text>
-          </View>
+      <Animated.View style={[opacity ? {opacity} : null]}>
+        <View>
+          <Text>Spazio Aderenti</Text>
         </View>
-      )}
+
+        <View>
+          <Text>Spazio Abbonamenti</Text>
+        </View>
+      </Animated.View>
     </AnimatedSafeView>
   );
 };

@@ -33,6 +33,7 @@ const Article = React.memo(
       }
 
       if (storedArticles[cacheKey]) {
+        console.log(storedArticles[cacheKey]);
         return setArticleContent(storedArticles[cacheKey]);
       }
 
@@ -66,6 +67,7 @@ const Article = React.memo(
               <div class="post-category entry-category">${category}</div>
               <h1 class="entry-title">${articleTitle}</h1>
               <div class="post-teaser entry-teaser">${articleSubtitle}</div>
+              <img class="post-img" src="${articleContent.image}" />
               <div class="post-content entry-content">
                 ${articleContent.full}
               </div>

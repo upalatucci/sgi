@@ -1429,7 +1429,13 @@ br:before {
     margin-bottom: 1.6rem;
     content: " ";
 }
+
+
+img.post-img {
+	margin-bottom: 30px;
+}
 </style>
+
 
 <link rel="stylesheet" href="https://ilnuovorinascimento.org/wp-content/themes/Extra/style.css" type="text/css" media="all">
 `;
