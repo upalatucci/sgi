@@ -46,9 +46,6 @@ const PREVIEW_HEIGHT = 350;
 
 export default () => {
   const {height: screenHeight} = useWindowDimensions();
-  const [chipSelected, SetChipSelected] = useState(CHIPS.ALL);
-  const [flatListScroll, setFlatListScroll] = useState(false);
-
   const flatListRef = useRef();
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -99,42 +96,23 @@ export default () => {
     }
   }, []);
 
-  const onScroll = useCallback((event) => {
-    const {contentOffset, layoutMeasurement, contentSize} = event.nativeEvent;
-
-    if (contentOffset.y + layoutMeasurement.height >= contentSize.height) {
-      setFlatListScroll(true);
-    }
-  }, []);
-
-  const onScrollFlatList = useCallback((event) => {
-    const {contentOffset} = event.nativeEvent;
-    if (contentOffset.y === 0) {
-      setFlatListScroll(false);
-    }
-  }, []);
-
   return (
-    <SafeAreaView>
-        <FlatList
-          ref={flatListRef}
-          style={[styles.list, {height: screenHeight - 140}]}
-          stickyHeaderIndices={[0]}
-          scrollEventThrottle={5}
-          data={content}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={filterNews(chipSelected)}
-          onRefresh={() => setPostsPage(1)}
-          refreshing={loading}
-          onEndReached={onEndReached}
-          onEndReachedThreshold={2}
-          nestedScrollEnabled={flatListScroll}
-          onScroll={onScrollFlatList}
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={flatListScroll}
-        />
-        {showScrollToTopButton && <ScrollToTopButton onPress={scrollToTop} />}
-    </SafeAreaView>
+    <View style={styles.container}>
+      <FlatList
+        ref={flatListRef}
+        style={styles.list}
+        data={content}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({item}) => (
+          <PostsItem {...item} uri={'news'} entrypoint={SGI_ENTRYPOINT} />
+        )}
+        onRefresh={() => setPostsPage(1)}
+        refreshing={loading}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={2}
+      />
+      {showScrollToTopButton && <ScrollToTopButton onPress={scrollToTop} onTopOfTabBar={true} />}
+    </View>
   );
 };
 
@@ -143,8 +121,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   container: {
+    paddingTop: 10,
     paddingHorizontal: 10,
     backgroundColor: Colors.background,
+    flex: 1,
   },
   preview: {
     height: PREVIEW_HEIGHT,
@@ -160,4 +140,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     backgroundColor: Colors.background,
   },
+  list: {
+    flex: 1
+  }
 });

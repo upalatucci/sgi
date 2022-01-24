@@ -21,8 +21,8 @@ const initialState = {
 function getInitState(logging) {
   return {
     ...initialState,
-    loading: logging || initialState.loading
-  }
+    loading: logging || initialState.loading,
+  };
 }
 
 function loginReducer(state, action) {
@@ -86,9 +86,10 @@ const Login = ({
       dispatchLogin();
     }
   };
+  console.log(state, isLogged)
 
   useEffect(() => {
-    if (logging)  return
+    if (logging) return;
 
     if (subscriptionInfo) {
       dispatch({type: 'logged'});
@@ -153,7 +154,7 @@ function mapStateToProps(state) {
   return {
     subscriptionInfo: state.magazine.subscriptionInfo,
     isLogged: state.magazine.isLogged,
-    logging: state.magazine.logging
+    logging: state.magazine.logging,
   };
 }
 

@@ -42,6 +42,9 @@ function PostPage(props) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, uri, entrypoint]);
+
+  console.log(content)
+  
   return (
     <SafeAreaView style={styles.flex}>
       {content && (

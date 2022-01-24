@@ -27,8 +27,8 @@ import Text from '../components/ui/Text';
 const windowHeight = Dimensions.get('window').height;
 const Magazine = React.memo(
   ({
-    number,
     magazine,
+    magazineType,
     subscriptionInfo,
     storedMagazines,
     cacheMagazine,
@@ -40,7 +40,7 @@ const Magazine = React.memo(
 
     async function downloadPDFRequest() {
       setLoadingPDF(true);
-      const magazinePrefix = magazine === 'nr' ? 'NR' : 'BS';
+      const magazinePrefix = magazineType === 'nr' ? 'NR' : 'BS';
       await downloadAndOpenPDF(
         magazineContent.number.download,
         `${magazinePrefix}${magazineContent.number.number}`,
@@ -49,20 +49,20 @@ const Magazine = React.memo(
     }
 
     useEffect(() => {
-      if (!subscriptionInfo || !magazine || !number) {
+      if (!subscriptionInfo || !magazineType || !magazine) {
         return;
       }
 
-      const cacheKey = `${magazine}-${number.number}`;
+      const cacheKey = `${magazineType}-${magazine.number}`;
 
       if (storedMagazines[cacheKey]) {
         return setMagazineContent(storedMagazines[cacheKey]);
       }
 
       getJsonData(
-        `number/${number.number}`,
-        subscriptionDataForMagazine(subscriptionInfo, magazine),
-        magazine === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
+        `number/${magazine.number}`,
+        subscriptionDataForMagazine(subscriptionInfo, magazineType),
+        magazineType === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
       ).then((response) => {
         if (response.data.status === 404) {
           Actions.pop();
@@ -75,20 +75,20 @@ const Magazine = React.memo(
         }
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [number, magazine, subscriptionInfo]);
+    }, [magazine, magazineType, subscriptionInfo]);
 
     if (!isLogged) {
       Actions.login({
         nextScene: 'magazine',
         nextSceneProps: {
-          number,
-          magazine,
+          number: magazine,
+          magazine: magazineType,
         },
       });
     }
 
     if (subscriptionInfo) {
-      if (cannotViewMagazine(subscriptionInfo, magazine, number.number)) {
+      if (cannotViewMagazine(subscriptionInfo, magazineType, magazine.number)) {
         launchError(
           'Il tuo abbonamento non è abilitato a consultare questa rivista',
         );
@@ -106,7 +106,7 @@ const Magazine = React.memo(
         <ScrollView style={styles.container}>
           <View style={styles.header}>
             <Text style={[styles.headerTitle]} allowFontScaling={false}>
-              {MAGAZINE_NAMES[magazine]}
+              {MAGAZINE_NAMES[magazineType]}
             </Text>
             <View style={styles.headerIcons}>
               <TouchableHighlight
@@ -133,15 +133,15 @@ const Magazine = React.memo(
           </View>
           <MagazineImage
             style={styles.image}
-            number={number}
-            magazine={magazine}
+            number={magazine}
+            magazine={magazineType}
           />
-          <Text style={[styles.number]}>{number.number}</Text>
+          <Text style={[styles.number]}>{magazine.number}</Text>
           <Text style={[styles.number, styles.numberDesc]}>
-            {number?.number_desc}
+            {magazine?.number_desc}
           </Text>
           {Object.entries(magazineContent.summary).map(([key, section]) => (
-            <ArticleSection key={key} section={section} magazine={magazine} />
+            <ArticleSection key={key} section={section} magazine={magazineType} />
           ))}
         </ScrollView>
       </SafeAreaView>

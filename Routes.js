@@ -71,6 +71,8 @@ function Routes() {
     return () => backHandlerListener.remove();
   }, []);
 
+  
+
   return (
     <Router>
       <Stack
@@ -78,13 +80,15 @@ function Routes() {
         navigationBarStyle={styles.navbar}
         navBar={NavBar}
         titleStyle={styles.title}
-        backButtonTintColor={Colors.primary}>
-        <Tabs
+        backButtonTintColor={Colors.primary}
+        >
+        <Scene
+          tabs
           key="home"
           type="reset"
           hideNavBar
           tabBarComponent={TabBar}
-          tabBarPosition="bottom">
+          tabBarPosition="bottom"  wrap={false}>
           <Scene
             key="homepage"
             type="reset"
@@ -92,11 +96,20 @@ function Routes() {
             hideNavBar
             title="Home"
           />
+          <Scene
+            key="news"
+            back
+            navigationBarStyle={styles.navbar}
+            titleStyle={styles.title}
+            component={News}
+            icon={HomeIcon}
+            hideNavBar
+          />
 
           <Scene
             key="frasedelgiorno"
             component={FraseDelGiorno}
-            hideNavBar={true}
+            hideNavBar
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}
             title="Frase del Giorno"
@@ -107,46 +120,23 @@ function Routes() {
             component={Riviste}
             icon={BookIcon}
             title="Riviste"
-            hideNavBar={true}
+            hideNavBar
           />
-        </Tabs>
+          <Scene
+            back
+            key="buddismo"
+            component={Buddismo}
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
+          />
+
+        </Scene>
         <Scene key="login" component={Login} hideNavBar type="reset" />
-        <Scene
-          key="posts"
-          navigationBarStyle={styles.navbar}
-          titleStyle={styles.title}
-          component={Posts}
-          icon={HomeIcon}
-          onRight={() => Actions.home()}
-          renderRightButton={SGILogo}
-        />
-        <Scene
-          key="news"
-          back
-          navigationBarStyle={styles.navbar}
-          titleStyle={styles.title}
-          component={News}
-          icon={HomeIcon}
-          onRight={() => Actions.home()}
-          renderRightButton={SGILogo}
-        />
-        <Scene
-          back
-          key="buddismo"
-          component={Buddismo}
-          onRight={() => Actions.home()}
-          renderRightButton={SGILogo}
-        />
-        <Scene
-          key="postPage"
-          component={PostPage}
-          back
-          renderRightButton={MultiUtilsRightButton}
-        />
+        
         <Scene
           key="magazine"
           component={Magazine}
-          drawer
+          back
           onRight={() => Actions.home()}
           renderRightButton={SGILogo}
         />
@@ -156,10 +146,30 @@ function Routes() {
           back
           renderRightButton={MultiUtilsRightButton}
         />
+        
+        <Scene
+          key="postPage"
+          component={PostPage}
+          back
+          renderRightButton={MultiUtilsRightButton}
+        />
+          
+        <Scene
+          key="posts"
+          navigationBarStyle={styles.navbar}
+          titleStyle={styles.title}
+          component={Posts}
+          icon={HomeIcon}
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+          back
+        />
+
+        
         <Scene
           key="webview"
           component={WebViewPage}
-          drawer
+          back
           onRight={() => Actions.home()}
           renderRightButton={SGILogo}
         />

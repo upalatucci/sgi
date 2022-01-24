@@ -40,7 +40,7 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
         setMagazines(newContent.data);
         dispatch({
           type: SET_MAGAZINE_CACHE,
-          payload: {[cacheKey]: newContent.datsa},
+          payload: {[cacheKey]: newContent.data},
         });
       })
       .catch((err) => console.error(err))
@@ -63,8 +63,8 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({item, index}) => (
           <MagazineImageWithNumber
-            magazine={magazine}
-            number={item}
+            magazineType={magazine}
+            magazine={item}
             index={index}
           />
         )}

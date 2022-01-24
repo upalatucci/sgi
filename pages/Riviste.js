@@ -16,7 +16,7 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, isLogged}) => {
     Actions.login({nextScene: 'magazines'});
     return <Loading />;
   }
-
+  
   const isExpired = isSubscriptionExpired(subscriptionInfo);
 
   const subEndDate = parse(
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingBottom: 50,
   },
   text: {
     fontWeight: 'bold',

@@ -26,6 +26,7 @@ import {
   SGI_SITES,
 } from '../utils';
 import Loading from '../components/Loading';
+import SplashScreen from 'react-native-splash-screen';
 
 const Home = ({
   lastBS,
@@ -38,7 +39,8 @@ const Home = ({
 }) => {
   useEffect(() => {
     login();
-  });
+    SplashScreen.hide();
+  }, []);
 
   useEffect(() => {
     fetchBS();
@@ -179,6 +181,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingBottom: 50,
   },
   welcome: {
     padding: 20,
