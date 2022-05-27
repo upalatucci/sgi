@@ -71,8 +71,6 @@ function Routes() {
     return () => backHandlerListener.remove();
   }, []);
 
-  
-
   return (
     <Router>
       <Stack
@@ -80,15 +78,15 @@ function Routes() {
         navigationBarStyle={styles.navbar}
         navBar={NavBar}
         titleStyle={styles.title}
-        backButtonTintColor={Colors.primary}
-        >
+        backButtonTintColor={Colors.primary}>
         <Scene
           tabs
           key="home"
           type="reset"
           hideNavBar
           tabBarComponent={TabBar}
-          tabBarPosition="bottom"  wrap={false}>
+          tabBarPosition="bottom"
+          wrap={false}>
           <Scene
             key="homepage"
             type="reset"
@@ -122,17 +120,9 @@ function Routes() {
             title="Riviste"
             hideNavBar
           />
-          <Scene
-            back
-            key="buddismo"
-            component={Buddismo}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-
         </Scene>
         <Scene key="login" component={Login} hideNavBar type="reset" />
-        
+
         <Scene
           key="magazine"
           component={Magazine}
@@ -146,14 +136,14 @@ function Routes() {
           back
           renderRightButton={MultiUtilsRightButton}
         />
-        
+
         <Scene
           key="postPage"
           component={PostPage}
           back
           renderRightButton={MultiUtilsRightButton}
         />
-          
+
         <Scene
           key="posts"
           navigationBarStyle={styles.navbar}
@@ -165,7 +155,14 @@ function Routes() {
           back
         />
 
-        
+        <Scene
+          back
+          key="buddismo"
+          component={Buddismo}
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+        />
+
         <Scene
           key="webview"
           component={WebViewPage}

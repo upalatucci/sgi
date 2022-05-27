@@ -40,7 +40,7 @@ const Home = ({
   useEffect(() => {
     login();
     SplashScreen.hide();
-  }, []);
+  }, [login]);
 
   useEffect(() => {
     fetchBS();

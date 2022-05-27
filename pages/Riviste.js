@@ -16,7 +16,7 @@ const Riviste = ({lastBS, lastNR, subscriptionInfo, isLogged}) => {
     Actions.login({nextScene: 'magazines'});
     return <Loading />;
   }
-  
+
   const isExpired = isSubscriptionExpired(subscriptionInfo);
 
   const subEndDate = parse(

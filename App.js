@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Actions} from 'react-native-router-flux';
 import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';

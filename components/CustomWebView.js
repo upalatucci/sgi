@@ -117,7 +117,7 @@ const CustomWebView = ({
 
     if (enableHighlight) {
       webref.current.injectJavaScript(
-          `
+        `
           restoreScroll(${percentScroll})
         try {
           const allHighlights = ${JSON.stringify(highlights)}
@@ -138,7 +138,7 @@ const CustomWebView = ({
   }, [webref, percentScroll, highlights]);
 
   const scrollToTop = useCallback(() => {
-    console.log(webref)
+    console.log(webref);
     if (!webref.current) {
       return;
     }
@@ -316,7 +316,7 @@ const scrollScript = `
   } catch(err) {
     window.scrollTo(0, 0);
   }
-`
+`;
 
 const styles = StyleSheet.create({
   buttons: {

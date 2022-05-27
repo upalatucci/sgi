@@ -86,17 +86,19 @@ const Login = ({
       dispatchLogin();
     }
   };
-  console.log(state, isLogged)
+  console.log(state, isLogged);
 
   useEffect(() => {
-    if (logging) return;
+    if (logging) {
+      return;
+    }
 
     if (subscriptionInfo) {
       dispatch({type: 'logged'});
     } else {
       dispatch({type: 'no_logged'});
     }
-  }, [subscriptionInfo]);
+  }, [logging, subscriptionInfo]);
 
   useEffect(() => {
     if (isLogged) {

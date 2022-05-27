@@ -111,7 +111,9 @@ export default () => {
         onEndReached={onEndReached}
         onEndReachedThreshold={2}
       />
-      {showScrollToTopButton && <ScrollToTopButton onPress={scrollToTop} onTopOfTabBar={true} />}
+      {showScrollToTopButton && (
+        <ScrollToTopButton onPress={scrollToTop} onTopOfTabBar={true} />
+      )}
     </View>
   );
 };
@@ -141,6 +143,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   list: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });

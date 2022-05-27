@@ -6,7 +6,9 @@ import {StyleSheet} from 'react-native';
 
 const ScrollToTopButton = ({onPress, onTopOfTabBar}) => {
   return (
-    <TouchableHighlight style={[styles.buttonUp, onTopOfTabBar ? styles.onTopOfTabBar : null]} onPress={onPress}>
+    <TouchableHighlight
+      style={[styles.buttonUp, onTopOfTabBar ? styles.onTopOfTabBar : null]}
+      onPress={onPress}>
       <WithLocalSvg asset={Up} />
     </TouchableHighlight>
   );
@@ -27,8 +29,8 @@ const styles = StyleSheet.create({
     zIndex: 30,
   },
   onTopOfTabBar: {
-    bottom: 70
-  }
+    bottom: 70,
+  },
 });
 
 export default ScrollToTopButton;

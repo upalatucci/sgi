@@ -9,7 +9,7 @@ import {Colors} from '../styles';
 import GiornoPerGiorno from '../assets/giornopergiorno.png';
 import MappaDellaFelicita from '../assets/mappadellafelicita.png';
 import {it} from 'date-fns/locale';
-import { Actions } from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 
 export default () => {
   const [content, setContent] = useState();

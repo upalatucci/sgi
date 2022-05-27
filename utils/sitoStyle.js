@@ -682,6 +682,6 @@ img.alignright {
   float: auto;
 }
 </style>
-`
+`;
 
 export default sitoStyle;

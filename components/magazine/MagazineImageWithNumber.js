@@ -43,16 +43,10 @@ export default ({magazine, magazineType, index}) => {
         <MagazineImage
           number={magazine}
           magazineType={magazineType}
-          style={[
-            styles.image,
-            index === 0 ? styles.firstMagazineImage : null,
-          ]}
+          style={[styles.image, index === 0 ? styles.firstMagazineImage : null]}
         />
         <Text
-          style={[
-            styles.text,
-            index === 0 ? styles.firstMagazineText : null,
-          ]}>
+          style={[styles.text, index === 0 ? styles.firstMagazineText : null]}>
           {magazine.number}
         </Text>
       </View>
