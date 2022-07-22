@@ -11,6 +11,7 @@ import Modal from '../components/Modal';
 import {login} from '../services/auth';
 import {LOGIN, SET_SUBSCRIPTION_INFO} from '../store/mutations';
 import {Colors} from '../styles';
+import analytics from '@react-native-firebase/analytics';
 
 const initialState = {
   logged: false,
@@ -77,6 +78,8 @@ const Login = ({
     dispatch({type: 'loading'});
 
     const response = await login(username, password);
+    await analytics().logLogin({method: 'form'});
+
     if (response.riv_message && response.riv_message.length > 0) {
       dispatch({type: 'error', payload: response.riv_message});
     } else {
@@ -86,7 +89,6 @@ const Login = ({
       dispatchLogin();
     }
   };
-  console.log(state, isLogged);
 
   useEffect(() => {
     if (logging) {

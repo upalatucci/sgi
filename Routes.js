@@ -1,18 +1,9 @@
 import React, {useEffect} from 'react';
 import {BackHandler, StyleSheet} from 'react-native';
-import {
-  Drawer,
-  Router,
-  Scene,
-  Stack,
-  Actions,
-  Tabs,
-} from 'react-native-router-flux';
+import {Router, Scene, Stack, Actions} from 'react-native-router-flux';
 
 import {Colors} from './styles';
-import FraseDelGiornoIcon from './components/icons/FraseDelGiornoIcon';
 import HomeIcon from './components/icons/HomeIcon';
-import LotusIcon from './components/icons/LotusIcon';
 import BookIcon from './components/icons/BookIcon';
 import WebViewPage from './pages/WebViewPage';
 import DownloadPDF from './pages/DownloadPDF';
@@ -28,15 +19,25 @@ import News from './pages/News';
 import Magazine from './pages/Magazine';
 import Login from './pages/Login';
 
-import CustomDrawer from './components/Drawer';
-import Menu from './components/icons/Menu';
 import SGILogo from './components/icons/SGILogoHome';
 import MultiUtilsRightButton from './components/MultiUtilsRightButtons';
 
 import NavBar from './components/NavBar';
 import TabBar from './components/TabBar';
+import {sendAnalyticsOnRouteChange} from './utils/analytics';
 
 export function backHandler() {
+  console.log('BACK', Actions.currentScene);
+  if (Actions.currentScene === 'homepage' || !Actions.prevState) {
+    BackHandler.exitApp();
+    return;
+  }
+
+  if (Actions.currentScene === 'login') {
+    Actions.home();
+    return;
+  }
+
   const routes = Actions.prevState.routes[0].routes;
   let prevRoute;
 
@@ -56,20 +57,10 @@ export function backHandler() {
     return;
   }
 
-  switch (Actions.currentScene) {
-    case 'home':
-      BackHandler.exitApp();
-      break;
-    case 'login':
-      Actions.home();
-      break;
-    default:
-      if (prevRoute) {
-        Actions.popAndPush(prevRoute.routeName, prevRoute.params);
-      } else {
-        Actions.home();
-      }
-      break;
+  if (prevRoute) {
+    Actions.popAndPush(prevRoute.routeName, prevRoute.params);
+  } else {
+    Actions.home();
   }
 }
 
@@ -83,7 +74,18 @@ function Routes() {
   }, []);
 
   return (
-    <Router>
+    <Router
+      onStateChange={(e) => {
+        if (!e.routes) {
+          return;
+        }
+        const routesLength = e.routes.length;
+
+        const currentScene = routesLength > 0 && e.routes[routesLength - 1];
+        if (currentScene) {
+          sendAnalyticsOnRouteChange(currentScene);
+        }
+      }}>
       <Stack
         key="root"
         navigationBarStyle={styles.navbar}

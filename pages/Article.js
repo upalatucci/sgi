@@ -57,7 +57,6 @@ const Article = React.memo(
     if (!articleContent) {
       return <Loading />;
     }
-
     return (
       <SafeAreaView style={styles.flex}>
         {articleContent && (
