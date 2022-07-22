@@ -1,5 +1,6 @@
 import {SHOW_MODAL, HIDE_MODAL, SET_TEXT_SIZE} from './mutations';
-import {possibleTextSizes} from '../utils';
+
+export const possibleTextSizes = [0, 1, 2];
 
 const initialState = {
   modalIsVisible: false,

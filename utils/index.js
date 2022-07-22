@@ -6,6 +6,7 @@ import FileViewer from 'react-native-file-viewer';
 import {Dimensions} from 'react-native';
 
 export async function convertHTMLToText(htmlMessage) {
+  const noStyleHTML = htmlMessage.replace(/<style[^]+?<\/style>/g, '');
   return new Promise((resolve) => {
     let message = '';
 
@@ -13,7 +14,7 @@ export async function convertHTMLToText(htmlMessage) {
       ontext: (text) => (message += text),
       onend: () => resolve(message),
     });
-    parser.write(htmlMessage);
+    parser.write(noStyleHTML);
     parser.end();
   });
 }
@@ -58,12 +59,6 @@ export function transformDate(dateString) {
   return `${date.getDate()} ${
     monthNames[date.getMonth()]
   } ${date.getFullYear()}`;
-}
-
-export const possibleTextSizes = [0, 1, 2];
-
-export function getFontSize(textSize) {
-  return `${100 + 50 * textSize}%`;
 }
 
 export const MAGAZINE_TYPES = {

@@ -3,9 +3,9 @@ import {View, StyleSheet} from 'react-native';
 import Text from '../ui/Text';
 import {useDispatch, useSelector} from 'react-redux';
 import {Colors} from '../../styles';
-import {possibleTextSizes} from '../../utils';
 import TouchableHighlight from '../CustomTouchableHighlight';
 import {SET_TEXT_SIZE} from '../../store/mutations';
+import {possibleTextSizes} from '../../store/uiRecuder';
 
 function FontSizeIcon() {
   const textSize = useSelector((state) => state.ui.textSize);

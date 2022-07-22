@@ -38,7 +38,18 @@ import TabBar from './components/TabBar';
 
 export function backHandler() {
   const routes = Actions.prevState.routes[0].routes;
-  let prevRoute = routes[routes.length - 2];
+  let prevRoute;
+
+  if (!routes) {
+    Actions.home();
+    return;
+  }
+
+  if (routes.length >= 2) {
+    prevRoute = routes[routes.length - 2];
+  } else {
+    prevRoute = routes[routes.length - 1];
+  }
 
   if (prevRoute && prevRoute.routeName === 'login') {
     Actions.home();

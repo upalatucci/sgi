@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useEffect, useState, useCallback} from 'react';
 import {
   Image,
   Linking,
@@ -7,19 +7,17 @@ import {
   View,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
-import SitoStyle from '../utils/sitoStyle';
-import VoloContinuoStyle from '../utils/volocontinuoStyle';
-import MagazineStyle from '../utils/magazineStyle';
-import {useDispatch, useSelector} from 'react-redux';
-import {getFontSize} from '../utils';
-import CustomTouchableHighlight from './CustomTouchableHighlight';
-import {Selector} from '../getSelector';
-import {HIGHLIGHT, REMOVE_HIGHLIGHT} from '../store/mutations';
-import MarkerIcon from '../assets/marker.png';
-import GoBack from '../assets/go-back-arrow.png';
-import {useCallback} from 'react';
-import ScrollToTopButton from './ScrollToTopButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import SitoStyle from '../../utils/sitoStyle';
+import VoloContinuoStyle from '../../utils/volocontinuoStyle';
+import MagazineStyle from '../../utils/magazineStyle';
+import {useSelector} from 'react-redux';
+import {getFontSize} from './utils';
+import CustomTouchableHighlight from '../CustomTouchableHighlight';
+import {Selector} from './getSelector';
+import MarkerIcon from '../../assets/marker.png';
+import GoBack from '../../assets/go-back-arrow.png';
+import ScrollToTopButton from '../ScrollToTopButton';
+import {addHighlight, getAllHighlights, removeHightlight} from './highlights';
 
 const contentStyles = {
   volocontinuo: VoloContinuoStyle,
@@ -27,41 +25,10 @@ const contentStyles = {
   magazine: MagazineStyle,
 };
 
-async function removeHightlight(magazineKey) {
-  const allHightlight = (await getAllHighlights(magazineKey)) || [];
-  allHightlight.pop();
-
-  await setAllHighlights(magazineKey, allHightlight);
-
-  return getAllHighlights(magazineKey);
-}
-
-async function addHighlight(magazineKey, highlight) {
-  const allHightlight = (await getAllHighlights(magazineKey)) || [];
-
-  allHightlight.push(highlight);
-
-  await setAllHighlights(magazineKey, allHightlight);
-
-  return getAllHighlights(magazineKey);
-}
-
-async function getAllHighlights(magazineKey) {
-  return new Promise(async (resolve) => {
-    resolve(JSON.parse(await AsyncStorage.getItem(`highlight-${magazineKey}`)));
-  });
-}
-
-async function setAllHighlights(magazineKey, highlights) {
-  return AsyncStorage.setItem(
-    `highlight-${magazineKey}`,
-    JSON.stringify(highlights),
-  );
-}
-
 const CustomWebView = ({
   style,
   content,
+  contentHeader,
   onLoadEnd,
   magazineKey,
   subtractHeight = 80,
@@ -90,6 +57,7 @@ const CustomWebView = ({
     async (event) => {
       const dataObj = JSON.parse(event.nativeEvent.data);
 
+      console.log(dataObj);
       if ('log' in dataObj) {
         console.log(dataObj.log);
       } else {
@@ -212,6 +180,8 @@ const CustomWebView = ({
         </head>
         <body> 
             <div id="rn-container">
+              ${contentHeader}
+
               ${content}
             </div>
             
