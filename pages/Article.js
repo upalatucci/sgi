@@ -40,6 +40,7 @@ const Article = React.memo(
         magazine === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
       ).then((response) => {
         if (response.data) {
+          console.log(response.data);
           setArticleContent(response.data[0]);
           dispatch({
             type: SET_ARTICLE_CACHE,

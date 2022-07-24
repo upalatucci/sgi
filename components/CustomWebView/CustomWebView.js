@@ -69,13 +69,13 @@ const CustomWebView = ({
 
   const hightlight = useCallback(() => {
     if (enableHighlight) {
-      webref.current.injectJavaScript('highlightTextHTML(); true;');
+      webref.current.injectJavaScript('highlightTextHTML(); return true;');
     }
   }, [webref, enableHighlight]);
 
   const removeLastHighlight = useCallback(async () => {
     setHighlights(await removeHightlight(magazineKey));
-    webref.current.injectJavaScript('removeHighlight(); true;');
+    webref.current.injectJavaScript('removeHighlight(); return true;');
   }, [magazineKey]);
 
   const documentReady = useCallback(() => {
@@ -94,7 +94,7 @@ const CustomWebView = ({
         }catch(err){
           window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
         }
-        true;
+        return true;
         `,
       );
     }
@@ -286,6 +286,8 @@ const scrollScript = `
   } catch(err) {
     window.scrollTo(0, 0);
   }
+
+  return true
 `;
 
 const styles = StyleSheet.create({
