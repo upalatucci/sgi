@@ -144,7 +144,12 @@ const Magazine = React.memo(({magazine, magazineType}) => {
           {magazine?.number_desc}
         </Text>
         {Object.entries(magazineContent.summary).map(([key, section]) => (
-          <ArticleSection key={key} section={section} magazine={magazineType} />
+          <ArticleSection
+            key={key}
+            section={section}
+            magazineType={magazineType}
+            magazineNumber={magazine.number}
+          />
         ))}
       </ScrollView>
     </SafeAreaView>

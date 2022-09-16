@@ -13,7 +13,7 @@ export const sendAnalyticsOnRouteChange = async (currentScene) => {
   switch (currentScene.routeName) {
     case 'article':
       sendScreen(
-        `articolo-${viewProps.magazine}-${viewProps.articleId}-${viewProps.articleTitle}`,
+        `articolo-${viewProps.magazineType}-${viewProps.magazineNumber}-${viewProps.articleTitle}`,
       );
       break;
     case 'magazine':

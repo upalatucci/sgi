@@ -31,3 +31,18 @@ export async function addHighlight(magazineKey, highlight) {
 
   return getAllHighlights(magazineKey);
 }
+
+const ALREADY_CHECKED_FIRST_TIME = 'ALREADY_CHECKED_FIRST_TIME';
+
+export async function firstTimeHighlight() {
+  const firstTimeString = await AsyncStorage.getItem('first-time-hightlight');
+
+  return firstTimeString !== ALREADY_CHECKED_FIRST_TIME;
+}
+
+export async function setFirstTimeHighlight() {
+  return AsyncStorage.setItem(
+    'first-time-hightlight',
+    ALREADY_CHECKED_FIRST_TIME,
+  );
+}

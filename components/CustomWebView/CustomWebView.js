@@ -10,14 +10,21 @@ import {WebView} from 'react-native-webview';
 import SitoStyle from '../../utils/sitoStyle';
 import VoloContinuoStyle from '../../utils/volocontinuoStyle';
 import MagazineStyle from '../../utils/magazineStyle';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getFontSize} from './utils';
 import CustomTouchableHighlight from '../CustomTouchableHighlight';
+import Modal from '../Modal';
 import {Selector} from './getSelector';
 import MarkerIcon from '../../assets/marker.png';
 import GoBack from '../../assets/go-back-arrow.png';
 import ScrollToTopButton from '../ScrollToTopButton';
-import {addHighlight, getAllHighlights, removeHightlight} from './highlights';
+import {
+  addHighlight,
+  getAllHighlights,
+  removeHightlight,
+  firstTimeHighlight,
+  setFirstTimeHighlight,
+} from './highlights';
 
 const contentStyles = {
   volocontinuo: VoloContinuoStyle,
@@ -34,6 +41,8 @@ const CustomWebView = ({
   subtractHeight = 80,
   enableHighlight = false,
 }) => {
+  const dispatch = useDispatch();
+  const [showFirstTimeModal, setShowFirstTimeModal] = useState(false);
   const [percentScroll, setPercentScroll] = useState(0);
   const [highlights, setHighlights] = useState([]);
   const [showScrollTopButton, setShowScrollTopButton] = useState(false);
@@ -69,13 +78,13 @@ const CustomWebView = ({
 
   const hightlight = useCallback(() => {
     if (enableHighlight) {
-      webref.current.injectJavaScript('highlightTextHTML(); return true;');
+      webref.current.injectJavaScript('highlightTextHTML(); true;');
     }
   }, [webref, enableHighlight]);
 
   const removeLastHighlight = useCallback(async () => {
     setHighlights(await removeHightlight(magazineKey));
-    webref.current.injectJavaScript('removeHighlight(); return true;');
+    webref.current.injectJavaScript('removeHighlight(); true;');
   }, [magazineKey]);
 
   const documentReady = useCallback(() => {
@@ -94,7 +103,7 @@ const CustomWebView = ({
         }catch(err){
           window.ReactNativeWebView.postMessage(JSON.stringify({log: err}))
         }
-        return true;
+         true;
         `,
       );
     }
@@ -134,10 +143,23 @@ const CustomWebView = ({
     getAllHighlights(magazineKey).then((h) => {
       setHighlights(h);
     });
+
+    firstTimeHighlight().then(setShowFirstTimeModal);
   }, [magazineKey]);
 
   return (
     <>
+      <Modal
+        modalVisible={showFirstTimeModal}
+        onClose={() => {
+          setShowFirstTimeModal(false);
+          setFirstTimeHighlight();
+        }}
+        message={
+          'Prima volta che utilizzi la sottolineatura? Provala! Seleziona il testo tenendo premuto sulle lettere e premi il pulsante con il pennarello'
+        }
+      />
+
       {showScrollTopButton && <ScrollToTopButton onPress={scrollToTop} />}
       {enableHighlight && (
         <View style={styles.buttons}>
@@ -235,7 +257,8 @@ const CustomWebView = ({
                   startOffset: range.startOffset,
                   endContainerPath: UTILS.cssPath(parentEndContainer),
                   endContainerIndex: getIndexNodeFromParent(range.endContainer),
-                  endOffset: range.endOffset
+                  endOffset: range.endOffset,
+                  text: range.toString()
                 }
 
                 window.ReactNativeWebView.postMessage(JSON.stringify(data))
@@ -287,7 +310,7 @@ const scrollScript = `
     window.scrollTo(0, 0);
   }
 
-  return true
+  true;
 `;
 
 const styles = StyleSheet.create({

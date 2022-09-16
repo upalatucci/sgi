@@ -11,7 +11,14 @@ import {Colors, TitleStyle} from '../styles';
 import {SET_ARTICLE_CACHE} from '../store/mutations';
 
 const Article = React.memo(
-  ({articleId, magazine, articleTitle, articleSubtitle, category}) => {
+  ({
+    articleId,
+    magazineType,
+    magazineNumber,
+    articleTitle,
+    articleSubtitle,
+    category,
+  }) => {
     const {subscriptionInfo, storedArticles} = useSelector((state) => ({
       subscriptionInfo: state.magazine.subscriptionInfo,
       storedArticles: state.magazine.cachedArticles,
@@ -20,12 +27,12 @@ const Article = React.memo(
     const dispatch = useDispatch();
     const [articleContent, setArticleContent] = useState();
     const [loading, setLoading] = useState(true);
-    const cacheKey = `${magazine}-${articleId}`;
+    const cacheKey = `${magazineType}-${articleId}`;
 
     function shareArticle() {}
 
     useEffect(() => {
-      if (!subscriptionInfo || !magazine || !articleId) {
+      if (!subscriptionInfo || !magazineType || !articleId) {
         return;
       }
 
@@ -36,8 +43,8 @@ const Article = React.memo(
 
       getJsonData(
         `articles/${articleId}`,
-        subscriptionDataForMagazine(subscriptionInfo, magazine),
-        magazine === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
+        subscriptionDataForMagazine(subscriptionInfo, magazineType),
+        magazineType === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
       ).then((response) => {
         if (response.data) {
           console.log(response.data);
@@ -49,7 +56,7 @@ const Article = React.memo(
         }
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [articleId, magazine, subscriptionInfo]);
+    }, [articleId, magazineType, subscriptionInfo]);
 
     if (!subscriptionInfo) {
       Actions.magazines({onBack: () => Actions.home()});
@@ -58,11 +65,13 @@ const Article = React.memo(
     if (!articleContent) {
       return <Loading />;
     }
+
+    const highlightMagazineKey = `${cacheKey}-${magazineNumber}-${articleTitle}`;
     return (
       <SafeAreaView style={styles.flex}>
         {articleContent && (
           <CustomWebView
-            magazineKey={cacheKey}
+            magazineKey={highlightMagazineKey}
             contentHeader={`<div class="post-category entry-category">${category}</div>
             <h1 class="entry-title">${articleTitle}</h1>
             <div class="post-teaser entry-teaser">${articleSubtitle}</div>
@@ -76,7 +85,7 @@ const Article = React.memo(
             onLoadEnd={() => {
               setLoading(false);
             }}
-            enableHighlight={false}
+            enableHighlight={true}
           />
         )}
         {loading && <Loading />}

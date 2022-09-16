@@ -36,7 +36,7 @@ const rootReduced = combineReducers({
 
 const store = createStore(rootReduced, compose(applyMiddleware(thunk)));
 const persistor = persistStore(store);
-// persistor.purge();
+persistor.purge();
 
 export default () => {
   return (

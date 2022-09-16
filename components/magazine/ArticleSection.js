@@ -11,7 +11,7 @@ import TouchableHighlight from '../CustomTouchableHighlight';
 import {Actions} from 'react-native-router-flux';
 import CustomHTML from '../CustomHTML';
 
-export default ({section, magazine}) => {
+export default ({section, magazineType, magazineNumber}) => {
   const sectionArticles = Object.entries(section.articles);
 
   console.log(sectionArticles);
@@ -31,7 +31,8 @@ export default ({section, magazine}) => {
             key={key}
             onPress={() =>
               Actions.article({
-                magazine,
+                magazineType,
+                magazineNumber,
                 articleId: article.id,
                 articleTitle: article.title,
                 articleSubtitle: article.subtitle,

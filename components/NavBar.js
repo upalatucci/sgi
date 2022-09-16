@@ -53,7 +53,11 @@ export default (props) => {
               leftButtonStyle={styles.backButtonStyle}
             />
           ) : (
-            <View />
+            <CustomTouchableHighlight
+              style={styles.drawerIconContainer}
+              onPress={() => Actions.drawerOpen()}>
+              {props.drawerIcon(props)}
+            </CustomTouchableHighlight>
           )}
 
           {props.renderRightButton ? (
