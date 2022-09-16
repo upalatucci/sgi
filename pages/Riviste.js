@@ -12,7 +12,7 @@ import {format, parse} from 'date-fns';
 import {Colors} from '../styles';
 
 const Riviste = ({lastBS, lastNR, subscriptionInfo, isLogged}) => {
-  if (!isLogged) {
+  if (!isLogged || !subscriptionInfo.riv_logged) {
     Actions.login({nextScene: 'magazines'});
     return <Loading />;
   }

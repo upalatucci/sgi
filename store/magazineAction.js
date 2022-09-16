@@ -52,6 +52,11 @@ export function fetchLogin() {
             credentials.username,
             credentials.password,
           );
+
+          if (!subInfo.riv_logged) {
+            throw new Error(subInfo.riv_message);
+          }
+
           dispatch({type: LOGIN});
           dispatch({type: SET_SUBSCRIPTION_INFO, payload: subInfo});
         } catch (err) {

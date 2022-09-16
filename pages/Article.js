@@ -46,6 +46,7 @@ const Article = React.memo(
         subscriptionDataForMagazine(subscriptionInfo, magazineType),
         magazineType === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
       ).then((response) => {
+        console.log('full article', response.data[0].full);
         if (response.data) {
           console.log(response.data);
           setArticleContent(response.data[0]);

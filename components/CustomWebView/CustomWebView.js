@@ -10,7 +10,7 @@ import {WebView} from 'react-native-webview';
 import SitoStyle from '../../utils/sitoStyle';
 import VoloContinuoStyle from '../../utils/volocontinuoStyle';
 import MagazineStyle from '../../utils/magazineStyle';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {getFontSize} from './utils';
 import CustomTouchableHighlight from '../CustomTouchableHighlight';
 import Modal from '../Modal';
@@ -41,7 +41,6 @@ const CustomWebView = ({
   subtractHeight = 80,
   enableHighlight = false,
 }) => {
-  const dispatch = useDispatch();
   const [showFirstTimeModal, setShowFirstTimeModal] = useState(false);
   const [percentScroll, setPercentScroll] = useState(0);
   const [highlights, setHighlights] = useState([]);
@@ -202,7 +201,7 @@ const CustomWebView = ({
         </head>
         <body> 
             <div id="rn-container">
-              ${contentHeader}
+              ${contentHeader ? contentHeader : ''}
 
               ${content}
             </div>
