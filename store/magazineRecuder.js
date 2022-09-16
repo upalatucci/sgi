@@ -10,7 +10,7 @@ import {
   LOGOUT,
   HIGHLIGHT,
   REMOVE_HIGHLIGHT,
-  LOGGING
+  LOGGING,
 } from './mutations';
 
 import {generateSignToken} from '../services/auth';
@@ -74,8 +74,8 @@ export default function (state = initialState, {type, payload}) {
     case LOGGING:
       return {
         ...state,
-        logging: true
-      }
+        logging: true,
+      };
     case LOGIN:
       return {
         ...state,

@@ -11,6 +11,7 @@ import Modal from '../components/Modal';
 import {login} from '../services/auth';
 import {LOGIN, SET_SUBSCRIPTION_INFO} from '../store/mutations';
 import {Colors} from '../styles';
+import analytics from '@react-native-firebase/analytics';
 
 const initialState = {
   logged: false,
@@ -21,8 +22,8 @@ const initialState = {
 function getInitState(logging) {
   return {
     ...initialState,
-    loading: logging || initialState.loading
-  }
+    loading: logging || initialState.loading,
+  };
 }
 
 function loginReducer(state, action) {
@@ -77,6 +78,8 @@ const Login = ({
     dispatch({type: 'loading'});
 
     const response = await login(username, password);
+    await analytics().logLogin({method: 'form'});
+
     if (response.riv_message && response.riv_message.length > 0) {
       dispatch({type: 'error', payload: response.riv_message});
     } else {
@@ -88,14 +91,16 @@ const Login = ({
   };
 
   useEffect(() => {
-    if (logging)  return
+    if (logging) {
+      return;
+    }
 
     if (subscriptionInfo) {
       dispatch({type: 'logged'});
     } else {
       dispatch({type: 'no_logged'});
     }
-  }, [subscriptionInfo]);
+  }, [logging, subscriptionInfo]);
 
   useEffect(() => {
     if (isLogged) {
@@ -153,7 +158,7 @@ function mapStateToProps(state) {
   return {
     subscriptionInfo: state.magazine.subscriptionInfo,
     isLogged: state.magazine.isLogged,
-    logging: state.magazine.logging
+    logging: state.magazine.logging,
   };
 }
 

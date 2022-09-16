@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, Image, ScrollView, StyleSheet, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {SGI_ENTRYPOINT, VOLO_ENTRYPOINT} from '../api';
@@ -26,6 +26,7 @@ import {
   SGI_SITES,
 } from '../utils';
 import Loading from '../components/Loading';
+import SplashScreen from 'react-native-splash-screen';
 
 const Home = ({
   lastBS,
@@ -37,8 +38,9 @@ const Home = ({
   fetchLastNewsAction,
 }) => {
   useEffect(() => {
-    login()
-  });
+    login();
+    SplashScreen.hide();
+  }, [login]);
 
   useEffect(() => {
     fetchBS();
@@ -57,7 +59,7 @@ const Home = ({
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.welcome}>
           <Text style={styles.welcomeTitle}>{welcomeText()}</Text>
@@ -171,7 +173,7 @@ const Home = ({
           ))}
         </ScrollView>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -179,6 +181,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    paddingBottom: 50,
   },
   welcome: {
     padding: 20,
@@ -313,7 +316,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchBS: () => dispatch(fetchLastBSImage()),
     fetchNR: () => dispatch(fetchLastNRImage()),
     fetchLastNewsAction: () => dispatch(fetchLastNews()),
-    login: () => dispatch(fetchLogin())
+    login: () => dispatch(fetchLogin()),
   };
 };
 

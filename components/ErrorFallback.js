@@ -13,8 +13,12 @@ export default function ErrorFallback({error, resetErrorBoundary}) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sembra che qualcosa sia andato storto!</Text>
-      <Text>Ci dispiace per l'inconveniente</Text>
-      <Text>Errore: {error.message}</Text>
+      <Text style={styles.text}>Ci dispiace per l'inconveniente</Text>
+      <Text style={styles.text}>
+        Non ti preoccupare, tutti affrontiamo difficolta nella vita qualche
+        volta
+      </Text>
+      <Text>sdErrore: {error.message}</Text>
       <TouchableHighlight style={styles.button} onPress={resetErrorBoundary}>
         <Text style={styles.buttonText}>Prova di nuovo</Text>
       </TouchableHighlight>
@@ -29,6 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+    paddingHorizontal: 20,
   },
   title: {
     ...TitleStyle,
@@ -40,6 +45,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     ...PrimaryButtonTitleStyle,
+    textAlign: 'center',
+  },
+  text: {
     textAlign: 'center',
   },
 });

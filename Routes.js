@@ -1,11 +1,9 @@
 import React, {useEffect} from 'react';
 import {BackHandler, StyleSheet} from 'react-native';
-import {Drawer, Router, Scene, Stack, Actions} from 'react-native-router-flux';
+import {Router, Scene, Stack, Actions} from 'react-native-router-flux';
 
 import {Colors} from './styles';
-import FraseDelGiornoIcon from './components/icons/FraseDelGiornoIcon';
 import HomeIcon from './components/icons/HomeIcon';
-import LotusIcon from './components/icons/LotusIcon';
 import BookIcon from './components/icons/BookIcon';
 import WebViewPage from './pages/WebViewPage';
 import DownloadPDF from './pages/DownloadPDF';
@@ -21,36 +19,48 @@ import News from './pages/News';
 import Magazine from './pages/Magazine';
 import Login from './pages/Login';
 
-import CustomDrawer from './components/Drawer';
-import Menu from './components/icons/Menu';
 import SGILogo from './components/icons/SGILogoHome';
 import MultiUtilsRightButton from './components/MultiUtilsRightButtons';
 
 import NavBar from './components/NavBar';
+import TabBar from './components/TabBar';
+import {sendAnalyticsOnRouteChange} from './utils/analytics';
 
 export function backHandler() {
+  console.log('BACK', Actions.currentScene);
+  if (Actions.currentScene === 'homepage' || !Actions.prevState) {
+    BackHandler.exitApp();
+    return;
+  }
+
+  if (Actions.currentScene === 'login') {
+    Actions.home();
+    return;
+  }
+
   const routes = Actions.prevState.routes[0].routes;
-  let prevRoute = routes[routes.length - 2];
+  let prevRoute;
+
+  if (!routes) {
+    Actions.home();
+    return;
+  }
+
+  if (routes.length >= 2) {
+    prevRoute = routes[routes.length - 2];
+  } else {
+    prevRoute = routes[routes.length - 1];
+  }
 
   if (prevRoute && prevRoute.routeName === 'login') {
     Actions.home();
     return;
   }
 
-  switch (Actions.currentScene) {
-    case 'home':
-      BackHandler.exitApp();
-      break;
-    case 'login':
-      Actions.home();
-      break;
-    default:
-      if (prevRoute) {
-        Actions.popAndPush(prevRoute.routeName, prevRoute.params);
-      } else {
-        Actions.home();
-      }
-      break;
+  if (prevRoute) {
+    Actions.popAndPush(prevRoute.routeName, prevRoute.params);
+  } else {
+    Actions.home();
   }
 }
 
@@ -64,96 +74,122 @@ function Routes() {
   }, []);
 
   return (
-    <Router>
-      <Drawer contentComponent={CustomDrawer} drawerIcon={Menu} key="drawer">
-        <Stack
-          key="root"
-          navigationBarStyle={styles.navbar}
-          navBar={NavBar}
-          titleStyle={styles.title}
-          backButtonTintColor={Colors.primary}>
+    <Router
+      onStateChange={(e) => {
+        if (!e.routes) {
+          return;
+        }
+        const routesLength = e.routes.length;
+
+        const currentScene = routesLength > 0 && e.routes[routesLength - 1];
+        if (currentScene) {
+          sendAnalyticsOnRouteChange(currentScene);
+        }
+      }}>
+      <Stack
+        key="root"
+        navigationBarStyle={styles.navbar}
+        navBar={NavBar}
+        titleStyle={styles.title}
+        backButtonTintColor={Colors.primary}>
+        <Scene
+          tabs
+          key="home"
+          type="reset"
+          hideNavBar
+          tabBarComponent={TabBar}
+          tabBarPosition="bottom"
+          wrap={false}>
           <Scene
-            key="home"
+            key="homepage"
             type="reset"
             component={Home}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene key="login" component={Login} hideNavBar type="reset" />
-          <Scene
-            key="posts"
-            navigationBarStyle={styles.navbar}
-            titleStyle={styles.title}
-            component={Posts}
-            icon={HomeIcon}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
+            hideNavBar
+            title="Home"
           />
           <Scene
             key="news"
+            back
             navigationBarStyle={styles.navbar}
             titleStyle={styles.title}
             component={News}
             icon={HomeIcon}
+            hideNavBar
+          />
+
+          <Scene
+            key="frasedelgiorno"
+            component={FraseDelGiorno}
+            hideNavBar
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}
+            title="Frase del Giorno"
           />
+
           <Scene
-            drawer
-            key="buddismo"
-            component={Buddismo}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            drawer
             key="magazines"
             component={Riviste}
             icon={BookIcon}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
+            title="Riviste"
+            hideNavBar
           />
-          <Scene
-            drawer
-            key="frasedelgiorno"
-            component={FraseDelGiorno}
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            key="postPage"
-            component={PostPage}
-            back
-            renderRightButton={MultiUtilsRightButton}
-          />
-          <Scene
-            key="magazine"
-            component={Magazine}
-            drawer
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            key="article"
-            component={Article}
-            back
-            renderRightButton={MultiUtilsRightButton}
-          />
-          <Scene
-            key="webview"
-            component={WebViewPage}
-            drawer
-            onRight={() => Actions.home()}
-            renderRightButton={SGILogo}
-          />
-          <Scene
-            key="downloadPdf"
-            component={DownloadPDF}
-            back
-            title="PDF Rivista"
-          />
-        </Stack>
-      </Drawer>
+        </Scene>
+        <Scene key="login" component={Login} hideNavBar type="reset" />
+
+        <Scene
+          key="magazine"
+          component={Magazine}
+          back
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+        />
+        <Scene
+          key="article"
+          component={Article}
+          back
+          renderRightButton={MultiUtilsRightButton}
+        />
+
+        <Scene
+          key="postPage"
+          component={PostPage}
+          back
+          renderRightButton={MultiUtilsRightButton}
+        />
+
+        <Scene
+          key="posts"
+          navigationBarStyle={styles.navbar}
+          titleStyle={styles.title}
+          component={Posts}
+          icon={HomeIcon}
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+          back
+        />
+
+        <Scene
+          back
+          key="buddismo"
+          component={Buddismo}
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+        />
+
+        <Scene
+          key="webview"
+          component={WebViewPage}
+          back
+          onRight={() => Actions.home()}
+          renderRightButton={SGILogo}
+        />
+        <Scene
+          key="downloadPdf"
+          component={DownloadPDF}
+          back
+          title="PDF Rivista"
+        />
+      </Stack>
     </Router>
   );
 }

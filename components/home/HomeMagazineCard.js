@@ -33,8 +33,8 @@ export default ({magazine, magazineType, onPress, background}) => {
       });
     } else {
       Actions.magazine({
-        number: magazine,
-        magazine: magazineType,
+        magazine,
+        magazineType,
       });
     }
   }

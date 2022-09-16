@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: 110
+    width: 110,
   },
 });

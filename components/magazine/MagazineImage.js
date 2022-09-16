@@ -7,7 +7,7 @@ export default React.memo((props) => {
   const {aspectRatio} = useImageSizeType(props.number?.cover);
 
   const aspectRatioStyle = {
-    aspectRatio: aspectRatio ?? MAGAZINE_ASPECT_RATIO[props.magazine],
+    aspectRatio: aspectRatio ?? MAGAZINE_ASPECT_RATIO[props.magazineType],
   };
 
   return (

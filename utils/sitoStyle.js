@@ -676,7 +676,12 @@ a.archive_more {
   line-height: 1.2em !important;
   text-align: center !important;
 }
+
+img.alignright {
+  margin: auto;
+  float: auto;
+}
 </style>
-`
+`;
 
 export default sitoStyle;

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Actions} from 'react-native-router-flux';
 import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
@@ -12,7 +12,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistStore, persistReducer} from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
 import Routes from './Routes';
-import SplashScreen from 'react-native-splash-screen';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const persistConfig = {
@@ -40,10 +39,6 @@ const persistor = persistStore(store);
 // persistor.purge();
 
 export default () => {
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
-
   return (
     <SafeAreaProvider>
       <Provider store={store}>

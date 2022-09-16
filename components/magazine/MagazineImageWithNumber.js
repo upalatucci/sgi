@@ -10,15 +10,15 @@ import {cannotViewMagazine} from '../../utils';
 import {SHOW_MODAL} from '../../store/mutations';
 
 const windowWidth = Dimensions.get('window').width;
-export default (props) => {
+export default ({magazine, magazineType, index}) => {
   const dispatch = useDispatch();
   const subInfo = useSelector((state) => state.magazine.subscriptionInfo);
 
   function goToMagazine() {
     if (
-      props.number &&
+      magazine &&
       subInfo &&
-      cannotViewMagazine(subInfo, props.magazine, props.number.number)
+      cannotViewMagazine(subInfo, magazineType, magazine.number)
     ) {
       dispatch({
         type: SHOW_MODAL,
@@ -27,8 +27,8 @@ export default (props) => {
       });
     } else {
       Actions.magazine({
-        number: props.number,
-        magazine: props.magazine,
+        magazine,
+        magazineType,
       });
     }
   }
@@ -38,22 +38,16 @@ export default (props) => {
       <View
         style={[
           styles.container,
-          props.index === 0 ? styles.firstMagazineContainer : null,
+          index === 0 ? styles.firstMagazineContainer : null,
         ]}>
         <MagazineImage
-          number={props.number}
-          magazine={props.magazine}
-          style={[
-            styles.image,
-            props.index === 0 ? styles.firstMagazineImage : null,
-          ]}
+          number={magazine}
+          magazineType={magazineType}
+          style={[styles.image, index === 0 ? styles.firstMagazineImage : null]}
         />
         <Text
-          style={[
-            styles.text,
-            props.index === 0 ? styles.firstMagazineText : null,
-          ]}>
-          {props.number.number}
+          style={[styles.text, index === 0 ? styles.firstMagazineText : null]}>
+          {magazine.number}
         </Text>
       </View>
     </TouchableHighlight>
