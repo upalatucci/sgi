@@ -29,6 +29,9 @@ export const sendAnalyticsOnRouteChange = async (currentScene) => {
       );
       break;
     case 'root':
+    case 'MainActivity':
+    case 'UIViewController':
+    case 'RCTModalHostViewController':
       break;
     default:
       console.log(currentScene.routeName);
