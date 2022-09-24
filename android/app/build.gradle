@@ -133,8 +133,8 @@ android {
         applicationId "org.sgitalia.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20024
-        versionName "2.0.24"
+        versionCode 20026
+        versionName "2.0.26"
         multiDexEnabled true
     }
 

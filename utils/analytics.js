@@ -28,7 +28,10 @@ export const sendAnalyticsOnRouteChange = async (currentScene) => {
         }-${viewProps.title}`,
       );
       break;
+    case 'root':
+      break;
     default:
+      console.log(currentScene.routeName);
       sendScreen(currentScene.routeName);
       console.log(currentScene.routeName);
       break;

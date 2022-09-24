@@ -27,7 +27,7 @@ const Article = React.memo(
     const dispatch = useDispatch();
     const [articleContent, setArticleContent] = useState();
     const [loading, setLoading] = useState(true);
-    const cacheKey = `${magazineType}-${articleId}`;
+    const cacheKey = `${magazineType}-${magazineNumber}-${articleTitle}`;
 
     function shareArticle() {}
 
@@ -86,7 +86,7 @@ const Article = React.memo(
             onLoadEnd={() => {
               setLoading(false);
             }}
-            enableHighlight={true}
+            enableHighlight={false}
           />
         )}
         {loading && <Loading />}

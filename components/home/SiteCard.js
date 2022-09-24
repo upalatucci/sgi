@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Linking, StyleSheet} from 'react-native';
+import {View, Linking, StyleSheet, Image} from 'react-native';
 import Text from '../ui/Text';
 import {WithLocalSvg} from 'react-native-svg';
 import TouchableHighlight from '../CustomTouchableHighlight';
+import senzatomica from '../../assets/sites/senzatomica.png';
 
 export default ({title, icon, link}) => (
   <TouchableHighlight
@@ -10,7 +11,7 @@ export default ({title, icon, link}) => (
     style={styles.container}>
     <View style={styles.viewContainer}>
       {title === 'Senzatomica' ? (
-        <WithLocalSvg asset={icon} width={50} height={40} />
+        <Image source={senzatomica} style={styles.senzatomica} />
       ) : (
         <WithLocalSvg asset={icon} width={40} height={40} />
       )}
@@ -39,5 +40,10 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  senzatomica: {
+    resizeMode: 'contain',
+    width: 80,
+    height: 40,
   },
 });
