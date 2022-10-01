@@ -1,15 +1,20 @@
-import React, {useEffect, useReducer} from 'react';
+import React, {useCallback, useEffect, useReducer, useState} from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {Actions} from 'react-native-router-flux';
 import {WithLocalSvg} from 'react-native-svg';
-import {connect} from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import X from '../assets/x_dark.svg';
 import TouchableHighlight from '../components/CustomTouchableHighlight';
 import LoginForm from '../components/LoginForm';
 import Modal from '../components/Modal';
 import {login} from '../services/auth';
-import {LOGIN, SET_SUBSCRIPTION_INFO} from '../store/mutations';
+import {
+  LOGGING,
+  LOGIN,
+  LOGOUT,
+  SET_SUBSCRIPTION_INFO,
+} from '../store/mutations';
 import {Colors} from '../styles';
 import analytics from '@react-native-firebase/analytics';
 
@@ -63,54 +68,46 @@ function loginReducer(state, action) {
   }
 }
 
-const Login = ({
-  isLogged,
-  logging,
-  setSubscriptionInfo,
-  subscriptionInfo,
-  nextScene,
-  nextSceneProps,
-  dispatchLogin,
-}) => {
-  const [state, dispatch] = useReducer(loginReducer, getInitState(logging));
+const Login = ({nextScene, nextSceneProps}) => {
+  const {subscriptionInfo, isLogged, logging} = useSelector((state) => ({
+    subscriptionInfo: state.magazine.subscriptionInfo,
+    isLogged: state.magazine.isLogged,
+    logging: state.magazine.logging,
+  }));
+
+  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+
+  const redirect = useCallback(() => {
+    if (Actions[nextScene]) {
+      Actions.push(nextScene, nextSceneProps);
+    } else {
+      Actions.home();
+    }
+  }, [nextScene, nextSceneProps]);
 
   const onLogin = async (username, password) => {
-    dispatch({type: 'loading'});
+    dispatch({type: LOGGING});
 
     const response = await login(username, password);
-    await analytics().logLogin({method: 'form'});
 
     if (response.riv_message && response.riv_message.length > 0) {
-      dispatch({type: 'error', payload: response.riv_message});
+      dispatch({type: LOGOUT});
+      setError(response.riv_message);
     } else {
-      dispatch({type: 'logged', payload: response});
+      await analytics().logLogin({method: 'form'});
       await Keychain.setGenericPassword(username, password);
-      setSubscriptionInfo(response);
-      dispatchLogin();
+      dispatch({type: SET_SUBSCRIPTION_INFO, payload: response});
+      dispatch({type: LOGIN});
+      redirect();
     }
   };
 
   useEffect(() => {
-    if (logging) {
-      return;
-    }
-
-    if (subscriptionInfo) {
-      dispatch({type: 'logged'});
-    } else {
-      dispatch({type: 'no_logged'});
-    }
-  }, [logging, subscriptionInfo]);
-
-  useEffect(() => {
     if (isLogged) {
-      if (Actions[nextScene]) {
-        Actions.push(nextScene, nextSceneProps);
-      } else {
-        Actions.home();
-      }
+      redirect();
     }
-  }, [isLogged, nextScene, nextSceneProps, state]);
+  }, [isLogged, redirect]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -123,13 +120,13 @@ const Login = ({
       </View>
       <LoginForm
         onLogin={onLogin}
-        loading={state.loading || (state.logged && !subscriptionInfo)}
+        loading={logging || (isLogged && !subscriptionInfo)}
       />
 
       <Modal
-        modalVisible={state.error !== null}
-        onClose={() => dispatch({type: 'clear_error'})}
-        error={state.error}
+        modalVisible={error !== null}
+        onClose={() => setError(null)}
+        error={error}
       />
     </SafeAreaView>
   );
@@ -154,20 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps(state) {
-  return {
-    subscriptionInfo: state.magazine.subscriptionInfo,
-    isLogged: state.magazine.isLogged,
-    logging: state.magazine.logging,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    setSubscriptionInfo: (subInfo) =>
-      dispatch({type: SET_SUBSCRIPTION_INFO, payload: subInfo}),
-    dispatchLogin: () => dispatch({type: LOGIN}),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

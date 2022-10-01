@@ -67,6 +67,7 @@ export default function (state = initialState, {type, payload}) {
       return {
         ...state,
         isLogged: false,
+        logging: false,
         subscriptionInfo: null,
         cachedMagazines: {},
         cachedArticles: {},

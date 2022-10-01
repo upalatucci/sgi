@@ -45,6 +45,7 @@ export function fetchLastNews() {
 export function fetchLogin() {
   return (dispatch) => {
     Keychain.getGenericPassword().then(async (credentials) => {
+      console.log('Credentials', credentials);
       if (credentials) {
         dispatch({type: LOGGING});
         try {
@@ -53,7 +54,7 @@ export function fetchLogin() {
             credentials.password,
           );
 
-          if (!subInfo.riv_logged) {
+          if (!subInfo.riv_logged || subInfo.riv_logged === 'false') {
             throw new Error(subInfo.riv_message);
           }
 

@@ -134,7 +134,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 20026
-        versionName "2.0.26"
+        versionName "2.0.27"
         multiDexEnabled true
     }
 
