@@ -3,7 +3,7 @@ import {format, parse, startOfMonth} from 'date-fns';
 import {it} from 'date-fns/locale';
 import RNFS from 'react-native-fs';
 import FileViewer from 'react-native-file-viewer';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 
 export async function convertHTMLToText(htmlMessage) {
   const noStyleHTML = htmlMessage.replace(/<style[^]+?<\/style>/g, '');
@@ -106,21 +106,24 @@ export const SGI_SITES = [
     link: 'https://ottopermille.sokagakkai.it/',
   },
   {
-    icon: require('../assets/sites/bs.svg'),
-    title: 'Buddismo e Società',
-    link: 'https://buddismoesocieta.org/',
-  },
-  {
-    icon: require('../assets/sites/nr.svg'),
-    title: 'Il Nuovo Rinascimento',
-    link: 'https://ilnuovorinascimento.org/',
-  },
-  {
     icon: require('../assets/sites/ilvolocontinuo.svg'),
     title: 'Il Volo Continuo',
     link: 'https://www.ilvolocontinuo.it/',
   },
 ];
+
+if (Platform.OS !== 'ios') {
+  SGI_SITES.push({
+    icon: require('../assets/sites/bs.svg'),
+    title: 'Buddismo e Società',
+    link: 'https://buddismoesocieta.org/',
+  });
+  SGI_SITES.push({
+    icon: require('../assets/sites/nr.svg'),
+    title: 'Il Nuovo Rinascimento',
+    link: 'https://ilnuovorinascimento.org/',
+  });
+}
 
 export const DEVICE_SIZES = {
   SMALL: 'small',

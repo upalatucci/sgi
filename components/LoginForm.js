@@ -15,10 +15,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import EmailIcon from '../assets/email.png';
 import PasswordIcon from '../assets/password.png';
 import Loading from './Loading';
+import ModalPassword from './ModalPassword';
 
 const LoginForm = ({onLogin, loading}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   if (loading) {
     return <Loading textColor="white" />;
@@ -28,6 +30,10 @@ const LoginForm = ({onLogin, loading}) => {
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ModalPassword
+        modalVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
       <View style={styles.containerImages}>
         <View style={styles.logoView}>
           <Image source={require('../assets/sgi.png')} style={styles.image} />
@@ -66,11 +72,7 @@ const LoginForm = ({onLogin, loading}) => {
           />
         </View>
         <TouchableHighlight
-          onPress={() =>
-            Linking.openURL(
-              'https://servizi.sgi-italia.org/abbonamenti/index.php/site/ricordaPassword',
-            )
-          }
+          onPress={() => setModalVisible(true)}
           style={styles.recovery}>
           <Text style={styles.recoveryText}>Hai dimenticato la password?</Text>
         </TouchableHighlight>
@@ -88,20 +90,22 @@ const LoginForm = ({onLogin, loading}) => {
           </LinearGradient>
         </TouchableHighlight>
 
-        <TouchableHighlight
-          onPress={() =>
-            Linking.openURL(
-              'https://servizi.sgi-italia.org/abbonamenti/index.php/registrazione/index',
-            )
-          }
-          style={styles.signIn}>
-          <View style={styles.signInTextContainer}>
-            <Text style={styles.signInText}>Non hai un Account?</Text>
-            <Text style={[styles.signInText, styles.boldText]}>
-              Registrati qui
-            </Text>
-          </View>
-        </TouchableHighlight>
+        {Platform.OS !== 'ios' && (
+          <TouchableHighlight
+            onPress={() =>
+              Linking.openURL(
+                'https://servizi.sgi-italia.org/abbonamenti/index.php/registrazione/index',
+              )
+            }
+            style={styles.signIn}>
+            <View style={styles.signInTextContainer}>
+              <Text style={styles.signInText}>Non hai un Account?</Text>
+              <Text style={[styles.signInText, styles.boldText]}>
+                Registrati qui
+              </Text>
+            </View>
+          </TouchableHighlight>
+        )}
       </View>
     </KeyboardAvoidingView>
   );

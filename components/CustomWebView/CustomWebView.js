@@ -13,18 +13,11 @@ import MagazineStyle from '../../utils/magazineStyle';
 import {useSelector} from 'react-redux';
 import {getFontSize} from './utils';
 import CustomTouchableHighlight from '../CustomTouchableHighlight';
-import Modal from '../Modal';
 import {Selector} from './getSelector';
 import MarkerIcon from '../../assets/marker.png';
 import GoBack from '../../assets/go-back-arrow.png';
 import ScrollToTopButton from '../ScrollToTopButton';
-import {
-  addHighlight,
-  getAllHighlights,
-  removeHightlight,
-  firstTimeHighlight,
-  setFirstTimeHighlight,
-} from './highlights';
+import {addHighlight, getAllHighlights, removeHightlight} from './highlights';
 
 const contentStyles = {
   volocontinuo: VoloContinuoStyle,
@@ -41,7 +34,6 @@ const CustomWebView = ({
   subtractHeight = 80,
   enableHighlight = false,
 }) => {
-  const [showFirstTimeModal, setShowFirstTimeModal] = useState(false);
   const [percentScroll, setPercentScroll] = useState(0);
   const [highlights, setHighlights] = useState([]);
   const [showScrollTopButton, setShowScrollTopButton] = useState(false);
@@ -142,23 +134,10 @@ const CustomWebView = ({
     getAllHighlights(magazineKey).then((h) => {
       setHighlights(h);
     });
-
-    firstTimeHighlight().then(setShowFirstTimeModal);
   }, [magazineKey]);
 
   return (
     <>
-      <Modal
-        modalVisible={showFirstTimeModal}
-        onClose={() => {
-          setShowFirstTimeModal(false);
-          setFirstTimeHighlight();
-        }}
-        message={
-          'Prima volta che utilizzi la sottolineatura? Provala! Seleziona il testo tenendo premuto sulle lettere e premi il pulsante con il pennarello'
-        }
-      />
-
       {showScrollTopButton && <ScrollToTopButton onPress={scrollToTop} />}
       {enableHighlight && (
         <View style={styles.buttons}>

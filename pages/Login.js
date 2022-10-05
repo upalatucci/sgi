@@ -80,7 +80,7 @@ const Login = ({nextScene, nextSceneProps}) => {
 
   const redirect = useCallback(() => {
     if (Actions[nextScene]) {
-      Actions.push(nextScene, nextSceneProps);
+      Actions.popAndPush(nextScene, nextSceneProps);
     } else {
       Actions.home();
     }
@@ -99,7 +99,6 @@ const Login = ({nextScene, nextSceneProps}) => {
       await Keychain.setGenericPassword(username, password);
       dispatch({type: SET_SUBSCRIPTION_INFO, payload: response});
       dispatch({type: LOGIN});
-      redirect();
     }
   };
 
