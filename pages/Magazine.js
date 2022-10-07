@@ -113,12 +113,12 @@ const Magazine = React.memo(({magazine, magazineType}) => {
           </Text>
           <View style={styles.headerIcons}>
             <TouchableHighlight
-              onPress={() => Actions.magazines()}
+              onPress={() => Actions.jump('magazines')}
               style={styles.headerItem}>
               <WithLocalSvg
                 style={styles.goToMagazinesImage}
-                width={20}
-                height={20}
+                width={30}
+                height={30}
                 asset={GoToMagazines}
               />
             </TouchableHighlight>
@@ -127,8 +127,8 @@ const Magazine = React.memo(({magazine, magazineType}) => {
               style={styles.headerItem}>
               <WithLocalSvg
                 style={styles.goToMagazinesImage}
-                width={20}
-                height={20}
+                width={30}
+                height={30}
                 asset={Pdf}
               />
             </TouchableHighlight>

@@ -8,6 +8,7 @@ export default ({pdfUri}) => {
   console.log(pdfUri, 'PDF');
 
   useEffect(() => {
+    console.log('Download');
     const localFile = `${RNFS.DocumentDirectoryPath}/temporaryfile.pdf`;
     const options = {
       fromUrl: pdfUri,

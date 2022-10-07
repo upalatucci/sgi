@@ -80,7 +80,7 @@ const Login = ({nextScene, nextSceneProps}) => {
 
   const redirect = useCallback(() => {
     if (Actions[nextScene]) {
-      Actions.popAndPush(nextScene, nextSceneProps);
+      Actions.push(nextScene, nextSceneProps);
     } else {
       Actions.home();
     }
