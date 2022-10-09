@@ -24,17 +24,21 @@ export function italianFormat(date, dateFormat) {
 }
 
 export function downloadAndOpenPDF(pdfUri, name) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const localFile = `${RNFS.DocumentDirectoryPath}/${name}.pdf`;
     const options = {
       fromUrl: pdfUri,
       toFile: localFile,
       cacheable: true,
     };
-    RNFS.downloadFile(options).promise.then((data) => {
-      console.log(data);
-      FileViewer.open(localFile).then(() => resolve());
-    });
+    RNFS.downloadFile(options)
+      .promise.then((data) => {
+        console.log(data);
+        FileViewer.open(localFile, {showAppsSuggestions: true})
+          .then(resolve)
+          .catch(reject);
+      })
+      .catch(reject);
   });
 }
 

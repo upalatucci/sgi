@@ -22,6 +22,7 @@ import GoToMagazines from '../assets/components.svg';
 import Pdf from '../assets/pdf.svg';
 import MagazineImage from '../components/magazine/MagazineImage';
 import Text from '../components/ui/Text';
+import PdfError from '../components/PdfError';
 
 const windowHeight = Dimensions.get('window').height;
 const Magazine = React.memo(({magazine, magazineType}) => {
@@ -35,16 +36,50 @@ const Magazine = React.memo(({magazine, magazineType}) => {
   );
   const [magazineContent, setMagazineContent] = useState();
   const [loadingPDF, setLoadingPDF] = useState(false);
+  const [pdfError, setError] = useState();
 
   async function downloadPDFRequest() {
     setLoadingPDF(true);
+    let response;
+
+    if (!magazineContent?.number?.download) {
+      response = await readMagazine();
+
+      if (response) {
+        const cacheKey = `${magazineType}-${magazine.number}`;
+        dispatch({
+          type: SET_MAGAZINE_CACHE,
+          payload: {[cacheKey]: response.data},
+        });
+      }
+    }
+
     const magazinePrefix = magazineType === 'nr' ? 'NR' : 'BS';
     await downloadAndOpenPDF(
-      magazineContent.number.download,
-      `${magazinePrefix}${magazineContent.number.number}`,
-    );
+      response?.data?.number?.download || magazineContent.number.download,
+      `${magazinePrefix}${magazineContent.number.number}.pdf`,
+    ).catch(setError);
     setLoadingPDF(false);
   }
+
+  const readMagazine = () => {
+    return getJsonData(
+      `number/${magazine.number}`,
+      subscriptionDataForMagazine(subscriptionInfo, magazineType),
+      magazineType === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
+    ).then((response) => {
+      if (response.data.status === 404) {
+        Actions.pop();
+        dispatch({type: SHOW_MODAL, payload: response.message});
+      } else {
+        if (response.data) {
+          setMagazineContent(response.data);
+
+          return response;
+        }
+      }
+    });
+  };
 
   useEffect(() => {
     if (!subscriptionInfo || !magazineType || !magazine) {
@@ -57,24 +92,15 @@ const Magazine = React.memo(({magazine, magazineType}) => {
       return setMagazineContent(storedMagazines[cacheKey]);
     }
 
-    getJsonData(
-      `number/${magazine.number}`,
-      subscriptionDataForMagazine(subscriptionInfo, magazineType),
-      magazineType === 'nr' ? NR_ENTRYPOINT : BS_ENTRYPOINT,
-    ).then((response) => {
-      if (response.data.status === 404) {
-        Actions.pop();
-        dispatch({type: SHOW_MODAL, payload: response.message});
-      } else {
-        if (response.data) {
-          setMagazineContent(response.data);
-          dispatch({
-            type: SET_MAGAZINE_CACHE,
-            payload: {[cacheKey]: response.data},
-          });
-        }
+    readMagazine().then((response) => {
+      if (response) {
+        dispatch({
+          type: SET_MAGAZINE_CACHE,
+          payload: {[cacheKey]: response.data},
+        });
       }
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [magazine, magazineType, subscriptionInfo]);
 
@@ -102,6 +128,10 @@ const Magazine = React.memo(({magazine, magazineType}) => {
 
   if (!magazineContent || loadingPDF || !isLogged) {
     return <Loading />;
+  }
+
+  if (pdfError) {
+    return <PdfError error={pdfError} onClick={downloadPDFRequest} />;
   }
 
   return (

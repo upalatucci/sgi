@@ -13,8 +13,6 @@ import CustomHTML from '../CustomHTML';
 
 export default ({section, magazineType, magazineNumber}) => {
   const sectionArticles = Object.entries(section.articles);
-
-  console.log(sectionArticles);
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.category}>
