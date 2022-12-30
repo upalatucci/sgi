@@ -28,15 +28,7 @@ import {
 import Loading from '../components/Loading';
 import SplashScreen from 'react-native-splash-screen';
 
-const Home = ({
-  lastBS,
-  lastNR,
-  lastNews,
-  fetchBS,
-  fetchNR,
-  login,
-  fetchLastNewsAction,
-}) => {
+const Home = ({lastBS, lastNews, fetchBS, login, fetchLastNewsAction}) => {
   useEffect(() => {
     login();
     SplashScreen.hide();
@@ -44,9 +36,8 @@ const Home = ({
 
   useEffect(() => {
     fetchBS();
-    fetchNR();
     fetchLastNewsAction();
-  }, [fetchNR, fetchBS, fetchLastNewsAction]);
+  }, [fetchBS, fetchLastNewsAction]);
 
   function welcomeText() {
     const hourNow = new Date().getHours();
@@ -145,7 +136,7 @@ const Home = ({
             </Text>
           </TouchableHighlight>
         </View>
-        <HomeMagazineCard magazine={lastNR} magazineType={MAGAZINE_TYPES.NR} />
+        <HomeMagazineCard magazineType={MAGAZINE_TYPES.NR} />
         <HomeMagazineCard magazine={lastBS} magazineType={MAGAZINE_TYPES.BS} />
         <HomeMagazineCard
           magazineType={MAGAZINE_TYPES.VC}
@@ -305,7 +296,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     lastBS: state.magazine.lastBS,
-    lastNR: state.magazine.lastNR,
     lastNews: state.magazine.lastNews,
   };
 };
@@ -313,7 +303,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchBS: () => dispatch(fetchLastBSImage()),
-    fetchNR: () => dispatch(fetchLastNRImage()),
     fetchLastNewsAction: () => dispatch(fetchLastNews()),
     login: () => dispatch(fetchLogin()),
   };

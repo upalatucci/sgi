@@ -3,7 +3,7 @@ export const VOLO_ENTRYPOINT = 'https://ilvolocontinuo.it/wp-json/app-sgi/v1';
 export const SGI_SERVICES = 'https://servizi.sgi-italia.org';
 export const BS_ENTRYPOINT = 'https://buddismoesocieta.org/wp-json/app-sgi/v1';
 export const NR_ENTRYPOINT =
-  'https://ilnuovorinascimento.org/wp-json/app-sgi/v1';
+  'https://ilnuovorinascimento.org/site/wp-json/app-sgi/v1';
 
 export function getJsonData(url, parameters, entrypoint = SGI_ENTRYPOINT) {
   let completeUrl = [entrypoint, url].join('/');

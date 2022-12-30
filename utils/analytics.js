@@ -1,4 +1,5 @@
 import analytics from '@react-native-firebase/analytics';
+import {Actions} from 'react-native-router-flux';
 import {SGI_ENTRYPOINT} from '../api';
 
 export const sendScreen = async (routeName) => {
@@ -10,7 +11,13 @@ export const sendScreen = async (routeName) => {
 
 export const sendAnalyticsOnRouteChange = async (currentScene) => {
   const viewProps = currentScene.params;
-  switch (currentScene.routeName) {
+  console.log(
+    currentScene.routeName,
+    '#####################',
+    currentScene,
+    Actions.currentScene,
+  );
+  switch (Actions.currentScene) {
     case 'article':
       sendScreen(
         `articolo-${viewProps.magazineType}-${viewProps.magazineNumber}-${viewProps.articleTitle}`,
@@ -28,15 +35,22 @@ export const sendAnalyticsOnRouteChange = async (currentScene) => {
         }-${viewProps.title}`,
       );
       break;
+    case 'frasedelgiorno':
+      sendScreen('frasedelgiorno');
+      break;
+    case 'buddismo':
+      sendScreen('buddismo');
+      break;
+    case 'news':
+      sendScreen('news');
+      break;
     case 'root':
     case 'MainActivity':
     case 'UIViewController':
     case 'RCTModalHostViewController':
       break;
     default:
-      console.log(currentScene.routeName);
-      sendScreen(currentScene.routeName);
-      console.log(currentScene.routeName);
+      console.log(Actions.currentScene);
       break;
   }
 };

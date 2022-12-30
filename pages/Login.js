@@ -103,6 +103,7 @@ const Login = ({nextScene, nextSceneProps}) => {
   };
 
   useEffect(() => {
+    console.log('LOGGGGEEEEEDD____', isLogged);
     if (isLogged) {
       redirect();
     }

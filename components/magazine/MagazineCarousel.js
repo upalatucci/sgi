@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, Linking} from 'react-native';
 import Text from '../ui/Text';
 import {getJsonData} from '../../api';
 import MagazineImageWithNumber from './MagazineImageWithNumber';
@@ -11,6 +11,7 @@ import {
 } from '../../utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {SET_MAGAZINE_CACHE} from '../../store/mutations';
+import TouchableHighlight from '../CustomTouchableHighlight';
 
 export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
   const [loading, setLoading] = useState(true);
 
   const fetchMagazines = useCallback(() => {
-    if (!subInfo) {
+    if (!subInfo || magazine === MAGAZINE_TYPES.NR) {
       return;
     }
     const cacheKey = `all-${magazine}`;
@@ -54,23 +55,31 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
 
   return (
     <View style={[styles.container]}>
-      <FlatList
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollViewContent}
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        data={magazines}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({item, index}) => (
-          <MagazineImageWithNumber
-            magazineType={magazine}
-            magazine={item}
-            index={index}
-          />
-        )}
-        onRefresh={fetchMagazines}
-        refreshing={loading}
-      />
+      {magazine === 'nr' ? (
+        <TouchableHighlight
+          style={styles.linking}
+          onPress={() => Linking.openURL('https://ilnuovorinascimento.org')}>
+          <Text style={styles.linkingText}>Vai al nuovo sito NR</Text>
+        </TouchableHighlight>
+      ) : (
+        <FlatList
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollViewContent}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={magazines}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({item, index}) => (
+            <MagazineImageWithNumber
+              magazineType={magazine}
+              magazine={item}
+              index={index}
+            />
+          )}
+          onRefresh={fetchMagazines}
+          refreshing={loading}
+        />
+      )}
       <View style={styles.containerText}>
         <Text style={styles.magazineTitle}>{MAGAZINE_NAMES[magazine]}</Text>
         <Text style={styles.magazineDesc}>
@@ -113,5 +122,13 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     alignItems: 'center',
+  },
+  linking: {
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  linkingText: {
+    fontSize: 20,
+    color: Colors.blue,
   },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, Linking} from 'react-native';
 import Text from '../ui/Text';
 import {
   deviceSize,
@@ -44,6 +44,8 @@ export default ({magazine, magazineType, onPress, background}) => {
       onPress={() => {
         if (onPress) {
           onPress();
+        } else if (magazineType === MAGAZINE_TYPES.NR) {
+          return Linking.openURL('https://ilnuovorinascimento.org');
         } else if (Actions.currentScene !== 'magazine' && magazine) {
           goToMagazine();
         }
