@@ -10,6 +10,10 @@ export function useImageSizeType(imageUrl) {
   const [imageType, setImageType] = useState();
   const [aspectRatio, setAspectRatio] = useState();
 
+  if (!imageUrl) {
+    return {imageType, aspectRatio};
+  }
+
   Image.getSize(imageUrl, (width, height) => {
     setImageType(
       width > height ? IMAGE_SIZE_TYPE.LANDSCAPE : IMAGE_SIZE_TYPE.PORTRAIT,

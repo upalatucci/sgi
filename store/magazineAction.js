@@ -26,9 +26,13 @@ export function fetchLastNRImage() {
 
 export function fetchLastBSImage() {
   return (dispatch) => {
-    return lastMaganize('bs').then((response) =>
-      dispatch({type: SET_LASR_BS_IMAGE, payload: response.data.number}),
-    );
+    return lastMaganize('bs').then((response) => {
+      if (!response.data.number) {
+        return;
+      }
+
+      dispatch({type: SET_LASR_BS_IMAGE, payload: response.data.number});
+    });
   };
 }
 

@@ -12,7 +12,10 @@ export function getJsonData(url, parameters, entrypoint = SGI_ENTRYPOINT) {
     completeUrl += `?${queryParam.toString()}`;
   }
   console.log(completeUrl);
-  return fetch(completeUrl).then((r) => r.json());
+  return fetch(completeUrl).then((r) => {
+    console.log(r);
+    return r.json();
+  });
 }
 
 export function loginRequest(user, md5password) {

@@ -13,7 +13,9 @@ export default React.memo((props) => {
   return (
     <Image
       {...props}
-      source={{uri: props.number ? props.number.cover : null}}
+      source={{
+        uri: props.number && props.number.cover ? props.number.cover : null,
+      }}
       style={
         Array.isArray(props.style)
           ? [...props.style, aspectRatioStyle]
