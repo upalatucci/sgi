@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, StyleSheet, FlatList, Linking} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 import Text from '../ui/Text';
 import {getJsonData} from '../../api';
 import MagazineImageWithNumber from './MagazineImageWithNumber';
@@ -12,6 +12,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {SET_MAGAZINE_CACHE} from '../../store/mutations';
 import TouchableHighlight from '../CustomTouchableHighlight';
+import {Actions} from 'react-native-router-flux';
 
 export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
   const dispatch = useDispatch();
@@ -56,10 +57,8 @@ export default ({entrypoint, subInfo, magazine = MAGAZINE_TYPES.NR}) => {
   return (
     <View style={[styles.container]}>
       {magazine === 'nr' ? (
-        <TouchableHighlight
-          style={styles.linking}
-          onPress={() => Linking.openURL('https://ilnuovorinascimento.org')}>
-          <Text style={styles.linkingText}>Vai al nuovo sito NR</Text>
+        <TouchableHighlight style={styles.linking} onPress={() => Actions.NR()}>
+          <Text style={styles.linkingText}>Vai allo spazio dedicato</Text>
         </TouchableHighlight>
       ) : (
         <FlatList

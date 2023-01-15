@@ -1,7 +1,7 @@
 import shajs from 'sha.js';
 import md5 from 'md5';
 import {loginRequest} from '../api';
-import {TOKEN} from '../token';
+import {TOKEN, NR_TOKEN} from '../token';
 
 export function generateSignToken(parameters, magazine = 'nr') {
   const {riv_nome, riv_cognome, riv_codabb: riv_cod_abb} = parameters;
@@ -48,3 +48,15 @@ export function subscriptionDataForMagazine(subscriptionInfo, magazine = 'nr') {
 
   return magazineSubInfo;
 }
+
+export const generateSubscriptionsMAC = (email, password) => {
+  const passphrase = [
+    'nr',
+    NR_TOKEN,
+    email.toLowerCase(),
+    NR_TOKEN,
+    md5(password),
+  ].join('');
+
+  return shajs('sha512').update(passphrase).digest('hex').toUpperCase();
+};

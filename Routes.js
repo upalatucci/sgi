@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BackHandler, StyleSheet} from 'react-native';
+import {BackHandler, Linking, StyleSheet} from 'react-native';
 import {Router, Scene, Stack, Actions, Drawer} from 'react-native-router-flux';
 
 import {Colors} from './styles';
@@ -27,9 +27,9 @@ import CustomDrawer from './components/Drawer';
 import Menu from './components/icons/Menu';
 // import TabBar from './components/TabBar';
 import {sendAnalyticsOnRouteChange} from './utils/analytics';
+import NR from './pages/NR';
 
 export function backHandler() {
-  console.log('BACK', Actions.currentScene);
   if (Actions.currentScene === 'homepage' || !Actions.prevState) {
     BackHandler.exitApp();
     return;
@@ -73,6 +73,20 @@ function Routes() {
       backHandler,
     );
     return () => backHandlerListener.remove();
+  }, []);
+
+  useEffect(() => {
+    const redirectToNR = (url) => {
+      Actions.NR({url});
+    };
+
+    Linking.getInitialURL()
+      .then((url) => url && redirectToNR(url))
+      .catch(console.error);
+
+    Linking.addEventListener('url', ({url}) => redirectToNR(url));
+
+    () => Linking.removeAllListeners('url');
   }, []);
 
   return (
@@ -152,6 +166,14 @@ function Routes() {
           />
 
           <Scene
+            key="NR"
+            component={NR}
+            back
+            onRight={() => Actions.home()}
+            renderRightButton={SGILogo}
+          />
+
+          <Scene
             key="postPage"
             component={PostPage}
             back
@@ -183,6 +205,7 @@ function Routes() {
             onRight={() => Actions.home()}
             renderRightButton={SGILogo}
           />
+
           <Scene
             key="downloadPdf"
             component={DownloadPDF}

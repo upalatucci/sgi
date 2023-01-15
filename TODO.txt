@@ -1,0 +1,2 @@
+- setup react native deep link on ios
+- setup ilnuovorinascimento for deep links: https://developer.apple.com/documentation/Xcode/supporting-associated-domains?language=objc
