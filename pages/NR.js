@@ -75,6 +75,8 @@ const NR = ({url}) => {
       window.onbeforeunload = () => {
         window.ReactNativeWebView.postMessage(JSON.stringify({loading: 'loading'}))
       }
+
+      true
     `);
   };
 

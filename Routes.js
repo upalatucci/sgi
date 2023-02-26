@@ -81,12 +81,22 @@ function Routes() {
     };
 
     Linking.getInitialURL()
-      .then((url) => url && redirectToNR(url))
+      .then((url) => {
+        console.log(url);
+        return url && redirectToNR(url);
+      })
       .catch(console.error);
 
-    Linking.addEventListener('url', ({url}) => redirectToNR(url));
+    const linkingEvent = Linking.addEventListener('url', ({url}) => {
+      console.log(url);
+      return redirectToNR(url);
+    });
 
-    () => Linking.removeAllListeners('url');
+    console.log('OPEEEEN');
+    return () => {
+      console.log('CLOSEEE');
+      linkingEvent.remove();
+    };
   }, []);
 
   return (
