@@ -5,7 +5,7 @@ def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs')
 buildscript {
     ext {
         buildToolsVersion = "29.0.3"
-        minSdkVersion = 21
+        minSdkVersion = 19
         compileSdkVersion = 31
         targetSdkVersion = 31
         kotlin_version = '1.6.10' // <- add this line

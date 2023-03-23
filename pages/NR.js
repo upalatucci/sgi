@@ -1,13 +1,11 @@
 import md5 from 'md5';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, BackHandler} from 'react-native';
 import {WebView} from 'react-native-webview';
 import Loading from '../components/Loading';
 import * as Keychain from 'react-native-keychain';
 import {generateSubscriptionsMAC} from '../services/auth';
 import {Actions} from 'react-native-router-flux';
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import RNPrint from 'react-native-print';
 
 const NR = ({url}) => {
   const webViewRef = useRef();
@@ -44,7 +42,7 @@ const NR = ({url}) => {
           )}&m=${generateSubscriptionsMAC(
             credentials.username,
             credentials.password,
-          )}&s=nr&r=1`,
+          )}&s=nr`,
         );
       } else {
         Actions.login({nextScene: 'NR', nextSceneProps: {url}});
@@ -68,33 +66,9 @@ const NR = ({url}) => {
     }
 
     webViewRef.current?.injectJavaScript(`
-      window.print = () => {
-        window.ReactNativeWebView.postMessage(JSON.stringify({print: document.querySelector('html').outerHTML}))
-      }
-
-      window.onbeforeunload = () => {
-        window.ReactNativeWebView.postMessage(JSON.stringify({loading: 'loading'}))
-      }
+      window.print = () => window.ReactNativeWebView.print()
     `);
   };
-
-  const handleOnMessage = useCallback(async (event) => {
-    const dataObj = JSON.parse(event.nativeEvent.data);
-
-    console.log(dataObj);
-    if ('print' in dataObj) {
-      setLoading(true);
-      const results = await RNHTMLtoPDF.convert({
-        html: dataObj.print,
-        fileName: 'test',
-        base64: true,
-      });
-      await RNPrint.print({filePath: results.filePath});
-      setLoading(false);
-    } else if ('loading' in dataObj) {
-      setLoading(true);
-    }
-  }, []);
 
   console.log('NR initialPage', initialPage);
 
@@ -111,10 +85,9 @@ const NR = ({url}) => {
           onLoadStart={() => setLoading(true)}
           onNavigationStateChange={onNavigationStateChange}
           sharedCookiesEnabled={true}
-          onMessage={handleOnMessage}
         />
       )}
-      {(loading || !initialPage) && <Loading withOverlay />}
+      {(loading || !initialPage) && <Loading />}
     </>
   );
 };

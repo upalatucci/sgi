@@ -7,7 +7,6 @@ export default ({
   absolutePositioning = true,
   style,
   withText = true,
-  withOverlay = false,
   textColor = 'black',
 }) => {
   const rotation = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
@@ -37,7 +36,6 @@ export default ({
       style={[
         styles.container,
         absolutePositioning ? styles.containerAbsolutePosition : style,
-        withOverlay ? styles.overlay : {},
       ]}>
       {/* <Svg width="100" height="100" viewBox="0 0 30 30">
         <Defs>
@@ -104,8 +102,5 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 20,
-  },
-  overlay: {
-    backgroundColor: 'rgba(200, 200, 200, 0.15)',
   },
 });
