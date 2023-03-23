@@ -1,9 +1,0 @@
-[{
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "org.sgitalia.app",
-      "sha256_cert_fingerprints":
-      ["41:BB:E6:F8:7A:90:CF:7D:F0:94:22:1C:4C:57:5C:F1:F4:CE:51:E2:11:6F:74:D1:81:42:C7:4F:C4:AB:A7:FE"]
-    }
-  }]

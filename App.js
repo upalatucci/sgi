@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Actions} from 'react-native-router-flux';
 import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
@@ -13,7 +13,6 @@ import {persistStore, persistReducer} from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
 import Routes from './Routes';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Linking} from 'react-native';
 
 const persistConfig = {
   key: 'root',

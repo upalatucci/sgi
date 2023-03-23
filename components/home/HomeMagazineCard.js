@@ -45,7 +45,7 @@ export default ({magazine, magazineType, onPress, background}) => {
         if (onPress) {
           onPress();
         } else if (magazineType === MAGAZINE_TYPES.NR) {
-          return Actions.NR();
+          return Linking.openURL('https://ilnuovorinascimento.org');
         } else if (Actions.currentScene !== 'magazine' && magazine) {
           goToMagazine();
         }

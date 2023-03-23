@@ -18,6 +18,56 @@ import {
 import {Colors} from '../styles';
 import analytics from '@react-native-firebase/analytics';
 
+const initialState = {
+  logged: false,
+  loading: true,
+  error: null,
+};
+
+function getInitState(logging) {
+  return {
+    ...initialState,
+    loading: logging || initialState.loading,
+  };
+}
+
+function loginReducer(state, action) {
+  switch (action.type) {
+    case 'no_logged':
+      return {
+        ...initialState,
+        loading: false,
+      };
+    case 'clear_error':
+      return {
+        ...state,
+        error: null,
+      };
+    case 'error':
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+        logged: false,
+      };
+    case 'logged':
+      return {
+        ...state,
+        logged: true,
+        error: null,
+        loading: false,
+      };
+    case 'loading':
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    default:
+      return state;
+  }
+}
+
 const Login = ({nextScene, nextSceneProps}) => {
   const {subscriptionInfo, isLogged, logging} = useSelector((state) => ({
     subscriptionInfo: state.magazine.subscriptionInfo,
