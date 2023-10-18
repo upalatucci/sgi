@@ -60,7 +60,8 @@ const Drawer = ({isLogged, logout}) => {
             Linking.openURL(
               Platform.select({
                 default: 'https://servizi.sgi-italia.org/abbonamenti/',
-                ios: 'https://servizi.sgi-italia.org/abbonamenti/index.php/site/login',
+                ios:
+                  'https://servizi.sgi-italia.org/abbonamenti/index.php/site/login',
               }),
             )
           }>
@@ -82,7 +83,7 @@ const Drawer = ({isLogged, logout}) => {
             {isLogged ? 'Logout' : 'Login'}
           </Text>
         </TouchableHighlight>
-        <Text style={styles.version}>2.0.36 236</Text>
+        <Text style={styles.version}>2.0.37 237</Text>
       </ScrollView>
     </SafeAreaView>
   );
