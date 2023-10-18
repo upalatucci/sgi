@@ -15,7 +15,7 @@ export default ({title, icon, link}) => (
       ) : (
         <WithLocalSvg asset={icon} width={40} height={40} />
       )}
-      <Text style={styles.text} allowFontScaling={false}>
+      <Text style={styles.text} allowFontScaling={true}>
         {title}
       </Text>
     </View>
