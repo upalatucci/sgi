@@ -164,7 +164,7 @@ const CustomWebView = ({
         source={{
           html: `<html>
         <head>
-          <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
           ${contentStyles[style ?? 'sito']}
           <style> 
             img, iframe, video { display: block; max-width: 90% !important; height: auto; margin: 0 auto; } 

@@ -27,6 +27,7 @@ import {
 } from '../utils';
 import Loading from '../components/Loading';
 import SplashScreen from 'react-native-splash-screen';
+import CustomHTML from '../components/CustomHTML';
 
 const Home = ({lastBS, lastNews, fetchBS, login, fetchLastNewsAction}) => {
   useEffect(() => {
@@ -102,9 +103,18 @@ const Home = ({lastBS, lastNews, fetchBS, login, fetchLastNewsAction}) => {
                 {formatDateNews(lastNews[0].date)}
               </Text>
               <Text style={styles.newsTitle}>{lastNews[0].title}</Text>
-              <Text style={styles.newsSubtitle} numberOfLines={4}>
-                {lastNews[0].excerpt ? lastNews[0].excerpt.trim() : null}
-              </Text>
+
+              <CustomHTML
+                content={
+                  lastNews[0].excerpt
+                    ? lastNews[0].excerpt
+                        .trim()
+                        .replace(/(\r\n|&nbsp;|\n|\r|<br ?\/>)/gm, '')
+                    : null
+                }
+                allowFontScaling={false}
+                fontSize={14}
+              />
               <TouchableHighlight
                 onPress={() =>
                   Actions.postPage({

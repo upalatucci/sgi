@@ -509,12 +509,6 @@ body.single .et_post_meta_wrapper h1 {
   }
 }
 @media only screen and (min-width: 1350px) {
-  .et_pb_row {
-    padding: 27px 0;
-  }
-  .et_pb_section {
-    padding: 54px 0;
-  }
   .single.et_pb_pagebuilder_layout.et_full_width_page .et_post_meta_wrapper {
     padding-top: 81px;
   }
@@ -586,9 +580,6 @@ h6 {
   }
 }
 @media only screen and (max-width: 767px) {
-  .et_pb_section {
-    padding: 48px 0;
-  }
   .et_pb_section.et_pb_fullwidth_section {
     padding: 0;
   }
@@ -677,11 +668,25 @@ a.archive_more {
   text-align: center !important;
 }
 
+blockquote {
+  margin: 20px 0 30px;
+  border-left: 5px solid;
+  padding-left: 20px;
+}
+
 img.alignright {
   margin: auto;
   float: auto;
 }
+
+.et_pb_row {
+  padding: 2% 0 !important;
+}
+
+
 </style>
+<link rel="stylesheet" href="https://www.sgi-italia.org/wp-content/et-cache/9175/et-core-unified-9175.min.css?ver=1678794777"  type="text/css">
+<link rel="stylesheet" href="https://www.sgi-italia.org/wp-content/et-cache/9175/et-core-unified-tb-4795-deferred-9175.min.css?ver=1678794777"  type="text/css">
 `;
 
 export default sitoStyle;

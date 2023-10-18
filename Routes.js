@@ -81,6 +81,11 @@ function Routes() {
         if (!e.routes) {
           return;
         }
+
+        if (process.env.NODE_ENV === 'development') {
+          return;
+        }
+
         const routesLength = e.routes.length;
 
         const currentScene = routesLength > 0 && e.routes[routesLength - 1];

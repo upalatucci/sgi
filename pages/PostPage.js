@@ -20,7 +20,7 @@ function PostPage(props) {
     } else {
       return (
         `<h1 class="entry-title">${data.title}</h1>
-        <p class="post-meta">${formatDateNews(
+        <p class="entry-content">${formatDateNews(
           data.date,
         )} <strong>${data.categories.join(', ')}</strong></p>` + postData
       );
